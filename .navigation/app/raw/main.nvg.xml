@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "ua.kiev.vignatyev.vhome1.PinchActivity"/>
+      <point      
+        x = "3024"      
+        y = "1424"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "ua.kiev.vignatyev.vhome1.MotionDetectActivity"/>
+      <point      
+        x = "2060"      
+        y = "1588"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "ua.kiev.vignatyev.vhome1.MainActivity"/>
+      <point      
+        x = "500"      
+        y = "100"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.MenuState"      
+        className = "ua.kiev.vignatyev.vhome1.MainActivity"/>
+      <point      
+        x = "1768"      
+        y = "100"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "ua.kiev.vignatyev.vhome1.VarchPlayerActivity"/>
+      <point      
+        x = "600"      
+        y = "1580"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>
