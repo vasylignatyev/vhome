@@ -37,11 +37,9 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
 
     private EditText etEmail;
     private EditText etPassword;
-    private CheckBox cbSavePassword;
 
     FragmentActivity mActivity = null;
 
-    private String mUserToken;
     private String mUserName;
     private String mUserPass;
 
@@ -87,12 +85,11 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
 
     private void populateViewForOrientation(LayoutInflater inflater, ViewGroup viewGroup) {
         viewGroup.removeAllViewsInLayout();
-        //View view = inflater.inflate(R.layout.fragment_login, viewGroup);
+
         View view = inflater.inflate(R.layout.fragment_login, viewGroup);
 
         etEmail = (EditText) view.findViewById(R.id.etEmail);
         etPassword = (EditText) view.findViewById(R.id.etPassword);
-        cbSavePassword = (CheckBox) view.findViewById(R.id.cbSavePassword);
         Button btnLogin = (Button) view.findViewById(R.id.btnLogin);
         Button btnRegisterRecovery = (Button) view.findViewById(R.id.btnRegisterRecovery);
 
@@ -147,9 +144,6 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
 
     }
 
-    /**
-     *
-     */
     public class GetToken extends AsyncTask<RequestPackage, Void, String> {
         @Override
         protected String doInBackground(RequestPackage... params) {

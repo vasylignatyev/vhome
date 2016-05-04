@@ -11,6 +11,7 @@ public class MotionDetectActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_motion_detect);
 
+        Log.d("MyApp", "MotionDetectActivity");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String i_customer_vcam = extras.getString(MotionDetectFragment.ARG_I_CUSTOMER_VCAM, null);

@@ -59,55 +59,17 @@ public class MainActivity extends FragmentActivity
     private Context context = this;
     boolean doubleBackToExitPressedOnce = false;
 
-
-    /**
-     * VAR
-     */
     private boolean mLoggedIn = true;
     private boolean mCheckUpdate = true;
     private int mVersionCode;
     private SharedPreferences sp;
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private CharSequence mTitle;
     private String mUserName, mUserPass;
 
     private String mGcmToken = null;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+
     private GoogleApiClient client;
     //private BroadcastReceiver mRegistrationBroadcastReceiver;
-
-    /**
-     * GETTERS AND SETTERS
-     */
-    /*
-    public static Vcam getVcam(int position) {
-        if(mVcamList.size() != 0 )
-            return mVcamList.get(position);
-        return null;
-    }
-    */
-    public static Vcam getScam(int position) {
-        return mScamList.get(position);
-    }
-
-    public static void setVcamList(List<Vcam> vcamList) {
-        MainActivity.mVcamList = vcamList;
-    }
-
-    public static void setScamList(List<Vcam> scamList) {
-        MainActivity.mScamList = scamList;
-    }
-
-    public static List<Vcam> getVcamList() {
-        return mVcamList;
-    }
-
-    public static List<Vcam> getScamList() {
-        return mScamList;
-    }
 
     public static String getUserToken() {
         return mUserToken;
@@ -169,6 +131,14 @@ public class MainActivity extends FragmentActivity
             mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
                     (DrawerLayout) findViewById(R.id.drawer_layout));
         }
+
+        if ( checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            //intent.putExtra( RegistrationIntentService.ARG_NUMBER, mNumber);
+            startService(intent);
+        }
+
     }
 
     @Override
@@ -292,14 +262,7 @@ public class MainActivity extends FragmentActivity
         Toast.makeText(this, "Your account was used by another device. You should login again.", Toast.LENGTH_LONG).show();
         onNavigationDrawerItemSelected(4);
     }
-/*
-    public void restoreActionBar() {
-        android.app.ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
-*/
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if ((null != mNavigationDrawerFragment) && (!mNavigationDrawerFragment.isDrawerOpen())) {
@@ -350,15 +313,11 @@ public class MainActivity extends FragmentActivity
         Log.i("MyApp", "Positive click!");
     }
 
-    public void doNegativeClick() {
-        // Do stuff here.
-        Log.i("MyApp", "Negative click!");
-    }
-
     @Override
     public void onStop() {
         super.onStop();
     }
+
     public void unsetGcmRegistrationToken() {
         //pd.show();
         //************************

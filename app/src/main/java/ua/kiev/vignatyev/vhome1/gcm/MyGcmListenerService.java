@@ -8,6 +8,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -52,15 +53,15 @@ public class MyGcmListenerService extends GcmListenerService {
 
         Intent intent = new Intent(this, MotionDetectActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
         intent.putExtras(data);
 
         String iCustomerVcam = data.getString("i_customer_vcam", null);
 
-       // Log.d("MyApp", "iCustomerVcam = " + iCustomerVcam);
+        Log.d("MyApp", "sendNotification::iCustomerVcam = " + iCustomerVcam);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, Integer.parseInt(iCustomerVcam), intent,
-            PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent.FLAG_ONE_SHOT);
+//            PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
