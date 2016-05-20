@@ -24,16 +24,23 @@
     <string name="enter_password">Password</string>
     <string name="enter">Enter</string>
     <string name="registration">Registration</string>
-    <string name="fogot_password">Fogot password?</string>
+    <string name="forgot_password">Forgot password?</string>
 
     <!-- Nav Drawer Menu Items -->
+    <string name="my_cameras">My cameras</string>
+    <string name="shared_cameras">Shared cameras</string>
+    <string name="my_alerts">My alerts</string>
+    <string name="shared_alerts">Shared alerts</string>
+    <string name="exit">Quit</string>
+
     <string-array name="nav_drawer_items">
-        <item>My cameras</item>
-        <item>Shared cameras</item>
-        <item>My alerts</item>
-        <item>Shared alerts</item>
-        <item>Quit</item>
+        <item>@string/my_cameras</item>
+        <item>@string/shared_cameras</item>
+        <item>@string/my_alerts</item>
+        <item>@string/shared_alerts</item>
+        <item>@string/exit</item>
     </string-array>
+
     <string name="title_activity_motion_detect">MotionDetectActivity</string>
     <string name="title_activity_touch_image_view">TouchImageViewActivity</string>
 
@@ -53,6 +60,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="noNetwork">No Internet Connection</string>
+    <string name="title_activity_vcam_setup">VcamSetup</string>
+    <string name="manufacturer">Производитель</string>
+    <string name="model">Модель</string>
+    <string name="title_activity_schedule">ScheduleActivity</string>
+    <string name="record_schedule">Расписание записи</string>
 
 
 </resources>

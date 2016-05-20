@@ -1,0 +1,279 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ua.kiev.vignatyev.vhome1.VcamSetupFragment">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/manufacturer"
+        android:id="@+id/tvManufacturer"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textSize="17dp"
+        android:paddingTop="8dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinManufacturer"
+        android:layout_alignTop="@+id/tvManufacturer"
+        android:layout_toEndOf="@+id/tvManufacturer"
+        android:layout_marginLeft="50dp"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/model"
+        android:id="@+id/tvModel"
+        android:textSize="17dp"
+        android:layout_below="@+id/tvManufacturer"
+        android:layout_alignStart="@+id/tvVcamDNS"
+        android:paddingTop="8dp"
+        android:layout_marginTop="5dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinModel"
+        android:layout_alignTop="@+id/tvModel"
+        android:layout_toEndOf="@+id/tvModel"
+        android:layout_marginLeft="50dp"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DNS Камеры"
+        android:id="@+id/tvVcamDNS"
+        android:layout_below="@+id/tvModel"
+        android:textSize="17dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="8dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etVcamDNS"
+        android:layout_alignTop="@+id/tvVcamDNS"
+        android:layout_toEndOf="@+id/tvVcamDNS"
+        android:layout_marginLeft="25dp"
+        android:maxLines="1"
+        android:minWidth="200dp"
+        android:nestedScrollingEnabled="true"
+        android:inputType="textUri" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IP Адрес Камеры"
+        android:id="@+id/tvVcamIP"
+        android:layout_below="@+id/tvVcamDNS"
+        android:layout_alignParentStart="true"
+        android:textSize="17dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="8dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etVcamIP"
+        android:layout_alignTop="@+id/tvVcamIP"
+        android:layout_toEndOf="@+id/tvVcamIP"
+        android:layout_marginLeft="25dp"
+        android:maxLines="1"
+        android:minWidth="200dp"
+        android:nestedScrollingEnabled="true"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Протокол"
+        android:id="@+id/tvProtocol"
+        android:layout_below="@+id/tvVcamIP"
+        android:layout_alignParentStart="true"
+        android:textSize="17dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="8dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinProtocol"
+        android:layout_alignTop="@+id/tvProtocol"
+        android:layout_toEndOf="@+id/tvProtocol"
+        android:layout_marginLeft="50dp"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Порт подключения"
+        android:id="@+id/tvConnectionPort"
+        android:layout_below="@+id/tvProtocol"
+        android:layout_alignParentStart="true"
+        android:textSize="17dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="8dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etConnectionPort"
+        android:layout_alignTop="@+id/tvConnectionPort"
+        android:layout_toEndOf="@+id/tvConnectionPort"
+        android:layout_marginLeft="25dp"
+        android:text="554"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Порт управления"
+        android:id="@+id/tvSetupPort"
+        android:layout_below="@+id/tvConnectionPort"
+        android:layout_alignParentStart="true"
+        android:textSize="17dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="8dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etSetupPort"
+        android:layout_alignTop="@+id/tvSetupPort"
+        android:layout_toEndOf="@+id/tvSetupPort"
+        android:layout_marginLeft="25dp"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Логин для камеры"
+        android:id="@+id/tvVcamLogin"
+        android:layout_below="@+id/tvSetupPort"
+        android:layout_alignParentStart="true"
+        android:textSize="17dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="8dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etVcamLogin"
+        android:hint="login name"
+        android:layout_alignTop="@+id/tvVcamLogin"
+        android:layout_toEndOf="@+id/tvVcamLogin"
+        android:layout_marginLeft="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Пароль для камеры"
+        android:id="@+id/tvVcamPassword"
+        android:layout_below="@+id/tvVcamLogin"
+        android:layout_alignParentStart="true"
+        android:textSize="17dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="8dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etVcamPassword"
+        android:hint="password"
+        android:layout_alignTop="@+id/tvVcamPassword"
+        android:layout_toEndOf="@+id/tvVcamPassword"
+        android:layout_marginLeft="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Расположение камеры"
+        android:id="@+id/tvVcamLocation"
+        android:layout_below="@+id/tvVcamPassword"
+        android:layout_alignParentStart="true"
+        android:textSize="17dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="8dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etVcamLocation"
+        android:hint="адресс"
+        android:layout_alignTop="@+id/tvVcamLocation"
+        android:layout_toEndOf="@+id/tvVcamLocation"
+        android:layout_marginLeft="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Имя камеры"
+        android:id="@+id/tvVcamName"
+        android:layout_below="@+id/tvVcamLocation"
+        android:layout_alignParentStart="true"
+        android:textSize="17dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="8dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etVcamName"
+        android:hint="Название"
+        android:layout_alignTop="@+id/tvVcamName"
+        android:layout_toEndOf="@+id/tvVcamName"
+        android:layout_marginLeft="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Продолжительность записи"
+        android:id="@+id/tvRecordDuration"
+        android:layout_below="@+id/tvVcamName"
+        android:layout_alignParentStart="true"
+        android:textSize="17dp"
+        android:layout_marginTop="5dp"
+        android:paddingTop="8dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etRecordDuration"
+        android:text="300"
+        android:layout_alignTop="@+id/tvRecordDuration"
+        android:layout_toEndOf="@+id/tvRecordDuration"
+        android:layout_marginLeft="25dp"
+        android:inputType="numberDecimal" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Аудиопоток"
+        android:id="@+id/swAudioStream"
+        android:checked="false"
+        android:layout_below="@+id/tvRecordDuration"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Уведомления"
+        android:id="@+id/swNotifications"
+        android:checked="false"
+        android:layout_below="@+id/swAudioStream"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+</RelativeLayout>

@@ -23,7 +23,7 @@ import ua.kiev.vignatyev.vhome1.adapters.VcamArrayAdapter;
 import ua.kiev.vignatyev.vhome1.ajax.HTTPManager;
 import ua.kiev.vignatyev.vhome1.ajax.RequestPackage;
 import ua.kiev.vignatyev.vhome1.models.Vcam;
-import ua.kiev.vignatyev.vhome1.parsers.VcamParser;
+import ua.kiev.vignatyev.vhome1.parsers.VcamListParser;
 
 public class ScamFragment extends Fragment implements AbsListView.OnItemClickListener, VcamArrayAdapter.OnAdapterInteractionListener {
     /**
@@ -65,6 +65,8 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
 
         if( context instanceof MainActivity) {
             mMainActivity = (MainActivity) context;
+            mMainActivity.getActionBar().setTitle(getResources().getString(R.string.shared_cameras));
+
         }
 
         pd = new ProgressDialog(context);
@@ -138,6 +140,21 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
         fragmentManager.executePendingTransactions();
     }
 
+    @Override
+    public void onConfigButtonClick(View view) {
+
+    }
+
+    @Override
+    public void onScheduleButtonClick(View view) {
+
+    }
+
+    @Override
+    public void onShareButtonClick(View view) {
+
+    }
+
     /**
      * REST Request for Shared Vcam List
      */
@@ -166,7 +183,7 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
         protected void onPostExecute(String s) {
             if(s == null)
                 return;
-            mVcamList = VcamParser.parseFeed(s);
+            mVcamList = VcamListParser.parseFeed(s);
             if(mVcamList != null ) {
                 updateDisplay();
             } else {

@@ -95,7 +95,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fogot_password"
+        android:text="@string/forgot_password"
         android:id="@+id/password_recovery"
         android:layout_below="@+id/btnLogin"
         android:layout_centerHorizontal="true"

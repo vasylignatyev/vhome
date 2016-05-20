@@ -33,32 +33,28 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo">
-
         <activity
             android:name=".LoginActivity"
             android:label="vhome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".PinchActivity"
-            android:label="@string/title_activity_pinch">
-        </activity>
+            android:label="@string/title_activity_pinch" />
         <activity
             android:name=".VarchPlayerActivity"
-            android:label="@string/title_activity_varch_player">
-        </activity>
+            android:label="@string/title_activity_varch_player" />
         <activity
             android:name=".MotionDetectActivity"
-            android:label="@string/title_activity_motion_detect">
-        </activity>
+            android:label="@string/title_activity_motion_detect" />
         <!-- [START gcm_receiver] -->
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -107,6 +103,16 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <activity
+            android:name=".VcamSetupActivity"
+            android:label="@string/title_activity_vcam_setup" />
+        <activity android:name=".Main2Activity" />
+        <activity
+            android:theme="@style/Theme.AppCompat"
+            android:name=".ScheduleActivity"
+            android:label="@string/title_activity_schedule">
+
+        </activity>
     </application>
 
 </manifest>

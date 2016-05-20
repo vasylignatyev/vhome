@@ -2,6 +2,7 @@ package ua.kiev.vignatyev.vhome1;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ import ua.kiev.vignatyev.vhome1.adapters.VcamArrayAdapter;
 import ua.kiev.vignatyev.vhome1.ajax.HTTPManager;
 import ua.kiev.vignatyev.vhome1.ajax.RequestPackage;
 import ua.kiev.vignatyev.vhome1.models.Vcam;
-import ua.kiev.vignatyev.vhome1.parsers.VcamParser;
+import ua.kiev.vignatyev.vhome1.parsers.VcamListParser;
 
 public class VcamFragment extends Fragment implements AbsListView.OnItemClickListener, VcamArrayAdapter.OnAdapterInteractionListener {
     /**
@@ -67,6 +67,7 @@ public class VcamFragment extends Fragment implements AbsListView.OnItemClickLis
 
         if( context instanceof MainActivity) {
             mMainActivity = (MainActivity) context;
+            mMainActivity.getActionBar().setTitle(getResources().getString(R.string.my_cameras));
         }
 
         pd = new ProgressDialog(context);
@@ -140,6 +141,27 @@ public class VcamFragment extends Fragment implements AbsListView.OnItemClickLis
         fragmentManager.executePendingTransactions();
     }
 
+    @Override
+    public void onConfigButtonClick(View view) {
+        String vcamToken = view.getTag().toString();
+        Intent intent = new Intent(mMainActivity, VcamSetupActivity.class);
+        intent.putExtra(VcamSetupActivity.VCAM_TOKEN, vcamToken);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onScheduleButtonClick(View view) {
+        String vcamToken = view.getTag().toString();
+        Intent intent = new Intent(mMainActivity, ScheduleActivity.class);
+        intent.putExtra(ScheduleActivity.VCAM_TOKEN, vcamToken);
+        intent.putExtra(ScheduleActivity.USER_TOKEN, mUserToken);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onShareButtonClick(View view) {
+    }
+
     /**
      * REST Request for Vcam List
      */
@@ -164,7 +186,7 @@ public class VcamFragment extends Fragment implements AbsListView.OnItemClickLis
         protected void onPostExecute(String s) {
             if(s == null)
                 return;
-            mVcamList = VcamParser.parseFeed(s);
+            mVcamList = VcamListParser.parseFeed(s);
             if(mVcamList != null ) {
                 updateDisplay();
             } else {

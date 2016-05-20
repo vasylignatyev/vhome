@@ -74,6 +74,9 @@ public class MotionDetectFragment extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        MainActivity mainActivity = (MainActivity)context;
+        mainActivity.getActionBar().setTitle(getResources().getString(R.string.my_alerts));
+
         pd = new ProgressDialog(context);
         pd.setTitle(context.getString(R.string.Connecting_server));
         pd.setMessage(context.getString(R.string.wait));

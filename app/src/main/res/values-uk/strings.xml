@@ -26,16 +26,24 @@
     <string name="enter_password">Пароль</string>
     <string name="enter">Вхід</string>
     <string name="registration">Реєстрація</string>
-    <string name="fogot_password">Забули пароль?</string>
+    <string name="forgot_password">Забули пароль?</string>
 
     <!-- Nav Drawer Menu Items -->
+    <string name="my_cameras">Мої камери</string>
+    <string name="shared_cameras">Доступні камери</string>
+    <string name="my_alerts">Мої оповіщення</string>
+    <string name="shared_alerts">Доступні оповіщення</string>
+    <string name="exit">Вихід</string>
+
     <string-array name="nav_drawer_items">
-        <item>Мои камеры</item>
-        <item>Доступные камеры</item>
-        <item>Мои оповещения</item>
-        <item>Доступные оповещения</item>
-        <item>Выход</item>
+        <item>@string/my_cameras</item>
+        <item>@string/shared_cameras</item>
+        <item>@string/my_alerts</item>
+        <item>@string/shared_alerts</item>
+        <item>@string/exit</item>
     </string-array>
+
+
     <string name="title_activity_motion_detect">MotionDetectActivity</string>
     <string name="title_activity_touch_image_view">TouchImageViewActivity</string>
 
@@ -49,5 +57,8 @@
     <string name="not_specified">Не вказано</string>
     <string name="find_in_archive">Знайти в відеоархіву</string>
     <string name="from_app_only">Відео доступне тільки з програми</string>
+    <string name="manufacturer">Производитель</string>
+    <string name="model">Модель</string>
+    <string name="record_schedule">Расписание записи</string>
 
 </resources>

@@ -14,7 +14,6 @@ public class Vcam {
     public int I_CUSTOMER_VCAM;
     public int ROD;
     public int ROS;
-    public int ON_AIR;
     public int RESTRICTION;
     public String EMAIL;
     public String VENDOR_NAME;
@@ -36,6 +35,9 @@ public class Vcam {
     public String VCAM_PROTOCOL;
     public String VCAM_AUDIO;
     public int ROD_START_TIME;
+    public int ON_AIR;
+    public int R_CHUNK_TIME;
+
 
     public Bitmap THUMBNAIL;
 

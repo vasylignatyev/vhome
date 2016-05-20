@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +41,9 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
     }
     public interface OnAdapterInteractionListener {
         void onArchButtonClick(View view);
+        void onConfigButtonClick(View view);
+        void onScheduleButtonClick(View view);
+        void onShareButtonClick(View view);
     }
 
     private OnAdapterInteractionListener listener;
@@ -61,17 +65,50 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         TextView tvVcamLocation = (TextView) convertView.findViewById(R.id.vcamLocation);
         tvVcamLocation.setText(vcam.VCAM_LOCATION);
         Button vacmArchiveButton = (Button) convertView.findViewById(R.id.vacmArchiveButton);
+        vacmArchiveButton.setTag(vcam.TOKEN);
 
         vacmArchiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("MyApp", "Button Click");
                 if (listener != null) {
                     listener.onArchButtonClick(v);
                 }
             }
         });
 
+        ImageButton vcamConfig = (ImageButton) convertView.findViewById(R.id.ibConfig);
+        vcamConfig.setTag(vcam.TOKEN);
+        vcamConfig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onConfigButtonClick(v);
+                }
+            }
+        });
+
+        ImageButton ibCalendar = (ImageButton) convertView.findViewById(R.id.ibCalendar);
+        ibCalendar.setTag(vcam.TOKEN);
+        ibCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onScheduleButtonClick(v);
+                }
+            }
+        });
+
+
+        ImageButton ibShare = (ImageButton) convertView.findViewById(R.id.ibShare);
+        ibShare.setTag(vcam.TOKEN);
+        ibShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onShareButtonClick(v);
+                }
+            }
+        });
         if(vcam.THUMBNAIL != null) {
             ImageView ivThumb = (ImageView)  convertView.findViewById(R.id.ivThumb);
             ivThumb.setImageBitmap(vcam.THUMBNAIL);
@@ -82,7 +119,6 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         }
 
         convertView.setTag(position);
-        vacmArchiveButton.setTag(vcam.TOKEN);
 
         return convertView;
     }
