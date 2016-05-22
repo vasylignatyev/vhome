@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:text="vignatyev@list.ru"
+        android:id="@+id/tvUserEmail"
+        android:paddingLeft="15dp"
+        android:textColor="#000"
+        android:textSize="17dp"
+        android:layout_marginTop="15dp" />
+
+         <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spAccessLevel"
+             android:layout_toEndOf="@+id/tvUserEmail"
+             android:layout_toStartOf="@+id/ibDelete"
+             android:entries="@array/access_level_items"/>
+   <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ibDelete"
+       android:src="@android:drawable/ic_menu_delete"
+       android:background="#FFFFFF"
+       android:layout_alignTop="@+id/tvUserEmail"
+       android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

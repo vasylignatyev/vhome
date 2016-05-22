@@ -65,6 +65,17 @@
     <string name="model">Модель</string>
     <string name="title_activity_schedule">ScheduleActivity</string>
     <string name="record_schedule">Расписание записи</string>
+    <string name="title_activity_share">ShareActivity</string>
 
+    <string name="access_level_online">ONLINE</string>
+    <string name="access_level_archive">ARCHIVE</string>
+    <string name="access_level_alerts">ALERTS"</string>
+    <string name="access_level_online_alerts">ONLINE + ALERTS</string>
 
+    <string-array name="access_level_items">
+        <item>@string/access_level_online</item>
+        <item>@string/access_level_archive</item>
+        <item>@string/access_level_alerts</item>
+        <item>@string/access_level_online_alerts</item>
+    </string-array>
 </resources>

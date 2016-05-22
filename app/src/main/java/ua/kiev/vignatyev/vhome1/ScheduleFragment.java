@@ -63,9 +63,6 @@ public class ScheduleFragment extends Fragment {
             mUserToken = getArguments().getString(USER_TOKEN, null);
             mSchedule = getArguments().getString(SCHEDULE, null);
         }
-
-
-
         llSchedule = (LinearLayout) v.findViewById(R.id.llSchedule);
 
         Button btnWorkingDays = (Button) v.findViewById(R.id.btnWorkingDays);

@@ -160,6 +160,11 @@ public class VcamFragment extends Fragment implements AbsListView.OnItemClickLis
 
     @Override
     public void onShareButtonClick(View view) {
+        String vcamToken = view.getTag().toString();
+        Intent intent = new Intent(mMainActivity, ShareVcamActivity.class);
+        intent.putExtra(ShareVcamActivity.VCAM_TOKEN, vcamToken);
+        intent.putExtra(ShareVcamActivity.USER_TOKEN, mUserToken);
+        startActivity(intent);
     }
 
     /**
