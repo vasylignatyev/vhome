@@ -1,6 +1,8 @@
 package ua.kiev.vignatyev.vhome1;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,7 +31,8 @@ import ua.kiev.vignatyev.vhome1.models.ShareUser;
  * A placeholder fragment containing a simple view.
  */
 public class ShareVcamFragment extends Fragment
-    implements ShareVcamUsersAdapter.OnAdapterInteractionListener {
+    implements ShareVcamUsersAdapter.OnAdapterInteractionListener,
+        DatePickerFragment.OnPickerInteractionListener {
 
     public static final String VCAM_TOKEN = "vcam_token";
     public static final String USER_TOKEN = "user_token";
@@ -40,6 +44,7 @@ public class ShareVcamFragment extends Fragment
     private ListView lvSharedUsers;
 
     private Context context;
+    private ShareVcamActivity mShareVcamActivity;
 
     private ShareVcamFragment mShareVcamFragment = this;
 
@@ -52,6 +57,9 @@ public class ShareVcamFragment extends Fragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if(context instanceof ShareVcamActivity) {
+            mShareVcamActivity = (ShareVcamActivity) context;
+        }
         this.context = context;
     }
 
@@ -90,6 +98,13 @@ public class ShareVcamFragment extends Fragment
     @Override
     public void onExpireBtnClick(View view, String type, String name) {
         Log.d("MyApp", "onExpireBtnClick type:" + type + " name:" + name);
+
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.setListener(this);
+        FragmentManager fm = getFragmentManager();
+        newFragment.show( fm, "test");
+        //newFragment.show( mShareVcamActivity.getFragmentManager(), "datePicker");
+        //mShareVcamActivity.getFragmentManager().beginTransaction().aadd(newFragment , "datePicker");//add(R.id.container, newFragment).commit();
     }
 
     @Override
@@ -113,6 +128,14 @@ public class ShareVcamFragment extends Fragment
 
         getVcamShareCustomersAsyncTask task = new getVcamShareCustomersAsyncTask(camToken);
         task.execute(rp);
+    }
+
+    @Override
+    public String onDateSet(DatePicker view, int year, int month, int day) {
+        Log.d("MyApp", mMysqlDateFormat.format(view.getCalendarView().getDate()));
+        String dateStr = Integer.toString(year)+"-"+Integer.toString(month)+"-"+Integer.toString(day) + " 23:59:59";
+        Log.d("MyApp",  "OnDateSetListener:" + dateStr );
+        return dateStr;
     }
 
 
@@ -182,8 +205,6 @@ public class ShareVcamFragment extends Fragment
                 Log.d("MyApp", "Exception: " + e.getMessage());
                 e.printStackTrace();
             }
-
-
         }
     }
 }

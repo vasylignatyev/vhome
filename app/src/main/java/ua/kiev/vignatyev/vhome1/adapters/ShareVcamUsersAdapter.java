@@ -26,7 +26,7 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareUser> {
     private Context context;
     private List<ShareUser> mShareUser;
 
-    private static final SimpleDateFormat mDisplayDate = new SimpleDateFormat("HH:mm dd/MM/yy");
+    private static final SimpleDateFormat mDisplayDate = new SimpleDateFormat("dd.MMM.yy");
 
     private OnAdapterInteractionListener mListener;
 
