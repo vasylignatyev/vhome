@@ -61,7 +61,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="41dp"
-        android:text="Добавить пользователя"
+        android:text="Добавить"
         android:id="@+id/btAddShareUser"
         android:textColor="#0076FF"
         android:background="#FFFFFF"

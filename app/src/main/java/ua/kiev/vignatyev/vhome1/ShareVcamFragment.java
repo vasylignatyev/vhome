@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import ua.kiev.vignatyev.vhome1.adapters.VcamShareUserAdapter;
+import ua.kiev.vignatyev.vhome1.adapters.ShareVcamUsersAdapter;
 import ua.kiev.vignatyev.vhome1.ajax.HTTPManager;
 import ua.kiev.vignatyev.vhome1.ajax.RequestPackage;
 import ua.kiev.vignatyev.vhome1.models.ShareUser;
@@ -28,7 +27,8 @@ import ua.kiev.vignatyev.vhome1.models.ShareUser;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ShareVcamFragment extends Fragment {
+public class ShareVcamFragment extends Fragment
+    implements ShareVcamUsersAdapter.OnAdapterInteractionListener {
 
     public static final String VCAM_TOKEN = "vcam_token";
     public static final String USER_TOKEN = "user_token";
@@ -40,6 +40,8 @@ public class ShareVcamFragment extends Fragment {
     private ListView lvSharedUsers;
 
     private Context context;
+
+    private ShareVcamFragment mShareVcamFragment = this;
 
     private static final SimpleDateFormat mMysqlDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -79,6 +81,26 @@ public class ShareVcamFragment extends Fragment {
 
         return v;
     }
+
+    /**
+     *
+     * Adapter interface methods
+     */
+
+    @Override
+    public void onExpireBtnClick(View view, String type, String name) {
+        Log.d("MyApp", "onExpireBtnClick type:" + type + " name:" + name);
+    }
+
+    @Override
+    public void onScheduleBtnClick(View view, String type, String name) {
+        Log.d("MyApp", "onScheduleBtnClick type:" + type + " name:" + name);
+    }
+
+    @Override
+    public void onDeleteBtnClick(View view, String type, String name) {
+        Log.d("MyApp", "onDeleteBtnClick type:" + type + " name:" + name);
+    }
     /**
      * REST Request for Hash String
      */
@@ -92,6 +114,7 @@ public class ShareVcamFragment extends Fragment {
         getVcamShareCustomersAsyncTask task = new getVcamShareCustomersAsyncTask(camToken);
         task.execute(rp);
     }
+
 
     public class getVcamShareCustomersAsyncTask extends AsyncTask<RequestPackage, Void, String> {
         private String camToken;
@@ -136,8 +159,8 @@ public class ShareVcamFragment extends Fragment {
                         }
                         if(shareUserObject.has("ISSUE_DATE")) {
                             String dateStr = shareUserObject.getString("ISSUE_DATE");
-                            if(dateStr != null) {
-                                shareUser.EXPIRATION = mMysqlDateFormat.parse(dateStr);
+                            if((dateStr != null) && (!dateStr.equals("null"))) {
+                                shareUser.ISSUE_DATE = mMysqlDateFormat.parse(dateStr);
                             }
                         }
                         if(shareUserObject.has("NAME")) {
@@ -149,13 +172,13 @@ public class ShareVcamFragment extends Fragment {
                         shareUserArrayList.add(shareUser);
                     }
                     Log.d("MyApp", "shareUserArrayList size: " + shareUserArrayList.size());
-                    VcamShareUserAdapter vcamShareUserAdapter = new VcamShareUserAdapter(context, R.layout.item_share_vcam, shareUserArrayList);
-                    lvSharedUsers.setAdapter(vcamShareUserAdapter);
+                    ShareVcamUsersAdapter shareVcamUsersAdapter = new ShareVcamUsersAdapter(getActivity(), R.layout.item_share_vcam, shareUserArrayList);
+                    shareVcamUsersAdapter.setOnAdapterInteractionListener(mShareVcamFragment);
+                    if(lvSharedUsers != null) {
+                        lvSharedUsers.setAdapter(shareVcamUsersAdapter);
+                    }
                 }
-            } catch (JSONException e) {
-                Log.d("MyApp", "Exception: " + e.getMessage());
-                e.printStackTrace();
-            } catch (ParseException e) {
+            } catch (JSONException | ParseException e) {
                 Log.d("MyApp", "Exception: " + e.getMessage());
                 e.printStackTrace();
             }

@@ -7,8 +7,8 @@ import java.util.Date;
  */
 public class ShareUser {
     public int RESTRICTION;
-    public Date EXPIRATION;
-    public Date ISSUE_DATE;
+    public Date EXPIRATION = null;
+    public Date ISSUE_DATE = null;
     public String NAME;
     public String TYPE;
 }

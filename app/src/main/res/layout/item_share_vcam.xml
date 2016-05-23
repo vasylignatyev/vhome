@@ -1,35 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="42dp"
-        android:text="vignatyev@list.ru"
-        android:id="@+id/tvUserEmail"
-        android:paddingLeft="15dp"
-        android:textColor="#000"
-        android:textSize="17dp"
-        android:layout_marginTop="15dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20px"
+        android:background="#EFEFF4" />
 
-         <Spinner
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spAccessLevel"
-             android:layout_toEndOf="@+id/tvUserEmail"
-             android:layout_toStartOf="@+id/ibDelete"
-             android:entries="@array/access_level_items"/>
-   <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ibDelete"
-       android:src="@android:drawable/ic_menu_delete"
-       android:background="#FFFFFF"
-       android:layout_alignTop="@+id/tvUserEmail"
-       android:layout_alignParentEnd="true" />
+            android:text="Пользователь"
+            android:id="@+id/tvType"
+            android:textColor="#000"
+            android:textSize="17dp"
+            android:textStyle="bold" />
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="vignatyev@list.ru"
+            android:id="@+id/tvUserEmail"
+            android:textColor="#000"
+            android:textSize="17dp"
+            android:layout_marginLeft="20dp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#EFEFF4" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="3">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Доступ до: "
+                    android:paddingLeft="10dp"
+                    android:textStyle="normal|bold"
+                    android:textSize="17dp"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="неограничен"
+                    android:paddingLeft="10dp"
+                    android:textStyle="normal|italic"
+                    android:textSize="17dp"
+                    android:textColor="#000"
+                    android:id="@+id/tvExpirationDate" />
+
+            </LinearLayout>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ОНЛАЙН"
+                android:id="@+id/cbOnline"
+                android:textColor="#000"
+                android:checked="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="АРХИВ"
+                android:id="@+id/cbArchive"
+                android:textColor="#000"
+                android:checked="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="УВЕДОМЛЕНИЯ"
+                android:id="@+id/cbAlerts"
+                android:textColor="#000"
+                android:checked="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:id="@+id/llImageButton">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ibExpiration"
+                android:src="@android:drawable/ic_menu_recent_history"
+                android:background="#FFFFFF"
+                android:contentDescription="Окончание" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ibSchedule"
+                android:src="@android:drawable/ic_menu_today"
+                android:background="#FFFFFF"
+                android:contentDescription="Установить расписание"
+                android:layout_marginTop="6dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ibDelete"
+                android:src="@android:drawable/ic_menu_delete"
+                android:background="#FFFFFF"
+                android:contentDescription="Удалить"
+                android:layout_marginTop="6dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
