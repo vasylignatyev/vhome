@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import ua.kiev.vignatyev.vhome1.DatePickerFragment;
@@ -26,13 +27,16 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareVcamUser>
 
     private Context mContext;
     private final List<ShareVcamUser> mShareVcamUserList;
+    private final List<ShareVcamUser> mDeletedShareVcamUserList;
 
     private static final SimpleDateFormat mDisplayDate = new SimpleDateFormat("dd.MMM.yy");
 
-    public ShareVcamUsersAdapter(Context context, int resource, final List<ShareVcamUser> objects) {
+    public ShareVcamUsersAdapter(Context context, int resource, final List<ShareVcamUser> objects,
+                                 final List<ShareVcamUser> deletedObjects) {
         super(context, resource, objects);
         mContext = context;
         mShareVcamUserList = objects;
+        mDeletedShareVcamUserList = deletedObjects;
     }
 
     @Override
@@ -74,7 +78,7 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareVcamUser>
                 DatePickerFragment datePickerFragment = new DatePickerFragment();
                 Bundle arguments = new Bundle();
                 final String currentExpireDate = tvExpirationDate.getText().toString();
-                if( (currentExpireDate !=null) && (currentExpireDate.length()>0)) {
+                if(currentExpireDate.length()>0) {
                     try {
                         arguments.putLong( DatePickerFragment.TIME_PARAM, mDisplayDate.parse(currentExpireDate).getTime());
                     } catch (ParseException e) {
@@ -97,6 +101,7 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareVcamUser>
             @Override
             public void onClick(View v) {
                 mShareVcamUserList.remove(shareVcamUser);
+                mDeletedShareVcamUserList.add(shareVcamUser);
                 notifyDataSetChanged();
              }
         });

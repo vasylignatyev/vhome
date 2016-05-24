@@ -26,6 +26,8 @@ import ua.kiev.vignatyev.vhome1.ajax.HTTPManager;
 import ua.kiev.vignatyev.vhome1.ajax.RequestPackage;
 import ua.kiev.vignatyev.vhome1.models.ShareVcamUser;
 
+import static android.R.id.list;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -51,6 +53,7 @@ public class ShareVcamFragment extends Fragment {
     private ShareVcamActivity mShareVcamActivity;
 
     private ArrayList<ShareVcamUser> mShareVcamUserArrayList = new ArrayList<>();
+    private ArrayList<ShareVcamUser> mDeletedShareVcamUserArrayList = new ArrayList<>();
 
     private ShareVcamFragment mShareVcamFragment = this;
 
@@ -108,7 +111,9 @@ public class ShareVcamFragment extends Fragment {
     }
 
     private void  saveAccess(){
-
+        for (ShareVcamUser object: mShareVcamUserArrayList) {
+            System.out.println(object);
+        }
     }
 
     /**
@@ -205,7 +210,8 @@ public class ShareVcamFragment extends Fragment {
                         mShareVcamUserArrayList.add(shareUser);
                     }
                     Log.d("MyApp", "mShareVcamUserArrayList size: " + mShareVcamUserArrayList.size());
-                    ShareVcamUsersAdapter shareVcamUsersAdapter = new ShareVcamUsersAdapter(getActivity(), R.layout.item_share_vcam, mShareVcamUserArrayList);
+                    ShareVcamUsersAdapter shareVcamUsersAdapter =
+                            new ShareVcamUsersAdapter(getActivity(), R.layout.item_share_vcam, mShareVcamUserArrayList, mDeletedShareVcamUserArrayList);
                     if(lvSharedUsers != null) {
                         lvSharedUsers.setAdapter(shareVcamUsersAdapter);
                     }
