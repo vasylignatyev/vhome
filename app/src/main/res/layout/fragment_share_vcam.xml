@@ -51,37 +51,67 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="#EFEFF4"
-        android:baselineAligned="true"
-        android:id="@+id/linearLayout2"
-        android:layout_above="@+id/btAddShareUser"
-        android:layout_alignEnd="@+id/textView3"></LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvOwnerEmail"
+        android:layout_above="@+id/linearLayout2">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="41dp"
-        android:text="Добавить"
-        android:id="@+id/btAddShareUser"
-        android:textColor="#0076FF"
-        android:background="#FFFFFF"
-        android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/textView3" />
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lvSharedUsers"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/linearLayout3"
+            android:layout_below="@+id/linearLayout2" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tvOwnerEmail"
-        android:layout_above="@+id/linearLayout2"
-        android:layout_alignEnd="@+id/textView3">
+        android:layout_height="20dp"
+        android:background="#EFEFF4"
+        android:baselineAligned="true"
+        android:id="@+id/linearLayout2"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/linearLayout3">
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lvSharedUsers" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout3"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Отменить"
+            android:id="@+id/btCancel"
+            android:layout_weight="1"
+            android:textColor="#0076FF"
+            android:background="#FFFFFF" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Добавить"
+            android:id="@+id/btAddShareUser"
+            android:layout_weight="1"
+            android:textColor="#0076FF"
+            android:background="#FFFFFF" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Сохранить"
+            android:id="@+id/btSaveShareUser"
+            android:layout_weight="1"
+            android:textColor="#0076FF"
+            android:background="#FFFFFF" />
+
     </LinearLayout>
 
 </RelativeLayout>

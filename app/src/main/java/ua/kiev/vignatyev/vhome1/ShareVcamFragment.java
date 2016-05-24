@@ -1,8 +1,6 @@
 package ua.kiev.vignatyev.vhome1;
 
-import android.app.DialogFragment;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,7 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,18 +19,17 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import ua.kiev.vignatyev.vhome1.adapters.ShareVcamUsersAdapter;
 import ua.kiev.vignatyev.vhome1.ajax.HTTPManager;
 import ua.kiev.vignatyev.vhome1.ajax.RequestPackage;
-import ua.kiev.vignatyev.vhome1.models.ShareUser;
+import ua.kiev.vignatyev.vhome1.models.ShareVcamUser;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ShareVcamFragment extends Fragment
-    implements ShareVcamUsersAdapter.OnAdapterInteractionListener,
-        DatePickerFragment.OnPickerInteractionListener {
+public class ShareVcamFragment extends Fragment {
 
     public static final String VCAM_TOKEN = "vcam_token";
     public static final String USER_TOKEN = "user_token";
@@ -40,11 +37,20 @@ public class ShareVcamFragment extends Fragment
     private String mVcamToken;
     private String mUserToken;
 
+    //********* owner info
+    private int mICustomer;
+    private String mEMail;
+    //********* VCam info
+    private int mICustomerVcam;
+    private String mVcamName;
+    //*** VIEWS
     private TextView tvOwnerEmail;
     private ListView lvSharedUsers;
 
     private Context context;
     private ShareVcamActivity mShareVcamActivity;
+
+    private ArrayList<ShareVcamUser> mShareVcamUserArrayList = new ArrayList<>();
 
     private ShareVcamFragment mShareVcamFragment = this;
 
@@ -85,43 +91,37 @@ public class ShareVcamFragment extends Fragment
         tvOwnerEmail = (TextView) v.findViewById(R.id.tvOwnerEmail);
         lvSharedUsers = (ListView) v.findViewById(R.id.lvSharedUsers);
 
+        Button btSaveShareUser = (Button) v.findViewById(R.id.btSaveShareUser);
+        btSaveShareUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("MyApp", "Click on  btSaveShareUser: " + Arrays.asList(mShareVcamUserArrayList.toArray()));
+                saveAccess();
+
+            }
+        });
+
+
         getVcamShareCustomers(mVcamToken, mUserToken);
 
         return v;
     }
 
+    private void  saveAccess(){
+
+    }
+
     /**
-     *
      * Adapter interface methods
      */
 
-    @Override
-    public void onExpireBtnClick(View view, ShareUser shareUser) {
-        Log.d("MyApp", "onExpireBtnClick type:" + shareUser.TYPE + " name:" + shareUser.NAME);
-
-        DatePickerFragment newFragment = new DatePickerFragment();
-        newFragment.setListener(this);
-        FragmentManager fm = getFragmentManager();
-        newFragment.show( fm, "test");
-    }
-
-
-    @Override
-    public void onScheduleBtnClick(View view, ShareUser shareUser) {
-        Log.d("MyApp", "onScheduleBtnClick type:" + shareUser.TYPE + " name:" + shareUser.NAME);
-    }
-
-    @Override
-    public void onDeleteBtnClick(View view, ShareUser shareUser) {
-        Log.d("MyApp", "onDeleteBtnClick type:" + shareUser.TYPE + " name:" + shareUser.NAME);
-    }
     /**
      * REST Request for Hash String
      */
     private void getVcamShareCustomers(String camToken, String userToken) {
         RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
         rp.setMethod("GET");
-        rp.setParam("functionName", "getVcamShareCustomers");
+        rp.setParam("functionName", "getShareVcamCustomers");
         rp.setParam("cam_token", camToken);
         rp.setParam("user_token", userToken);
 
@@ -129,13 +129,6 @@ public class ShareVcamFragment extends Fragment
         task.execute(rp);
     }
 
-    @Override
-    public String onDateSet(DatePicker view, int year, int month, int day) {
-        Log.d("MyApp", mMysqlDateFormat.format(view.getCalendarView().getDate()));
-        String dateStr = Integer.toString(year)+"-"+Integer.toString(month)+"-"+Integer.toString(day) + " 23:59:59";
-        Log.d("MyApp",  "OnDateSetListener:" + dateStr );
-        return dateStr;
-    }
 
 
     public class getVcamShareCustomersAsyncTask extends AsyncTask<RequestPackage, Void, String> {
@@ -149,6 +142,7 @@ public class ShareVcamFragment extends Fragment
         protected String doInBackground(RequestPackage... params) {
             return HTTPManager.getData(params[0]);
         }
+
         @Override
         protected void onPostExecute(String s) {
             Log.d("MyApp", "getVcamShareCustomers:" + s);
@@ -158,20 +152,37 @@ public class ShareVcamFragment extends Fragment
                 if(jsonObject.has("owner")){
                     JSONObject owner = jsonObject.getJSONObject("owner");
                     if(owner.has("EMAIL")) {
-                        tvOwnerEmail.setText(owner.getString("EMAIL"));
+                        mEMail = owner.getString("EMAIL");
+                        tvOwnerEmail.setText(mEMail);
+                    }
+                    if(owner.has("NAME")) {
+                        mVcamName = owner.getString("NAME");
+                    }
+                    if(owner.has("I_CUSTOMER")) {
+                        mICustomer = owner.getInt("I_CUSTOMER");
+                    }
+                    if(owner.has("I_CUSTOMER_VCAM")) {
+                        mICustomerVcam = owner.getInt("I_CUSTOMER_VCAM");
                     }
                 }
                 if(jsonObject.has("share_list")) {
                     Log.d("MyApp", "has share_list");
-                    ArrayList<ShareUser> shareUserArrayList = new ArrayList<>();
+
+                    mShareVcamUserArrayList = new ArrayList<>();
 
                     JSONArray shareUserArray = jsonObject.getJSONArray("share_list");
                     for(int i = 0 ; i < shareUserArray.length() ; i++ ) {
-                        ShareUser shareUser = new ShareUser();
+                        ShareVcamUser shareUser = new ShareVcamUser();
 
                         JSONObject shareUserObject = shareUserArray.getJSONObject(i);
                         if(shareUserObject.has("RESTRICTION")) {
                             shareUser.RESTRICTION = shareUserObject.getInt("RESTRICTION");
+                        }
+                        if(shareUserObject.has("SCHEDULE")) {
+                            String str = shareUserObject.getString("SCHEDULE");
+                            if((str != null) && (!str.equals("null"))) {
+                                shareUser.SCHEDULE = str;
+                            }
                         }
                         if(shareUserObject.has("EXPIRATION")) {
                             String dateStr = shareUserObject.getString("EXPIRATION");
@@ -191,11 +202,10 @@ public class ShareVcamFragment extends Fragment
                         if(shareUserObject.has("TYPE")) {
                             shareUser.TYPE = shareUserObject.getString("TYPE");
                         }
-                        shareUserArrayList.add(shareUser);
+                        mShareVcamUserArrayList.add(shareUser);
                     }
-                    Log.d("MyApp", "shareUserArrayList size: " + shareUserArrayList.size());
-                    ShareVcamUsersAdapter shareVcamUsersAdapter = new ShareVcamUsersAdapter(getActivity(), R.layout.item_share_vcam, shareUserArrayList);
-                    shareVcamUsersAdapter.setOnAdapterInteractionListener(mShareVcamFragment);
+                    Log.d("MyApp", "mShareVcamUserArrayList size: " + mShareVcamUserArrayList.size());
+                    ShareVcamUsersAdapter shareVcamUsersAdapter = new ShareVcamUsersAdapter(getActivity(), R.layout.item_share_vcam, mShareVcamUserArrayList);
                     if(lvSharedUsers != null) {
                         lvSharedUsers.setAdapter(shareVcamUsersAdapter);
                     }

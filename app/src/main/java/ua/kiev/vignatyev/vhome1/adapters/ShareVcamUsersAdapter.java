@@ -2,67 +2,67 @@ package ua.kiev.vignatyev.vhome1.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import ua.kiev.vignatyev.vhome1.DatePickerFragment;
 import ua.kiev.vignatyev.vhome1.R;
-import ua.kiev.vignatyev.vhome1.models.ShareUser;
+import ua.kiev.vignatyev.vhome1.models.ShareVcamUser;
 
-public class ShareVcamUsersAdapter extends ArrayAdapter <ShareUser> {
+public class ShareVcamUsersAdapter extends ArrayAdapter <ShareVcamUser>
+        implements DatePickerFragment.OnPickerInteractionListener {
 
-    private Context context;
-    private List<ShareUser> mShareUser;
+    private Context mContext;
+    private final List<ShareVcamUser> mShareVcamUserList;
 
     private static final SimpleDateFormat mDisplayDate = new SimpleDateFormat("dd.MMM.yy");
 
-    private OnAdapterInteractionListener mListener;
-
-    public ShareVcamUsersAdapter(Context context, int resource, List<ShareUser> objects) {
+    public ShareVcamUsersAdapter(Context context, int resource, final List<ShareVcamUser> objects) {
         super(context, resource, objects);
-        this.context = context;
-        this.mShareUser = objects;
+        mContext = context;
+        mShareVcamUserList = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
             LayoutInflater inflater =
-                    (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                    (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.item_share_vcam, parent, false);
         }
-        final ShareUser shareUser = mShareUser.get(position);
+        final ShareVcamUser shareVcamUser = mShareVcamUserList.get(position);
 
 
         TextView tvUserEmail = (TextView) convertView.findViewById(R.id.tvUserEmail);
-        tvUserEmail.setText(shareUser.NAME);
+        tvUserEmail.setText(shareVcamUser.NAME);
 
         TextView tvType = (TextView) convertView.findViewById(R.id.tvType);
-        tvType.setText( shareUser.TYPE.equalsIgnoreCase("customer") ? "Пользователь" : "Группа");
+        tvType.setText( shareVcamUser.TYPE.equalsIgnoreCase("customer") ? "Пользователь" : "Группа");
 
         final TextView tvExpirationDate = (TextView) convertView.findViewById(R.id.tvExpirationDate);
-        tvExpirationDate.setText((shareUser.EXPIRATION==null)?"не ограничен":mDisplayDate.format(shareUser.EXPIRATION));
+        tvExpirationDate.setText((shareVcamUser.EXPIRATION==null)?"не ограничен":mDisplayDate.format(shareVcamUser.EXPIRATION));
 
         CheckBox cbOnline = (CheckBox) convertView.findViewById(R.id.cbOnline);
         CheckBox cbArchive = (CheckBox) convertView.findViewById(R.id.cbArchive);
         CheckBox cbAlerts = (CheckBox) convertView.findViewById(R.id.cbAlerts);
-        cbOnline.setChecked((shareUser.RESTRICTION & 1) != 0);
-        cbArchive.setChecked((shareUser.RESTRICTION & 2) != 0);
-        cbAlerts.setChecked((shareUser.RESTRICTION & 4) != 0);
+        cbOnline.setChecked((shareVcamUser.RESTRICTION & 1) != 0);
+        cbArchive.setChecked((shareVcamUser.RESTRICTION & 2) != 0);
+        cbAlerts.setChecked((shareVcamUser.RESTRICTION & 4) != 0);
 
         LinearLayout llImageButton = (LinearLayout) convertView.findViewById(R.id.llImageButton);
-        llImageButton.setTag(shareUser.NAME);
+        llImageButton.setTag(shareVcamUser.NAME);
 
         ImageButton ibExpiration = (ImageButton) convertView.findViewById(R.id.ibExpiration);
         ImageButton ibSchedule = (ImageButton) convertView.findViewById(R.id.ibSchedule);
@@ -71,42 +71,41 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareUser> {
         ibExpiration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener != null)
-                    mListener.onExpireBtnClick(v, shareUser);
+                DatePickerFragment datePickerFragment = new DatePickerFragment();
+                Bundle arguments = new Bundle();
+                final String currentExpireDate = tvExpirationDate.getText().toString();
+                if( (currentExpireDate !=null) && (currentExpireDate.length()>0)) {
+                    try {
+                        arguments.putLong( DatePickerFragment.TIME_PARAM, mDisplayDate.parse(currentExpireDate).getTime());
+                    } catch (ParseException e) {
+                        arguments.putLong( DatePickerFragment.TIME_PARAM, 0);
+                    }
+                }
+                datePickerFragment.setArguments(arguments);
+                datePickerFragment.setListener( ShareVcamUsersAdapter.this );
+                datePickerFragment.setShareVcamUser(shareVcamUser);
+                android.app.FragmentManager fm = ((Activity) mContext).getFragmentManager();
+                datePickerFragment.show( fm, "EXPIRATION_DATE");
             }
         });
         ibSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
-                DatePickerFragment newFragment = new DatePickerFragment();
-                newFragment.setTextView(tvExpirationDate);
-                android.app.FragmentManager fm;
-
-                fm = ((Activity) context).getFragmentManager();
-                newFragment.show( fm, "test");
-
-                if(mListener != null)
-                    mListener.onScheduleBtnClick(v, shareUser);
-            }
+           }
         });
         ibDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener != null)
-                    mListener.onDeleteBtnClick(v, shareUser);
-            }
+                mShareVcamUserList.remove(shareVcamUser);
+                notifyDataSetChanged();
+             }
         });
 
         return convertView;
     }
-
-    public interface OnAdapterInteractionListener {
-        void onExpireBtnClick(View view, ShareUser shareUser);
-        void onScheduleBtnClick(View view, ShareUser shareUser);
-        void onDeleteBtnClick(View view, ShareUser shareUser);
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        notifyDataSetChanged();
+        return ;
     }
-    public void setOnAdapterInteractionListener(OnAdapterInteractionListener listener) {
-        mListener = listener;
-    }
-
 }
