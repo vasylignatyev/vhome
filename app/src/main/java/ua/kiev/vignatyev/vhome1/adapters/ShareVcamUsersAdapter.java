@@ -2,6 +2,7 @@ package ua.kiev.vignatyev.vhome1.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,11 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
+import ua.kiev.vignatyev.vhome1.DatePickerFragment;
 import ua.kiev.vignatyev.vhome1.R;
 import ua.kiev.vignatyev.vhome1.models.ShareUser;
-
-/**
- * Created by vignatyev on 22.05.2016.
- */
 
 public class ShareVcamUsersAdapter extends ArrayAdapter <ShareUser> {
 
@@ -52,7 +51,7 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareUser> {
         TextView tvType = (TextView) convertView.findViewById(R.id.tvType);
         tvType.setText( shareUser.TYPE.equalsIgnoreCase("customer") ? "Пользователь" : "Группа");
 
-        TextView tvExpirationDate = (TextView) convertView.findViewById(R.id.tvExpirationDate);
+        final TextView tvExpirationDate = (TextView) convertView.findViewById(R.id.tvExpirationDate);
         tvExpirationDate.setText((shareUser.EXPIRATION==null)?"не ограничен":mDisplayDate.format(shareUser.EXPIRATION));
 
         CheckBox cbOnline = (CheckBox) convertView.findViewById(R.id.cbOnline);
@@ -73,21 +72,28 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareUser> {
             @Override
             public void onClick(View v) {
                 if(mListener != null)
-                    mListener.onExpireBtnClick(v, shareUser.TYPE, shareUser.NAME);
+                    mListener.onExpireBtnClick(v, shareUser);
             }
         });
         ibSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
+                DatePickerFragment newFragment = new DatePickerFragment();
+                newFragment.setTextView(tvExpirationDate);
+                android.app.FragmentManager fm;
+
+                fm = ((Activity) context).getFragmentManager();
+                newFragment.show( fm, "test");
+
                 if(mListener != null)
-                    mListener.onScheduleBtnClick(v, shareUser.TYPE, shareUser.NAME);
+                    mListener.onScheduleBtnClick(v, shareUser);
             }
         });
         ibDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mListener != null)
-                    mListener.onDeleteBtnClick(v, shareUser.TYPE, shareUser.NAME);
+                    mListener.onDeleteBtnClick(v, shareUser);
             }
         });
 
@@ -95,9 +101,9 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareUser> {
     }
 
     public interface OnAdapterInteractionListener {
-        void onExpireBtnClick(View view, String type, String name);
-        void onScheduleBtnClick(View view, String type, String name);
-        void onDeleteBtnClick(View view, String type, String name);
+        void onExpireBtnClick(View view, ShareUser shareUser);
+        void onScheduleBtnClick(View view, ShareUser shareUser);
+        void onDeleteBtnClick(View view, ShareUser shareUser);
     }
     public void setOnAdapterInteractionListener(OnAdapterInteractionListener listener) {
         mListener = listener;

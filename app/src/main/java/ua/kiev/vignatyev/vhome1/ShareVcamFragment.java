@@ -96,25 +96,24 @@ public class ShareVcamFragment extends Fragment
      */
 
     @Override
-    public void onExpireBtnClick(View view, String type, String name) {
-        Log.d("MyApp", "onExpireBtnClick type:" + type + " name:" + name);
+    public void onExpireBtnClick(View view, ShareUser shareUser) {
+        Log.d("MyApp", "onExpireBtnClick type:" + shareUser.TYPE + " name:" + shareUser.NAME);
 
         DatePickerFragment newFragment = new DatePickerFragment();
         newFragment.setListener(this);
         FragmentManager fm = getFragmentManager();
         newFragment.show( fm, "test");
-        //newFragment.show( mShareVcamActivity.getFragmentManager(), "datePicker");
-        //mShareVcamActivity.getFragmentManager().beginTransaction().aadd(newFragment , "datePicker");//add(R.id.container, newFragment).commit();
+    }
+
+
+    @Override
+    public void onScheduleBtnClick(View view, ShareUser shareUser) {
+        Log.d("MyApp", "onScheduleBtnClick type:" + shareUser.TYPE + " name:" + shareUser.NAME);
     }
 
     @Override
-    public void onScheduleBtnClick(View view, String type, String name) {
-        Log.d("MyApp", "onScheduleBtnClick type:" + type + " name:" + name);
-    }
-
-    @Override
-    public void onDeleteBtnClick(View view, String type, String name) {
-        Log.d("MyApp", "onDeleteBtnClick type:" + type + " name:" + name);
+    public void onDeleteBtnClick(View view, ShareUser shareUser) {
+        Log.d("MyApp", "onDeleteBtnClick type:" + shareUser.TYPE + " name:" + shareUser.NAME);
     }
     /**
      * REST Request for Hash String
