@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -25,11 +26,11 @@ import ua.kiev.vignatyev.vhome1.models.ShareVcamUser;
 public class ShareVcamUsersAdapter extends ArrayAdapter <ShareVcamUser>
         implements DatePickerFragment.OnPickerInteractionListener {
 
+    private static final SimpleDateFormat mDisplayDate = new SimpleDateFormat("dd.MMM.yy");
+
     private Context mContext;
     private final List<ShareVcamUser> mShareVcamUserList;
     private final List<ShareVcamUser> mDeletedShareVcamUserList;
-
-    private static final SimpleDateFormat mDisplayDate = new SimpleDateFormat("dd.MMM.yy");
 
     public ShareVcamUsersAdapter(Context context, int resource, final List<ShareVcamUser> objects,
                                  final List<ShareVcamUser> deletedObjects) {
@@ -64,6 +65,36 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareVcamUser>
         cbOnline.setChecked((shareVcamUser.RESTRICTION & 1) != 0);
         cbArchive.setChecked((shareVcamUser.RESTRICTION & 2) != 0);
         cbAlerts.setChecked((shareVcamUser.RESTRICTION & 4) != 0);
+        cbOnline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    shareVcamUser.RESTRICTION |=  1;
+                } else {
+                    shareVcamUser.RESTRICTION &=  (~1);
+                }
+            }
+        });
+        cbArchive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    shareVcamUser.RESTRICTION |=  2;
+                } else {
+                    shareVcamUser.RESTRICTION &=  (~2);
+                }
+            }
+        });
+        cbAlerts.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    shareVcamUser.RESTRICTION |=  4;
+                } else {
+                    shareVcamUser.RESTRICTION &=  (~4);
+                }
+            }
+        });
 
         LinearLayout llImageButton = (LinearLayout) convertView.findViewById(R.id.llImageButton);
         llImageButton.setTag(shareVcamUser.NAME);

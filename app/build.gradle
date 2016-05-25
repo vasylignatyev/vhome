@@ -9,6 +9,10 @@ android {
         applicationId "ua.kiev.vignatyev.vhome1"
         minSdkVersion 17
         targetSdkVersion 23
+
+        // Enabling multidex support.
+        // multiDexEnabled true
+
         versionCode 108
         versionName "1.08"
     }
@@ -22,12 +26,12 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:support-v4:23.2.1'
-    compile 'com.google.android.gms:play-services:8.4.0'
-    compile 'com.mcxiaoke.volley:library-aar:1.0.0'
-    compile 'com.google.android.gms:play-services-ads:8.4.0'
-    compile 'com.google.android.gms:play-services-identity:8.4.0'
-    compile 'com.google.android.gms:play-services-gcm:8.4.0'
-    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.google.android.gms:play-services:9.0.0'
+    compile 'com.google.android.gms:play-services-identity:9.0.0'
+    compile 'com.google.android.gms:play-services-gcm:9.0.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.volley:volley:1.0.0'
+    compile project(":volley")
 }

@@ -26,9 +26,6 @@ import ua.kiev.vignatyev.vhome1.PinchActivity;
 import ua.kiev.vignatyev.vhome1.R;
 import ua.kiev.vignatyev.vhome1.models.MDImage;
 
-/**
- * Created by vignatyev on 10.09.2015.
- */
 public class ImagePagerAdapter extends PagerAdapter {
     /*
      * VARS

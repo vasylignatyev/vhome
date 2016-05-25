@@ -124,6 +124,7 @@ public class VcamListParser {
                 return vcamList;
             } catch (JSONException ex) {
                 ex.printStackTrace();
+                Log.d("MyApp", "VcamListParser error: " + ex.getMessage());
                 return null;
             }
         }

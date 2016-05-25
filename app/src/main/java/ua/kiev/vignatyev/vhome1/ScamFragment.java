@@ -181,13 +181,13 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
         }
         @Override
         protected void onPostExecute(String s) {
-            if(s == null)
+            if(s == null) {
+                mMainActivity.shitHappens();
                 return;
+            }
             mVcamList = VcamListParser.parseFeed(s);
             if(mVcamList != null ) {
                 updateDisplay();
-            } else {
-                mMainActivity.shitHappens();
             }
             pd.hide();
         }

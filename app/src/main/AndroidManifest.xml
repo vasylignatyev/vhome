@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="ua.kiev.vignatyev.vhome1">
 
     <uses-sdk
@@ -63,7 +64,7 @@
             android:label="@string/title_activity_schedule"
             android:theme="@style/Theme.AppCompat"></activity>
         <activity
-            android:name=".ShareVcamActivity"
+            android:name=".ShareVcamUserActivity"
             android:label="@string/title_activity_share">
 
         </activity>

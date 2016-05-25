@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 
-public class ShareVcamActivity extends Activity {
+public class ShareVcamUserActivity extends Activity {
 
     public static final String USER_TOKEN = "user_token";
     public static final String VCAM_TOKEN = "vcam_token";
 
-    private  ShareVcamFragment mShareShareVcamFragment;
+    private ShareVcamUserFragment mShareShareVcamFragment;
 
     private String mVcamToken;
     private String mUserToken;
@@ -23,7 +23,7 @@ public class ShareVcamActivity extends Activity {
         mVcamToken = intent.getStringExtra(VCAM_TOKEN);
         mUserToken = intent.getStringExtra(USER_TOKEN);
 
-        mShareShareVcamFragment = ShareVcamFragment.newInstance(mVcamToken, mUserToken);
+        mShareShareVcamFragment = ShareVcamUserFragment.newInstance(mVcamToken, mUserToken);
         getFragmentManager().beginTransaction().add(R.id.container, mShareShareVcamFragment).commit();
 
     }
