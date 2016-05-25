@@ -111,11 +111,11 @@ public class ShareVcamUserFragment extends Fragment {
         btAddShareUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
+
                 android.app.FragmentManager fm = getFragmentManager();
                 AddShareVcamUserDialog addShareVcamUserDialog = new AddShareVcamUserDialog();
                 addShareVcamUserDialog.show(fm, "TEST");
-                */
+
             }
         });
         getVcamShareCustomers(mVcamToken, mUserToken);
