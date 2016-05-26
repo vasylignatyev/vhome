@@ -4,11 +4,25 @@
     android:layout_height="match_parent"
     tools:context="ua.kiev.vignatyev.vhome1.AddShareVcamUserDialog">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="пользователь/группа"
+            android:id="@+id/autoCompleteTextView" />
+
+
+        <Button
+            android:text="Добавить"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button" />
+    </LinearLayout>
+
 
 
 </FrameLayout>

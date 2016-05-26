@@ -63,7 +63,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="неограничен"
+                    android:hint="неограничен"
                     android:paddingLeft="10dp"
                     android:textStyle="normal|italic"
                     android:textSize="17dp"
