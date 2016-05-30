@@ -58,14 +58,16 @@
             android:label="@string/title_activity_motion_detect" />
         <activity
             android:name=".VcamSetupActivity"
-            android:label="@string/title_activity_vcam_setup" />
+            android:label="@string/title_activity_vcam_setup"
+            android:theme="@style/Theme.AppCompat"/>
         <activity
             android:name=".ScheduleActivity"
             android:label="@string/title_activity_schedule"
-            android:theme="@style/Theme.AppCompat"></activity>
+            android:theme="@style/Theme.AppCompat"/>
         <activity
             android:name=".ShareVcamUserActivity"
-            android:label="@string/title_activity_share">
+            android:label="@string/title_activity_share"
+            android:theme="@style/Theme.AppCompat">
 
         </activity>
         <!-- [START gcm_receiver] -->

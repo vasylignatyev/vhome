@@ -146,6 +146,7 @@ public class VcamFragment extends Fragment implements AbsListView.OnItemClickLis
         String vcamToken = view.getTag().toString();
         Intent intent = new Intent(mMainActivity, VcamSetupActivity.class);
         intent.putExtra(VcamSetupActivity.VCAM_TOKEN, vcamToken);
+        intent.putExtra(VcamSetupActivity.USER_TOKEN, mUserToken);
         startActivity(intent);
     }
 

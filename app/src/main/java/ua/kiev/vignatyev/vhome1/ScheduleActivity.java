@@ -33,10 +33,6 @@ public class ScheduleActivity extends Activity {
         mUserToken = intent.getStringExtra(USER_TOKEN);
 
         getCustomerVcamSchedule(mVcamToken);
-/*
-        mScheduleFragment = ScheduleFragment.newInstance(mVcamToken, mUserToken);
-        getFragmentManager().beginTransaction().add(R.id.container, mScheduleFragment).commit();
-*/
     }
 
     @Override
@@ -84,6 +80,7 @@ public class ScheduleActivity extends Activity {
         protected String doInBackground(RequestPackage... params) {
             return HTTPManager.getData(params[0]);
         }
+
         @Override
         protected void onPostExecute(String schedule) {
             Log.d("MyApp", "getCustomerVcamSchedule:" + schedule);
@@ -119,7 +116,6 @@ public class ScheduleActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             Log.d("MyApp", "updateCustomerVcamScheduleAsyncTask:" + s);
-
         }
     }
 }

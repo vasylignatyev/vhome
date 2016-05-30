@@ -29,7 +29,17 @@ import ua.kiev.vignatyev.vhome1.parsers.VcamParser;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class VcamSetupFragment extends Fragment {
+public class VcamSetupFragment extends Fragment
+    implements VcamSetupActivity.OnActivityInteraction {
+
+    public static final String VCAM_TOKEN = "vcam_token";
+    public static final String USER_TOKEN = "user_token";
+
+    private VcamSetupActivity.OnActivityInteraction mListener;
+
+    public void setListener(VcamSetupActivity.OnActivityInteraction listener ) {
+        mListener = listener;
+    }
 
 
     private VcamSetupActivity mVcamSetupActivity;
@@ -38,6 +48,9 @@ public class VcamSetupFragment extends Fragment {
     private Switch swAudioStream, swNotifications;
     private EditText etVcamIP, etConnectionPort, etVcamLogin, etVcamPassword, etVcamLocation, etVcamName, etRecordDuration;
 
+    private String mUserToken = null;
+    //Vcam info
+    private String mVcamToken = null;
     private String mVendorName = null;
     private String mVcamModel = null;
     private Boolean mVcamAudio = false;
@@ -50,7 +63,20 @@ public class VcamSetupFragment extends Fragment {
     private int mVcamPort;
     private int mRecordDuration;
 
+    public interface onFragmentInteraction {
+        void updateCustomerVcam();
+    }
+
     public VcamSetupFragment() {
+    }
+
+    public static VcamSetupFragment newInstance(String vcamToken, String userToken) {
+        VcamSetupFragment fragment = new VcamSetupFragment();
+        Bundle args = new Bundle();
+        args.putString( VCAM_TOKEN, vcamToken);
+        args.putString( USER_TOKEN, userToken);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -71,7 +97,11 @@ public class VcamSetupFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_vcam_setup, container, false);
 
-        Log.d("MyApp", "VcamSetupFragment::onCreateView: " + mVcamSetupActivity.getVcamToken());
+        if (getArguments() != null) {
+            mVcamToken = getArguments().getString(VCAM_TOKEN, null);
+            mUserToken = getArguments().getString(USER_TOKEN, null);
+        }
+        Log.d("MyApp", "VcamSetupFragment::onCreateView: " + mVcamToken);
 
         spinManufacturer = (Spinner) view.findViewById(R.id.spinManufacturer);
         spinModel = (Spinner) view.findViewById(R.id.spinModel);
@@ -85,6 +115,13 @@ public class VcamSetupFragment extends Fragment {
         etVcamName = (EditText) view.findViewById(R.id.etVcamName);
         etRecordDuration  = (EditText) view.findViewById(R.id.etRecordDuration);
 
+        if(mVcamToken != null) {
+            spinManufacturer.setEnabled(false);
+            spinManufacturer.setClickable(false);
+            spinModel.setEnabled(false);
+            spinModel.setClickable(false);
+        }
+
 
         spinManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -96,7 +133,6 @@ public class VcamSetupFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         spinModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -109,7 +145,6 @@ public class VcamSetupFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
@@ -120,8 +155,8 @@ public class VcamSetupFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d("MyApp", "VcamSetupFragment::onActivityCreated: " + mVcamSetupActivity.getVcamToken());
-        getCustomerVcamByToken(mVcamSetupActivity.getVcamToken());
+        Log.d("MyApp", "VcamSetupFragment::onActivityCreated: " + mVcamToken);
+        getCustomerVcamByToken(mVcamToken);
     }
 
     /**
@@ -354,6 +389,42 @@ public class VcamSetupFragment extends Fragment {
                 Log.d("MyApp", e.getMessage());
                 e.printStackTrace();
             }
+        }
+    }
+    /*
+    private String mVendorName = null;
+    private String mVcamModel = null;
+    private Boolean mVcamAudio = false;
+    private String mVcamProtocol;
+    private String mVcamIP;
+    private String mVcamLocation;
+    private String mCustomerVcamName;
+    private int mVcamPort;
+    private int mRecordDuration;
+*/
+    @Override
+    public void onBackPressed() {
+        RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
+        rp.setMethod("GET");
+        rp.setParam("functionName", "updateCustomerVcam");
+        rp.setParam("cam_token", mVcamToken);
+        rp.setParam("camLogin", mCustomerVcamLogin);
+        rp.setParam("camPass", mCustomerVcamPassword);
+        rp.setParam("camName", mCustomerVcamName);
+        rp.setParam("user_token", mUserToken);
+
+        updateCustomerVcamAsyncTask task = new updateCustomerVcamAsyncTask();
+        task.execute(rp);
+    }
+    public class updateCustomerVcamAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+
+        @Override
+        protected String doInBackground(RequestPackage... params) {
+            return HTTPManager.getData(params[0]);
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("MyApp", "updateCustomerVcam: " + s);
         }
     }
 

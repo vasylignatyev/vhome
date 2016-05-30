@@ -31,7 +31,8 @@ import ua.kiev.vignatyev.vhome1.models.ShareVcamUser;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ShareVcamUserFragment extends Fragment {
+public class ShareVcamUserFragment extends Fragment
+        implements AddShareVcamUserDialog.OnInteraction {
 
     public static final String VCAM_TOKEN = "vcam_token";
     public static final String USER_TOKEN = "user_token";
@@ -113,7 +114,8 @@ public class ShareVcamUserFragment extends Fragment {
             public void onClick(View v) {
 
                 android.app.FragmentManager fm = getFragmentManager();
-                AddShareVcamUserDialog addShareVcamUserDialog = new AddShareVcamUserDialog();
+                AddShareVcamUserDialog addShareVcamUserDialog = AddShareVcamUserDialog.newInstance( mICustomerVcam, mUserToken);
+                addShareVcamUserDialog.setListener( ShareVcamUserFragment.this );
                 addShareVcamUserDialog.show(fm, "TEST");
 
             }
@@ -130,9 +132,11 @@ public class ShareVcamUserFragment extends Fragment {
         getActivity().finish();
     }
 
-    /**
-     * Adapter interface methods
-     */
+    @Override
+    public void setShareVcamUser(ShareVcamUser shareVcamUser) {
+        mShareVcamUserArrayList.add(shareVcamUser);
+        lvSharedUsers.deferNotifyDataSetChanged();
+    }
 
      /**
      * REST Request for Hash String
@@ -155,6 +159,7 @@ public class ShareVcamUserFragment extends Fragment {
          task.execute(rp);
 
      }
+
 
     public class addAccessAsyncTask extends AsyncTask<RequestPackage, Void, String> {
 
@@ -258,9 +263,8 @@ public class ShareVcamUserFragment extends Fragment {
                     Log.d("MyApp", "mShareVcamUserArrayList size: " + Arrays.asList(mShareVcamUserArrayList.toArray()));
                     ShareVcamUsersAdapter shareVcamUsersAdapter =
                             new ShareVcamUsersAdapter(getActivity(), R.layout.item_share_vcam, mShareVcamUserArrayList, mDeletedShareVcamUserArrayList);
-                    if(lvSharedUsers != null) {
-                        lvSharedUsers.setAdapter(shareVcamUsersAdapter);
-                    }
+
+                    lvSharedUsers.setAdapter(shareVcamUsersAdapter);
                 }
             } catch (JSONException | ParseException e) {
                 Log.d("MyApp", "Exception: " + e.getMessage());

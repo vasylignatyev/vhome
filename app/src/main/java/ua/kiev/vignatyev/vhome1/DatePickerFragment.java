@@ -3,7 +3,9 @@ package ua.kiev.vignatyev.vhome1;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
@@ -60,9 +62,28 @@ public class DatePickerFragment extends DialogFragment
             mShareVcamUser.EXPIRATION = c.getTime();
         }
         if((mListener != null)) {
-           mListener.onDateSet( view,  year,  month,  day);
+            if(mShareVcamUser != null) {
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR, year);
+                c.set(Calendar.MONTH, month);
+                c.set(Calendar.DAY_OF_MONTH, day);
+                mShareVcamUser.EXPIRATION = c.getTime();
+            }
+            mListener.onDateSet( view, year, month, day);
         }
     }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
+        Log.d("MyApp", "DatePickerFragment cancel.");
+        if(mShareVcamUser != null) {
+            mShareVcamUser.EXPIRATION = null;
+
+        }
+
+    }
+
     public void setShareVcamUser(final ShareVcamUser shareVcamUser) {
         mShareVcamUser = shareVcamUser;
     }
