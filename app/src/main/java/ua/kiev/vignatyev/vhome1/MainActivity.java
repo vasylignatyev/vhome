@@ -194,10 +194,10 @@ public class MainActivity extends FragmentActivity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        //super.onSaveInstanceState(outState);
         outState.putString("userToken", mUserToken);
         outState.putString("userName", mUserName);
         outState.putString("userPass", mUserPass);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -245,10 +245,10 @@ public class MainActivity extends FragmentActivity
         mVcamList = null;
         mScamList = null;
         mLoggedIn = false;
-        sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.remove("userPass");
-        editor.apply();
+        //sp = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        //SharedPreferences.Editor editor = sp.edit();
+        //editor.remove("userPass");
+        //editor.apply();
         onNavigationDrawerItemSelected(0);
         unsetGcmRegistrationToken();
 

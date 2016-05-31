@@ -1,7 +1,6 @@
 package ua.kiev.vignatyev.vhome1;
 
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -40,8 +38,6 @@ public class AddShareVcamUserDialog extends DialogFragment {
 
     private int mICustomerVcam;
     private String mUserToken;
-
-    private Activity act;
 
     private boolean mCloseDialog = false;
 
@@ -72,10 +68,6 @@ public class AddShareVcamUserDialog extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if(context instanceof Activity) {
-            act = (Activity) context;
-        }
-
     }
 
     @Override
@@ -83,6 +75,8 @@ public class AddShareVcamUserDialog extends DialogFragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_add_share_vcam_user_dialog, container, false);
+
+        getDialog().setTitle("Добавить пользователя");
 
         if (getArguments() != null) {
             mICustomerVcam = getArguments().getInt(I_CUSTOMER_VCAM, 0);
@@ -124,9 +118,6 @@ public class AddShareVcamUserDialog extends DialogFragment {
                 }
             }
         });
-
-        //btAdd = (Button) v.findViewById(R.id.btAdd);
-
         return v;
     }
 

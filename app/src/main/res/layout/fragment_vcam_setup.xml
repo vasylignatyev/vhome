@@ -213,7 +213,10 @@
         android:hint="адресс"
         android:layout_alignTop="@+id/tvVcamLocation"
         android:layout_toEndOf="@+id/tvVcamLocation"
-        android:layout_marginLeft="25dp"/>
+        android:layout_marginLeft="25dp"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:ellipsize="end" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -233,7 +236,10 @@
         android:hint="Название"
         android:layout_alignTop="@+id/tvVcamName"
         android:layout_toEndOf="@+id/tvVcamName"
-        android:layout_marginLeft="25dp"/>
+        android:layout_marginLeft="25dp"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:ellipsize="end" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -62,13 +62,6 @@ public class DatePickerFragment extends DialogFragment
             mShareVcamUser.EXPIRATION = c.getTime();
         }
         if((mListener != null)) {
-            if(mShareVcamUser != null) {
-                Calendar c = Calendar.getInstance();
-                c.set(Calendar.YEAR, year);
-                c.set(Calendar.MONTH, month);
-                c.set(Calendar.DAY_OF_MONTH, day);
-                mShareVcamUser.EXPIRATION = c.getTime();
-            }
             mListener.onDateSet( view, year, month, day);
         }
     }
@@ -79,9 +72,10 @@ public class DatePickerFragment extends DialogFragment
         Log.d("MyApp", "DatePickerFragment cancel.");
         if(mShareVcamUser != null) {
             mShareVcamUser.EXPIRATION = null;
-
         }
-
+        if((mListener != null)) {
+            mListener.onDateSet( null, 0, 0, 0);
+        }
     }
 
     public void setShareVcamUser(final ShareVcamUser shareVcamUser) {
@@ -90,5 +84,5 @@ public class DatePickerFragment extends DialogFragment
 
      public interface OnPickerInteractionListener {
         void onDateSet(DatePicker view, int year, int month, int day);
-    }
+     }
 }

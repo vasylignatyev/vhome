@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
+import ua.kiev.vignatyev.vhome1.MainActivity;
 import ua.kiev.vignatyev.vhome1.MotionDetectActivity;
 import ua.kiev.vignatyev.vhome1.R;
 
@@ -33,14 +35,17 @@ public class MyGcmListenerService extends GcmListenerService {
         String motionDate = data.getString("motion_date",null);
         String vcamLocation = data.getString("vcam_location",null);
         String vcamName = data.getString("vcam_name",null);
+        String vcam_token = data.getString("vcam_token","");
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
         } else {
             // normal downstream message.
         }
-
-        sendNotification(message, data);
+        SharedPreferences sp = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE);
+        if((vcam_token.length()>0) && sp.getBoolean(vcam_token,true) ) {
+            sendNotification(message, data);
+        }
     }
     // [END receive_message]
 

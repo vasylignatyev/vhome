@@ -44,6 +44,7 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         void onConfigButtonClick(View view);
         void onScheduleButtonClick(View view);
         void onShareButtonClick(View view);
+        void onRecordButtonClick(View view, Vcam vcam);
     }
 
     private OnAdapterInteractionListener listener;
@@ -59,13 +60,27 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
                     (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.item_vcam, parent, false);
         }
-        Vcam vcam = vcamList.get(position);
+        final Vcam vcam = vcamList.get(position);
         TextView vcamName = (TextView) convertView.findViewById(R.id.vcamName);
         vcamName.setText(vcam.CUSTOMER_VCAM_NAME);
         TextView tvVcamLocation = (TextView) convertView.findViewById(R.id.vcamLocation);
         tvVcamLocation.setText(vcam.VCAM_LOCATION);
         Button vacmArchiveButton = (Button) convertView.findViewById(R.id.vacmArchiveButton);
         vacmArchiveButton.setTag(vcam.TOKEN);
+
+        TextView tvOnline = (TextView) convertView.findViewById(R.id.tvOnline);
+        if( vcam.ON_AIR == 4 ) {
+            tvOnline.setVisibility(View.VISIBLE);
+        } else {
+            tvOnline.setVisibility(View.GONE);
+        }
+
+        TextView tvRecord = (TextView) convertView.findViewById(R.id.tvRecord);
+        if( (vcam.ROS != 0) || (vcam.ROD != 0) ) {
+            tvRecord.setVisibility(View.VISIBLE);
+        } else {
+            tvRecord.setVisibility(View.GONE);
+        }
 
         vacmArchiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,9 +91,9 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
             }
         });
 
-        ImageButton vcamConfig = (ImageButton) convertView.findViewById(R.id.ibConfig);
-        vcamConfig.setTag(vcam.TOKEN);
-        vcamConfig.setOnClickListener(new View.OnClickListener() {
+        ImageButton ibConfig = (ImageButton) convertView.findViewById(R.id.ibConfig);
+        ibConfig.setTag(vcam.TOKEN);
+        ibConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -109,6 +124,22 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
                 }
             }
         });
+        ImageButton ibRecord = (ImageButton) convertView.findViewById(R.id.ibRecord);
+        ibShare.setTag(vcam.TOKEN);
+        ibRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRecordButtonClick(v, vcam);
+                }
+            }
+        });
+        if( vcam.TYPE.equalsIgnoreCase("OWNER")) {
+            ibConfig.setVisibility(View.VISIBLE);
+            ibCalendar.setVisibility(View.VISIBLE);
+            ibShare.setVisibility(View.VISIBLE);
+            ibRecord.setVisibility(View.VISIBLE);
+        }
         if(vcam.THUMBNAIL != null) {
             ImageView ivThumb = (ImageView)  convertView.findViewById(R.id.ivThumb);
             ivThumb.setImageBitmap(vcam.THUMBNAIL);

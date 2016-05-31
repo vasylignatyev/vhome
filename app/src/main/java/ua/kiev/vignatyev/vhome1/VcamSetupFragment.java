@@ -2,6 +2,7 @@ package ua.kiev.vignatyev.vhome1;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -25,6 +27,8 @@ import ua.kiev.vignatyev.vhome1.ajax.HTTPManager;
 import ua.kiev.vignatyev.vhome1.ajax.RequestPackage;
 import ua.kiev.vignatyev.vhome1.models.Vcam;
 import ua.kiev.vignatyev.vhome1.parsers.VcamParser;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -121,7 +125,17 @@ public class VcamSetupFragment extends Fragment
             spinModel.setEnabled(false);
             spinModel.setClickable(false);
         }
+        SharedPreferences sp = getActivity().getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE);
+        swNotifications.setChecked(sp.getBoolean(mVcamToken,true));
 
+        swNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE).edit();
+                editor.putBoolean(mVcamToken,isChecked);
+                editor.apply();
+            }
+        });
 
         spinManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

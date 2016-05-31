@@ -144,4 +144,5 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareVcamUser>
         notifyDataSetChanged();
         return ;
     }
+
 }

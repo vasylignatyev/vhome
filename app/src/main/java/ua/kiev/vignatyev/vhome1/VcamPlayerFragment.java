@@ -3,6 +3,7 @@ package ua.kiev.vignatyev.vhome1;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -78,8 +79,12 @@ public class VcamPlayerFragment extends Fragment {
             mVideoPlayerView.setVideoPath(mStreamURL);
             mVideoPlayerView.start();
         }
-        pd.hide();
-
+        mVideoPlayerView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                pd.hide();
+            }
+        });
     }
 
     public VcamPlayerFragment() {

@@ -9,12 +9,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -168,6 +170,15 @@ public class VcamFragment extends Fragment implements AbsListView.OnItemClickLis
         startActivity(intent);
     }
 
+    @Override
+    public void onRecordButtonClick(View view, Vcam vcam) {
+        if( vcam.ROS == 1) {
+            Toast.makeText(mMainActivity,
+                    "Запись уже производится по расписанию",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
     /**
      * REST Request for Vcam List
      */
@@ -194,6 +205,7 @@ public class VcamFragment extends Fragment implements AbsListView.OnItemClickLis
                 mMainActivity.shitHappens();
                 return;
             }
+            Log.d("MyApp", "getCustomerVCamList: " + s);
             mVcamList = VcamListParser.parseFeed(s);
 
             if(mVcamList != null ) {
