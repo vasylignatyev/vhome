@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,8 @@ import ua.kiev.vignatyev.vhome1.ajax.RequestPackage;
 import ua.kiev.vignatyev.vhome1.models.Vcam;
 import ua.kiev.vignatyev.vhome1.parsers.VcamListParser;
 
-public class VcamFragment extends Fragment implements AbsListView.OnItemClickListener, VcamArrayAdapter.OnAdapterInteractionListener {
+public class VcamFragment extends Fragment
+        implements AbsListView.OnItemClickListener, VcamArrayAdapter.OnAdapterInteractionListener {
     /**
      * STATIC VAR
      */
@@ -182,7 +182,7 @@ public class VcamFragment extends Fragment implements AbsListView.OnItemClickLis
     /**
      * REST Request for Vcam List
      */
-    public void getCustomerVCamList() {
+    private void getCustomerVCamList() {
 
         pd.show();
         //************************
@@ -191,10 +191,9 @@ public class VcamFragment extends Fragment implements AbsListView.OnItemClickLis
         rp.setParam("functionName", "getCustomerVcamList");
         rp.setParam("customer_token", mUserToken);
 
-        getCustomerVCamListAsyncTask task = new getCustomerVCamListAsyncTask();
-        task.execute(rp);
+        new VcamFragment.getCustomerVCamListAsyncTask().execute(rp);
     }
-    public class getCustomerVCamListAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+    private class getCustomerVCamListAsyncTask extends AsyncTask<RequestPackage, Void, String> {
         @Override
         protected String doInBackground(RequestPackage... params) {
             return HTTPManager.getData(params[0]);
@@ -218,7 +217,7 @@ public class VcamFragment extends Fragment implements AbsListView.OnItemClickLis
     /**
      * REST Request for Hash String
      */
-    public void getHashString(String camToken) {
+    private void getHashString(String camToken) {
         RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
         rp.setMethod("GET");
         rp.setParam("functionName", "get_hash_string");
@@ -227,8 +226,9 @@ public class VcamFragment extends Fragment implements AbsListView.OnItemClickLis
 
         getHashStringAsyncTask task = new getHashStringAsyncTask(camToken);
         task.execute(rp);
+
     }
-    public class getHashStringAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+    private class getHashStringAsyncTask extends AsyncTask<RequestPackage, Void, String> {
         private String camToken;
 
         public getHashStringAsyncTask(String camToken) {

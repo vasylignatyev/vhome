@@ -1,5 +1,6 @@
 package ua.kiev.vignatyev.vhome1;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,7 +21,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,10 +41,10 @@ import ua.kiev.vignatyev.vhome1.ajax.InstallTask;
 import ua.kiev.vignatyev.vhome1.ajax.RequestPackage;
 import ua.kiev.vignatyev.vhome1.gcm.QuickstartPreferences;
 import ua.kiev.vignatyev.vhome1.gcm.RegistrationIntentService;
-import ua.kiev.vignatyev.vhome1.models.Credentials;
 import ua.kiev.vignatyev.vhome1.models.Vcam;
 
 public class MainActivity extends FragmentActivity
+//public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     /**
      * STATIC VARS
@@ -88,7 +88,9 @@ public class MainActivity extends FragmentActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try { Class.forName("android.os.AsyncTask"); } catch(Throwable ignore) { }
         super.onCreate(savedInstanceState);
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -143,12 +145,11 @@ public class MainActivity extends FragmentActivity
 
     @Override
     protected void onStart() {
-        super.onStart();
-
         if(mCheckUpdate) {
             mCheckUpdate = false;
             getCurrentVersion();
         }
+        super.onStart();
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {

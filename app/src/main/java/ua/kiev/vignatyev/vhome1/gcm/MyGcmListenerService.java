@@ -37,13 +37,19 @@ public class MyGcmListenerService extends GcmListenerService {
         String vcamName = data.getString("vcam_name",null);
         String vcam_token = data.getString("vcam_token","");
 
+        Log.d("MyApp", "onMessageReceived vcam_token: " + vcam_token);
+
         if (from.startsWith("/topics/")) {
             // message received from some topic.
         } else {
             // normal downstream message.
         }
         SharedPreferences sp = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE);
-        if((vcam_token.length()>0) && sp.getBoolean(vcam_token,true) ) {
+        if(vcam_token.length() == 32) {
+            if( sp.getBoolean(vcam_token,true) ) {
+                sendNotification(message, data);
+            }
+        } else {
             sendNotification(message, data);
         }
     }

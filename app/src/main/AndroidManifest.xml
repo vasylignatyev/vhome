@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ua.kiev.vignatyev.vhome1">
 
     <uses-sdk
@@ -59,17 +58,18 @@
         <activity
             android:name=".VcamSetupActivity"
             android:label="@string/title_activity_vcam_setup"
-            android:theme="@style/Theme.AppCompat"/>
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".ScheduleActivity"
             android:label="@string/title_activity_schedule"
-            android:theme="@style/Theme.AppCompat"/>
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".ShareVcamUserActivity"
             android:label="@string/title_activity_share"
-            android:theme="@style/Theme.AppCompat">
-
-        </activity>
+            android:theme="@style/Theme.AppCompat"/>
+        <activity android:name=".ShareScheduleActivity"
+            android:label="@string/title_activity_share"
+            android:theme="@style/Theme.AppCompat"/>
         <!-- [START gcm_receiver] -->
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -118,6 +118,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-     </application>
+    </application>
 
 </manifest>

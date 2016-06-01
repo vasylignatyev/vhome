@@ -2,6 +2,7 @@ package ua.kiev.vignatyev.vhome1.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import ua.kiev.vignatyev.vhome1.DatePickerFragment;
 import ua.kiev.vignatyev.vhome1.R;
+import ua.kiev.vignatyev.vhome1.ShareScheduleActivity;
 import ua.kiev.vignatyev.vhome1.models.ShareVcamUser;
 
 public class ShareVcamUsersAdapter extends ArrayAdapter <ShareVcamUser>
@@ -126,6 +128,11 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareVcamUser>
         ibSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
+
+                Intent intent = new Intent(mContext, ShareScheduleActivity.class);
+                intent.putExtra(ShareScheduleActivity.SCHEDULE , shareVcamUser.SCHEDULE);
+                ((Activity) mContext).startActivity(intent);
+                ShareScheduleActivity.setShareVcamUser(shareVcamUser);
            }
         });
         ibDelete.setOnClickListener(new View.OnClickListener() {
@@ -144,5 +151,6 @@ public class ShareVcamUsersAdapter extends ArrayAdapter <ShareVcamUser>
         notifyDataSetChanged();
         return ;
     }
+
 
 }
