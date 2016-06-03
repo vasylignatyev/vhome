@@ -89,32 +89,32 @@ public class VcamListParser {
                     if(obj.has("OPTIONS")) {
                         JSONObject options = obj.getJSONObject("OPTIONS");
 
-                        if(obj.has("VCAM_PORT")) {
+                        if(options.has("VCAM_PORT")) {
                             vcam.VCAM_PORT = options.getInt("VCAM_PORT");
                         }
-                        if(obj.has("VCAM_IP")) {
+                        if(options.has("VCAM_IP")) {
                             vcam.VCAM_IP = options.getString("VCAM_IP");
                         }
-                        if(obj.has("VCAM_LOCATION")) {
+                        if(options.has("VCAM_LOCATION")) {
                             vcam.VCAM_LOCATION = options.getString("VCAM_LOCATION");
                         }
-                        if(obj.has("VCAM_VIDEO")) {
+                        if(options.has("VCAM_VIDEO")) {
                             vcam.VCAM_VIDEO = options.getString("VCAM_VIDEO");
                         }
-                        if(obj.has("UTILITY_NAME")) {
+                        if(options.has("UTILITY_NAME")) {
                             vcam.UTILITY_NAME = options.getString("UTILITY_NAME");
                         }
-                        if(obj.has("UTIL_IN_ARGS")) {
+                        if(options.has("UTIL_IN_ARGS")) {
                             vcam.UTIL_IN_ARGS = options.getString("UTIL_IN_ARGS");
                         }
-                        if(obj.has("VCAM_PROTOCOL")) {
+                        if(options.has("VCAM_PROTOCOL")) {
                             vcam.VCAM_PROTOCOL = options.getString("VCAM_PROTOCOL");
                         }
-                        if(obj.has("VCAM_AUDIO")) {
+                        if(options.has("VCAM_AUDIO")) {
                             vcam.VCAM_AUDIO = options.getString("VCAM_AUDIO");
                         }
-                        if(obj.has("ROD_START_TIME")) {
-                            vcam.ROD_START_TIME = options.getInt("ROD_START_TIME");
+                        if((options.has("ROD_START_TIME")) && (!options.getString("ROD_START_TIME").equals("null"))) {
+                           vcam.ROD_START_TIME = options.getInt("ROD_START_TIME");
                         }
                     }
                     /* ADD */
@@ -123,7 +123,6 @@ public class VcamListParser {
                 Log.d("MyApp", "VcamList length: " + vcamArray.length());
                 return vcamList;
             } catch (JSONException ex) {
-                ex.printStackTrace();
                 Log.d("MyApp", "VcamListParser error: " + ex.getMessage());
                 return null;
             }

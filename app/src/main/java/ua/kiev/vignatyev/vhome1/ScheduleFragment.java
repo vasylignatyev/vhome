@@ -139,26 +139,24 @@ public class ScheduleFragment extends Fragment {
         }
     }
     private void setSchedule(String schedule) {
-        Log.d("MyApp" , "ScheduleFragment::setSchedule schedule:" + schedule);
+        //Log.d("MyApp" , "ScheduleFragment::setSchedule schedule:" + schedule);
         if((schedule == null) || ( schedule.length() < 168)) {
             Log.d("MyApp", "setSchedule param too short: " + schedule.length());
             return;
         }
         int rowCount = llSchedule.getChildCount();
-        for( int r = 0 ; r <  rowCount; r++) {
+        for( int r = 0 ; r < rowCount ; r++) {
             View rowChild = llSchedule.getChildAt(r);
             if (rowChild instanceof LinearLayout) {
                 LinearLayout ll = (LinearLayout) rowChild;
-                int count = ll.getChildCount();
+                int llCount = ll.getChildCount();
                 int j = 0;
-                for (int i = 0; i <= count; i++) {
+                for (int i = 0; i < llCount; i++) {
                     View view = ll.getChildAt(i);
                     if (view instanceof CheckBox) {
-                        CheckBox cb = (CheckBox)view;
-                        int strIndex = rowCount + j * 24;
-                        if( strIndex < schedule.length() ) {
-                            cb.setChecked(schedule.charAt(rowCount + j * 24) == '1');
-                        }
+                        int strIndex = r + j*24 + 1;
+                        Log.d("MyApp", "strIndex: " + strIndex + " - " + schedule.charAt(strIndex));
+                        ((CheckBox)view).setChecked(schedule.charAt(strIndex) == '1');
                         j++;
                     }
                 }

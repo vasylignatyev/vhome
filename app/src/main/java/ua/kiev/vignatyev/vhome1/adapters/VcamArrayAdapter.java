@@ -1,6 +1,7 @@
 package ua.kiev.vignatyev.vhome1.adapters;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,13 +16,20 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 
 import ua.kiev.vignatyev.vhome1.MainActivity;
 import ua.kiev.vignatyev.vhome1.R;
+import ua.kiev.vignatyev.vhome1.VcamFragment;
+import ua.kiev.vignatyev.vhome1.ajax.HTTPManager;
+import ua.kiev.vignatyev.vhome1.ajax.RequestPackage;
 import ua.kiev.vignatyev.vhome1.models.Vcam;
+import ua.kiev.vignatyev.vhome1.parsers.VcamListParser;
 
 /**
  * Created by vignatyev on 01.07.2015.
@@ -32,19 +40,23 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
 
 
     private List<Vcam> vcamList;
+    private ProgressDialog pd;
 
     public VcamArrayAdapter(Context context, int resource, List<Vcam> objects) {
         super(context, resource, objects);
         this.context = context;
         this.vcamList = objects;
-        //setOnAdapterInteractionListener();
+
+        pd = new ProgressDialog(context);
+        pd.setTitle("Подключение к серверу");
+        pd.setMessage("Ожидайте");
     }
     public interface OnAdapterInteractionListener {
         void onArchButtonClick(View view);
         void onConfigButtonClick(View view);
         void onScheduleButtonClick(View view);
         void onShareButtonClick(View view);
-        void onRecordButtonClick(View view, Vcam vcam);
+        void onRecordButtonClick(int result);
     }
 
     private OnAdapterInteractionListener listener;
@@ -129,9 +141,8 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         ibRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
-                    listener.onRecordButtonClick(v, vcam);
-                }
+                recordControl( vcam.TOKEN, "session");
+
             }
         });
         if( vcam.TYPE.equalsIgnoreCase("OWNER")) {
@@ -194,6 +205,48 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
                 ImageView ivThumb = (ImageView) vcamAndThumb.view.findViewById(R.id.ivThumb);
                 ivThumb.setImageBitmap(vcamAndThumb.thumb);
                 vcamAndThumb.vcam.THUMBNAIL = vcamAndThumb.thumb;
+            }
+        }
+    }
+    /**
+     * REST Request
+     */
+    private void recordControl(String cam_token, String sessname) {
+
+        pd.show();
+        //************************
+        RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
+        rp.setMethod("GET");
+        rp.setParam("functionName", "recordControl");
+        rp.setParam("cam_token", cam_token);
+        rp.setParam( "sessname", sessname);
+
+        new recordControlAsyncTask().execute(rp);
+    }
+    private class recordControlAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+        @Override
+        protected String doInBackground(RequestPackage... params) {
+            return HTTPManager.getData(params[0]);
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            pd.hide();
+
+            if(s == null) {
+                return;
+            }
+            //Log.d("MyApp", "recordControl: " + s);
+
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if(jsonObject.has("result")) {
+                    int result = jsonObject.getInt("result");
+                    if( listener != null ) {
+                        listener.onRecordButtonClick(result);
+                    }
+                }
+            } catch (JSONException e) {
+                Log.d("MyApp", "recordControl JSON error: " + e.getMessage());
             }
         }
     }

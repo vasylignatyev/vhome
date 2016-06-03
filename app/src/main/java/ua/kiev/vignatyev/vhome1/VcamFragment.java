@@ -171,10 +171,15 @@ public class VcamFragment extends Fragment
     }
 
     @Override
-    public void onRecordButtonClick(View view, Vcam vcam) {
-        if( vcam.ROS == 1) {
+    public void onRecordButtonClick(int result) {
+
+        if( result == 1) {
             Toast.makeText(mMainActivity,
-                    "Запись уже производится по расписанию",
+                    "Запись по требованию включена. Длительность записи 60 минут",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mMainActivity,
+                    "Запись по требованию отключена.",
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -214,9 +219,6 @@ public class VcamFragment extends Fragment
         }
     }
 
-    /**
-     * REST Request for Hash String
-     */
     private void getHashString(String camToken) {
         RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
         rp.setMethod("GET");
