@@ -3,26 +3,24 @@
     <string name="app_name">vhome</string>
     <string name="senderID">80369243567</string>
 
-    <string name="title_section1">Вход</string>
-    <string name="title_section2">Мои камеры</string>
-    <string name="title_section3">Доступные камеры</string>
-    <string name="title_section4">Видеоархив</string>
+    <string name="title_section1">Вхід</string>
+    <string name="title_section2">Мої камери</string>
+    <string name="title_section3">Доступні камери</string>
+    <string name="title_section4">Відеоархів</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Налаштування</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="hello_world">Hello world!</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="exitQuestion">Выйти из приложения?</string>
+    <string name="exitQuestion">Вийти з програми?</string>
     <string name="exitOk">Ok</string>
     <string name="exitCancel">Cancel</string>
 
-    <string name="no_connected_vcam">У Вас нет подключенных камер</string>
-    <string name="no_records">Нет записей</string>
-    <string name="enter_email">Введите email</string>
+    <string name="no_connected_vcam">У Вас немає підключених камер</string>
+    <string name="no_records">Нема записів</string>
+    <string name="enter_email">EMail</string>
     <string name="enter_password">Пароль</string>
     <string name="enter">Вхід</string>
     <string name="registration">Реєстрація</string>
@@ -31,8 +29,8 @@
     <!-- Nav Drawer Menu Items -->
     <string name="my_cameras">Мої камери</string>
     <string name="shared_cameras">Доступні камери</string>
-    <string name="my_alerts">Мої оповіщення</string>
-    <string name="shared_alerts">Доступні оповіщення</string>
+    <string name="my_alerts">Мої повідомлення</string>
+    <string name="shared_alerts">Доступні  оповещения</string>
     <string name="exit">Вихід</string>
 
     <string-array name="nav_drawer_items">
@@ -43,22 +41,70 @@
         <item>@string/exit</item>
     </string-array>
 
-
-    <string name="title_activity_motion_detect">MotionDetectActivity</string>
+    <string name="title_activity_motion_detect">Детектор руху</string>
     <string name="title_activity_touch_image_view">TouchImageViewActivity</string>
-
     <string name="title_activity_mdfullscreen">MDFullscreenActivity</string>
     <string name="title_activity_pinch">PinchActivity</string>
     <string name="title_activity_varch_player">VarchPlayerActivity</string>
+    <string name="title_activity_vcam_setup">VcamSetup</string>
+    <string name="title_activity_schedule">ScheduleActivity</string>
+    <string name="title_activity_share">ShareActivity</string>
+
     <string name="videoarchive">Відеоархів</string>
-    <string name="cam_name">Імя камери</string>
+    <string name="cam_name">Ім\'я камери</string>
     <string name="not_available">Невідомо</string>
     <string name="date">Дата</string>
     <string name="not_specified">Не вказано</string>
     <string name="find_in_archive">Знайти в відеоархіву</string>
+    <string name="Connecting_server">Підключення до сервера</string>
+    <string name="wait">Чекайте</string>
     <string name="from_app_only">Відео доступне тільки з програми</string>
-    <string name="manufacturer">Производитель</string>
-    <string name="model">Модель</string>
-    <string name="record_schedule">Расписание записи</string>
 
+    <string name="noNetwork">Немає підключення до інтернет</string>
+    <string name="manufacturer">Виробник</string>
+    <string name="model">Модель</string>
+    <string name="record_schedule">Розклад записи</string>
+
+    <string name="access_level_online">ONLINE</string>
+    <string name="access_level_archive">ARCHIVE</string>
+    <string name="access_level_alerts">ALERTS</string>
+    <string name="access_level_online_alerts">ONLINE + ALERTS</string>
+
+    <string name="vcam_dns">DNS Камери</string>
+    <string name="vcam_ip">IP Адреса Камери</string>
+    <string name="protocol">Протокол</string>
+    <string name="vcam_port">Порт підключення</string>
+    <string name="setup_port">Порт управління</string>
+    <string name="vcam_login_name">Логін для камери</string>
+    <string name="vcam_password">Пароль для камери</string>
+    <string name="vcam_location">Розташування камери</string>
+    <string name="vcam_name">Ім\'я камери</string>
+    <string name="vcam_title">Назва</string>
+    <string name="record_duration">Тривалість запису</string>
+    <string name="alerts">Повідомлення</string>
+
+    <string name="shared_access">ЗАГАЛЬНИЙ ДОСТУП</string>
+    <string name="cancel">Скасувати</string>
+    <string name="add">Додати</string>
+    <string name="save">Зберегти</string>
+
+    <string name="all_working_days">Всі робочі дні</string>
+    <string name="weekend">Всі вихідні дні</string>
+    <string name="vcam_timetable">ГРАФІК РОБОТИ КАМЕРИ</string>
+    <string name="password">Пароль</string>
+    <string name="name">Ім\'я</string>
+    <string name="surename">Прізвище</string>
+    <string name="country">Країна</string>
+    <string name="city">Місто</string>
+    <string name="street_house">Улица, Дом</string>
+    <string name="phone">Телефон</string>
+    <string name="already_in_use">Такой п/я уже используется!</string>
+
+
+    <string-array name="access_level_items">
+        <item>@string/access_level_online</item>
+        <item>@string/access_level_archive</item>
+        <item>@string/access_level_alerts</item>
+        <item>@string/access_level_online_alerts</item>
+    </string-array>
 </resources>

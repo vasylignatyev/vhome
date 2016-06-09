@@ -18,7 +18,7 @@
 
 
 
-            <ua.kiev.vignatyev.vhome1.ScrollBarView
+            <ua.com.vi_port.vhome.ScrollBarView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/scrollBarView"

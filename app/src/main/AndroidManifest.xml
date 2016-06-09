@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ua.kiev.vignatyev.vhome1">
+    package="ua.com.vi_port.vhome">
 
     <uses-sdk
         android:minSdkVersion="17"
@@ -34,7 +34,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo">
         <activity
-            android:name=".LoginActivity"
+            android:name="ua.com.vi_port.vhome.LoginActivity"
             android:label="vhome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,31 +43,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="ua.com.vi_port.vhome.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".PinchActivity"
+            android:name="ua.com.vi_port.vhome.PinchActivity"
             android:label="@string/title_activity_pinch" />
         <activity
-            android:name=".VarchPlayerActivity"
+            android:name="ua.com.vi_port.vhome.VarchPlayerActivity"
             android:label="@string/title_activity_varch_player" />
         <activity
-            android:name=".MotionDetectActivity"
+            android:name="ua.com.vi_port.vhome.MotionDetectActivity"
             android:label="@string/title_activity_motion_detect" />
         <activity
-            android:name=".VcamSetupActivity"
+            android:name="ua.com.vi_port.vhome.VcamSetupActivity"
             android:label="@string/title_activity_vcam_setup"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".ScheduleActivity"
+            android:name="ua.com.vi_port.vhome.ScheduleActivity"
             android:label="@string/title_activity_schedule"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".ShareVcamUserActivity"
+            android:name="ua.com.vi_port.vhome.ShareVcamUserActivity"
             android:label="@string/title_activity_share"
             android:theme="@style/Theme.AppCompat"/>
-        <activity android:name=".ShareScheduleActivity"
+        <activity android:name="ua.com.vi_port.vhome.ShareScheduleActivity"
             android:label="@string/title_activity_share"
             android:theme="@style/Theme.AppCompat"/>
         <!-- [START gcm_receiver] -->
@@ -85,7 +85,7 @@
         <!-- [END gcm_receiver] -->
 
         <receiver
-            android:name=".ConnectionChangeReceiver"
+            android:name="ua.com.vi_port.vhome.ConnectionChangeReceiver"
             android:label="NetworkConnection">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -93,21 +93,21 @@
         </receiver>
 
         <service
-            android:name=".gcm.MyGcmListenerService"
+            android:name="ua.com.vi_port.vhome.gcm.MyGcmListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
         <service
-            android:name=".gcm.MyInstanceIDListenerService"
+            android:name="ua.com.vi_port.vhome.gcm.MyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
         <service
-            android:name=".gcm.RegistrationIntentService"
+            android:name="ua.com.vi_port.vhome.gcm.RegistrationIntentService"
             android:exported="false" />
 
         <!--

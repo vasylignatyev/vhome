@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ua.kiev.vignatyev.vhome1.VcamSetupFragment">
+    tools:context="ua.com.vi_port.vhome.VcamSetupFragment">
 
 
     <TextView
@@ -51,7 +51,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DNS Камеры"
+        android:text="@string/vcam_dns"
         android:id="@+id/tvVcamDNS"
         android:layout_below="@+id/tvModel"
         android:textSize="17dp"
@@ -74,7 +74,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="IP Адрес Камеры"
+        android:text="@string/vcam_ip"
         android:id="@+id/tvVcamIP"
         android:layout_below="@+id/tvVcamDNS"
         android:layout_alignParentStart="true"
@@ -97,7 +97,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Протокол"
+        android:text="@string/protocol"
         android:id="@+id/tvProtocol"
         android:layout_below="@+id/tvVcamIP"
         android:layout_alignParentStart="true"
@@ -117,7 +117,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Порт подключения"
+        android:text="@string/vcam_port"
         android:id="@+id/tvConnectionPort"
         android:layout_below="@+id/tvProtocol"
         android:layout_alignParentStart="true"
@@ -138,7 +138,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Порт управления"
+        android:text="@string/setup_port"
         android:id="@+id/tvSetupPort"
         android:layout_below="@+id/tvConnectionPort"
         android:layout_alignParentStart="true"
@@ -158,7 +158,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Логин для камеры"
+        android:text="@string/vcam_login_name"
         android:id="@+id/tvVcamLogin"
         android:layout_below="@+id/tvSetupPort"
         android:layout_alignParentStart="true"
@@ -178,7 +178,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Пароль для камеры"
+        android:text="@string/vcam_password"
         android:id="@+id/tvVcamPassword"
         android:layout_below="@+id/tvVcamLogin"
         android:layout_alignParentStart="true"
@@ -198,7 +198,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Расположение камеры"
+        android:text="@string/vcam_location"
         android:id="@+id/tvVcamLocation"
         android:layout_below="@+id/tvVcamPassword"
         android:layout_alignParentStart="true"
@@ -221,7 +221,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Имя камеры"
+        android:text="@string/vcam_name"
         android:id="@+id/tvVcamName"
         android:layout_below="@+id/tvVcamLocation"
         android:layout_alignParentStart="true"
@@ -233,7 +233,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etVcamName"
-        android:hint="Название"
+        android:hint="@string/vcam_title"
         android:layout_alignTop="@+id/tvVcamName"
         android:layout_toEndOf="@+id/tvVcamName"
         android:layout_marginLeft="25dp"
@@ -244,7 +244,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Продолжительность записи"
+        android:text="@string/record_duration"
         android:id="@+id/tvRecordDuration"
         android:layout_below="@+id/tvVcamName"
         android:layout_alignParentStart="true"
@@ -275,7 +275,7 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Уведомления"
+        android:text="@string/alerts"
         android:id="@+id/swNotifications"
         android:checked="false"
         android:layout_below="@+id/swAudioStream"

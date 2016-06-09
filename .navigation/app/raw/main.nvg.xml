@@ -6,7 +6,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "ua.kiev.vignatyev.vhome1.PinchActivity"/>
+        className = "ua.com.vi_port.vhome.PinchActivity"/>
       <point      
         x = "3024"      
         y = "1424"/>
@@ -14,7 +14,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "ua.kiev.vignatyev.vhome1.MotionDetectActivity"/>
+        className = "ua.com.vi_port.vhome.MotionDetectActivity"/>
       <point      
         x = "2060"      
         y = "1588"/>
@@ -22,7 +22,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "ua.kiev.vignatyev.vhome1.MainActivity"/>
+        className = "ua.com.vi_port.vhome.MainActivity"/>
       <point      
         x = "500"      
         y = "100"/>
@@ -30,7 +30,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.MenuState"      
-        className = "ua.kiev.vignatyev.vhome1.MainActivity"/>
+        className = "ua.com.vi_port.vhome.MainActivity"/>
       <point      
         x = "1768"      
         y = "100"/>
@@ -38,7 +38,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "ua.kiev.vignatyev.vhome1.VarchPlayerActivity"/>
+        className = "ua.com.vi_port.vhome.VarchPlayerActivity"/>
       <point      
         x = "600"      
         y = "1580"/>

@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ScheduleFragment"
+    tools:context="ua.com.vi_port.vhome.ScheduleFragment"
     android:orientation="vertical"
     android:background="#ffffff">
 
@@ -15,7 +15,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Все рабочие дни"
+        android:text="@string/all_working_days"
         android:id="@+id/btnWorkingDays"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
@@ -25,7 +25,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Все выходные дни"
+        android:text="@string/weekend"
         android:id="@+id/btnWeekend"
         android:layout_below="@+id/btnWorkingDays"
         android:layout_centerHorizontal="true"
@@ -45,7 +45,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ГРАФИК РАБОТЫ КАМЕРЫ"
+        android:text="@string/vcam_timetable"
         android:id="@+id/textView2"
         android:textColor="#6d6d72"
         android:background="#EFEFF4" />

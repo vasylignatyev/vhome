@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ShareVcamUserFragment"
+    tools:context="ua.com.vi_port.vhome.ShareVcamUserFragment"
     android:background="#FFFFFF"
     android:clickable="true">
 
@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:text="ОБЩИЙ ДОСТУП"
+        android:text="@string/shared_access"
         android:id="@+id/tvGeneralAccess"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
@@ -88,7 +88,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Отменить"
+            android:text="@string/cancel"
             android:id="@+id/btCancel"
             android:layout_weight="1"
             android:textColor="#0076FF"
@@ -97,7 +97,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Добавить"
+            android:text="@string/add"
             android:id="@+id/btAddShareUser"
             android:layout_weight="1"
             android:textColor="#0076FF"
@@ -106,7 +106,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Сохранить"
+            android:text="@string/save"
             android:id="@+id/btSaveShareUser"
             android:layout_weight="1"
             android:textColor="#0076FF"

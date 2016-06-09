@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ua.kiev.vignatyev.vhome1.VcamPlayerFragment">
+    tools:context="ua.kiev.vignatyev.vhome1.ua.com.vi_port.vhome.VcamPlayerFragment">
 
     <FrameLayout android:id="@+id/video_frame"
         android:layout_width="fill_parent"

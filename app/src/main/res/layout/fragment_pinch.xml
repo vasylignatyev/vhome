@@ -3,11 +3,11 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ua.kiev.vignatyev.vhome1.TouchImageView
+    <ua.com.vi_port.vhome.TouchImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/tvImage"
-        tools:context="ua.kiev.vignatyev.vhome1.PinchFragment"
+        tools:context="ua.kiev.vignatyev.vhome1.ua.com.vi_port.vhome.PinchFragment"
         />
 
 </FrameLayout>

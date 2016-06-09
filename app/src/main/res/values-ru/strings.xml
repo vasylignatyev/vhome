@@ -11,18 +11,16 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">н</string>
+    <string name="action_settings">Настройки</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="hello_world">Hello world!</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="exitQuestion">Выйти из приложения?</string>
     <string name="exitOk">Ok</string>
     <string name="exitCancel">Cancel</string>
 
     <string name="no_connected_vcam">У Вас нет подключенных камер</string>
     <string name="no_records">Нет записей</string>
-    <string name="enter_email">Имя пользователя</string>
+    <string name="enter_email">EMail</string>
     <string name="enter_password">Пароль</string>
     <string name="enter">Вход</string>
     <string name="registration">Регистрация</string>
@@ -43,20 +41,70 @@
         <item>@string/exit</item>
     </string-array>
 
-    <string name="title_activity_motion_detect">MotionDetectActivity</string>
+    <string name="title_activity_motion_detect">Детектор Движения</string>
     <string name="title_activity_touch_image_view">TouchImageViewActivity</string>
-
     <string name="title_activity_mdfullscreen">MDFullscreenActivity</string>
     <string name="title_activity_pinch">PinchActivity</string>
+    <string name="title_activity_varch_player">VarchPlayerActivity</string>
+    <string name="title_activity_vcam_setup">VcamSetup</string>
+    <string name="title_activity_schedule">ScheduleActivity</string>
+    <string name="title_activity_share">ShareActivity</string>
+
     <string name="videoarchive">Видеоархив</string>
     <string name="cam_name">Имя камеры</string>
     <string name="not_available">Не известно</string>
     <string name="date">Дата</string>
     <string name="not_specified">Не указано</string>
     <string name="find_in_archive">Найти в видеоархиве</string>
+    <string name="Connecting_server">Подключение к серверу</string>
+    <string name="wait">Ожидайте</string>
     <string name="from_app_only">Видео доступно только из приложения</string>
+
+    <string name="noNetwork">Нет подключения к интернет</string>
     <string name="manufacturer">Производитель</string>
     <string name="model">Модель</string>
     <string name="record_schedule">Расписание записи</string>
 
+    <string name="access_level_online">ONLINE</string>
+    <string name="access_level_archive">ARCHIVE</string>
+    <string name="access_level_alerts">ALERTS</string>
+    <string name="access_level_online_alerts">ONLINE + ALERTS</string>
+
+    <string name="vcam_dns">DNS Камеры</string>
+    <string name="vcam_ip">IP Адрес Камеры</string>
+    <string name="protocol">Протокол</string>
+    <string name="vcam_port">Порт подключения</string>
+    <string name="setup_port">Порт управления</string>
+    <string name="vcam_login_name">Логин для камеры</string>
+    <string name="vcam_password">Пароль для камеры</string>
+    <string name="vcam_location">Расположение камеры</string>
+    <string name="vcam_name">Имя камеры</string>
+    <string name="vcam_title">Название</string>
+    <string name="record_duration">Продолжительность записи</string>
+    <string name="alerts">Уведомления</string>
+
+    <string name="shared_access">ОБЩИЙ ДОСТУП</string>
+    <string name="cancel">Отменить</string>
+    <string name="add">Добавить</string>
+    <string name="save">Сохранить</string>
+
+    <string name="all_working_days">Все рабочие дни</string>
+    <string name="weekend">Все выходные</string>
+    <string name="vcam_timetable">Расписание для камеры</string>
+    <string name="password">Пароль</string>
+    <string name="name">Имя</string>
+    <string name="surename">Фамилия</string>
+    <string name="country">Страна</string>
+    <string name="city">Город</string>
+    <string name="street_house">Улица, Дом</string>
+    <string name="phone">Телефон</string>
+    <string name="already_in_use">Такой п/я уже используется!</string>
+
+
+    <string-array name="access_level_items">
+        <item>@string/access_level_online</item>
+        <item>@string/access_level_archive</item>
+        <item>@string/access_level_alerts</item>
+        <item>@string/access_level_online_alerts</item>
+    </string-array>
 </resources>
