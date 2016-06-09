@@ -45,13 +45,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        try {
-            mListener = (OnLoginFragmentInteractionListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement OnLoginFragmentInteractionListener");
-        }
+        mListener = (OnLoginFragmentInteractionListener) context;
     }
 
     @Override
@@ -120,7 +114,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                     if(etPassword.requestFocus()) {
                         /*
                         //fa.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-                        InputMethodManager mgr =      ((InputMethodManager)getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
+                        InputMethodManager mgr = (getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
                         mgr.showSoftInput(etPassword, InputMethodManager.SHOW_IMPLICIT);
                         Toast.makeText(mActivity, "Enter password", Toast.LENGTH_SHORT).show();
                         */
@@ -133,9 +127,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                 fragmentManager.beginTransaction().replace(R.id.container, newFragment).commit();
                 break;
         }
-
     }
-
     private class GetToken extends AsyncTask<RequestPackage, Void, String> {
         @Override
         protected String doInBackground(RequestPackage... params) {
@@ -154,7 +146,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                 if (obj.has("error")) {
                     Toast.makeText(getActivity().getApplicationContext(),"Wrong, password!!!", Toast.LENGTH_SHORT).show();
                 } else if (obj.has("token")) {
-                    if(mListener != null){
+                    if(mListener != null) {
                         String userToken = obj.getString("token");
                         mListener.loggedIn(userToken, mUserName, mUserPass);
                     }
