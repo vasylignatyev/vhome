@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,8 +74,6 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         vcamName.setText(vcam.CUSTOMER_VCAM_NAME);
         TextView tvVcamLocation = (TextView) convertView.findViewById(R.id.vcamLocation);
         tvVcamLocation.setText(vcam.VCAM_LOCATION);
-        Button vacmArchiveButton = (Button) convertView.findViewById(R.id.vacmArchiveButton);
-        vacmArchiveButton.setTag(vcam.TOKEN);
 
         TextView tvOnline = (TextView) convertView.findViewById(R.id.tvOnline);
         if( vcam.ON_AIR == 4 ) {
@@ -92,14 +89,6 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
             tvRecord.setVisibility(View.GONE);
         }
 
-        vacmArchiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onArchButtonClick(v);
-                }
-            }
-        });
 
         ImageButton ibConfig = (ImageButton) convertView.findViewById(R.id.ibConfig);
         ibConfig.setTag(vcam.TOKEN);
@@ -143,11 +132,23 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
 
             }
         });
+        ImageButton ibArchive = (ImageButton) convertView.findViewById(R.id.ibArchive);
+        ibArchive.setTag(vcam.TOKEN);
+        ibArchive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onArchButtonClick(v);
+                }
+            }
+        });
+
         if( vcam.TYPE.equalsIgnoreCase("OWNER")) {
             ibConfig.setVisibility(View.VISIBLE);
             ibCalendar.setVisibility(View.VISIBLE);
             ibShare.setVisibility(View.VISIBLE);
             ibRecord.setVisibility(View.VISIBLE);
+            ibArchive.setVisibility(View.VISIBLE);
         }
         if(vcam.THUMBNAIL != null) {
             ImageView ivThumb = (ImageView)  convertView.findViewById(R.id.ivThumb);

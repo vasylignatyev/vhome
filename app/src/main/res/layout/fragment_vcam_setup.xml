@@ -8,12 +8,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ua.com.vi_port.vhome.VcamSetupFragment">
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/manufacturer"
-        android:id="@+id/tvManufacturer"
+        android:text="НАСТРОЙКА КАМЕРЫ"
+        android:id="@+id/tvVcamSetup"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:textSize="17dp"
@@ -90,9 +89,11 @@
         android:layout_toEndOf="@+id/tvVcamIP"
         android:layout_marginLeft="25dp"
         android:maxLines="1"
+        android:ellipsize="end"
         android:minWidth="200dp"
         android:nestedScrollingEnabled="true"
-        android:inputType="numberDecimal" />
+        android:digits="0123456789."
+        android:inputType="number|numberDecimal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -133,7 +134,9 @@
         android:layout_toEndOf="@+id/tvConnectionPort"
         android:layout_marginLeft="25dp"
         android:text="554"
-        android:inputType="numberDecimal" />
+        android:maxLines="1"
+        android:singleLine="true"
+        android:inputType="number" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -153,7 +156,9 @@
         android:layout_alignTop="@+id/tvSetupPort"
         android:layout_toEndOf="@+id/tvSetupPort"
         android:layout_marginLeft="25dp"
-        android:inputType="numberDecimal" />
+        android:maxLines="1"
+        android:singleLine="true"
+        android:inputType="number" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -173,6 +178,9 @@
         android:hint="login name"
         android:layout_alignTop="@+id/tvVcamLogin"
         android:layout_toEndOf="@+id/tvVcamLogin"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:layout_marginLeft="25dp"/>
 
     <TextView
@@ -191,6 +199,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/etVcamPassword"
         android:hint="password"
+        android:maxLines="1"
+        android:singleLine="true"
         android:layout_alignTop="@+id/tvVcamPassword"
         android:layout_toEndOf="@+id/tvVcamPassword"
         android:layout_marginLeft="25dp"/>
@@ -211,6 +221,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/etVcamLocation"
         android:hint="адресс"
+        android:maxLines="1"
+        android:singleLine="true"
         android:layout_alignTop="@+id/tvVcamLocation"
         android:layout_toEndOf="@+id/tvVcamLocation"
         android:layout_marginLeft="25dp"
@@ -234,6 +246,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/etVcamName"
         android:hint="@string/vcam_title"
+        android:maxLines="1"
+        android:singleLine="true"
         android:layout_alignTop="@+id/tvVcamName"
         android:layout_toEndOf="@+id/tvVcamName"
         android:layout_marginLeft="25dp"
@@ -257,10 +271,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/etRecordDuration"
         android:text="300"
+        android:maxLines="1"
+        android:singleLine="true"
         android:layout_alignTop="@+id/tvRecordDuration"
         android:layout_toEndOf="@+id/tvRecordDuration"
         android:layout_marginLeft="25dp"
-        android:inputType="numberDecimal" />
+        android:inputType="number" />
 
     <Switch
         android:layout_width="wrap_content"
@@ -281,5 +297,15 @@
         android:layout_below="@+id/swAudioStream"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/manufacturer"
+        android:id="@+id/tvManufacturer"
+        android:textSize="17dp"
+        android:paddingTop="8dp"
+        android:layout_below="@+id/tvVcamSetup"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

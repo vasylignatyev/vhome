@@ -136,7 +136,10 @@ public class ScheduleFragment extends Fragment {
         }
     }
     private void setSchedule(String schedule) {
-        //Log.d("MyApp" , "ScheduleFragment::setSchedule schedule:" + schedule);
+
+        schedule = schedule.replace("\"", "");
+
+        Log.d("MyApp" , "ScheduleFragment::setSchedule schedule:" + schedule);
         if((schedule == null) || ( schedule.length() < 168)) {
             Log.d("MyApp", "setSchedule param too short: " + schedule.length());
             return;
@@ -151,7 +154,7 @@ public class ScheduleFragment extends Fragment {
                 for (int i = 0; i < llCount; i++) {
                     View view = ll.getChildAt(i);
                     if (view instanceof CheckBox) {
-                        int strIndex = r + j*24 + 1;
+                        int strIndex = r + j*24;
                         Log.d("MyApp", "strIndex: " + strIndex + " - " + schedule.charAt(strIndex));
                         ((CheckBox)view).setChecked(schedule.charAt(strIndex) == '1');
                         j++;
@@ -160,7 +163,6 @@ public class ScheduleFragment extends Fragment {
             }
         }
     }
-
     public String getSchedule(){
         String schedule = "";
 

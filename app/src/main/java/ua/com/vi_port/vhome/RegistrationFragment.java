@@ -51,6 +51,7 @@ public class RegistrationFragment extends Fragment implements View.OnFocusChange
         if (getArguments() != null) {
             mEMail = getArguments().getString(ARG_EMAIL);
         }
+        getActivity().getActionBar().setTitle(getResources().getString(R.string.registration));
     }
 
     @Override

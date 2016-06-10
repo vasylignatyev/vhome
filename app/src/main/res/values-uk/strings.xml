@@ -31,6 +31,7 @@
     <string name="shared_cameras">Доступні камери</string>
     <string name="my_alerts">Мої повідомлення</string>
     <string name="shared_alerts">Доступні  оповещения</string>
+    <string name="add_camera">Додати камеру</string>
     <string name="exit">Вихід</string>
 
     <string-array name="nav_drawer_items">
@@ -38,6 +39,7 @@
         <item>@string/shared_cameras</item>
         <item>@string/my_alerts</item>
         <item>@string/shared_alerts</item>
+        <item>@string/add_camera</item>
         <item>@string/exit</item>
     </string-array>
 
@@ -99,6 +101,7 @@
     <string name="street_house">Улица, Дом</string>
     <string name="phone">Телефон</string>
     <string name="already_in_use">Такой п/я уже используется!</string>
+    <string name="vcjjc">РАССПИСАНИЕ ЗАПИСИ</string>
 
 
     <string-array name="access_level_items">

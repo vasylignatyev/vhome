@@ -75,7 +75,10 @@ public class VcamParser {
                 JSONObject options = obj.getJSONObject("OPTIONS");
 
                 if(options.has("VCAM_PORT")) {
-                    vcam.VCAM_PORT = options.getInt("VCAM_PORT");
+                    String VCAM_PORT =  options.getString("VCAM_PORT");
+                    if(!VCAM_PORT.equals("null")) {
+                        //vcam.VCAM_PORT = Integer.parseInt(VCAM_PORT);
+                    }
                 }
                 if(options.has("VCAM_IP")) {
                     vcam.VCAM_IP = options.getString("VCAM_IP");
@@ -99,13 +102,22 @@ public class VcamParser {
                     vcam.VCAM_AUDIO = options.getString("VCAM_AUDIO");
                 }
                 if(options.has("ROD_START_TIME")) {
-                    vcam.ROD_START_TIME = options.getInt("ROD_START_TIME");
+                    String ROD_START_TIME =  options.getString("ROD_START_TIME");
+                    if(ROD_START_TIME.equals("null")) {
+                        vcam.ROD_START_TIME = Integer.parseInt(ROD_START_TIME);
+                    }
                 }
                 if(options.has("ON_AIR")) {
-                    vcam.ON_AIR = options.getInt("ON_AIR");
+                    String ON_AIR =  options.getString("ON_AIR");
+                    if(!ON_AIR.equals("null")) {
+                        vcam.ON_AIR = Integer.parseInt(ON_AIR);
+                    }
                 }
                 if(options.has("R_CHUNK_TIME")) {
-                    vcam.R_CHUNK_TIME = options.getInt("R_CHUNK_TIME");
+                    String R_CHUNK_TIME =  options.getString("R_CHUNK_TIME");
+                    if(!R_CHUNK_TIME.equals("null")) {
+                        vcam.R_CHUNK_TIME = Integer.parseInt(R_CHUNK_TIME);
+                    }
                 }
             }
             return vcam;

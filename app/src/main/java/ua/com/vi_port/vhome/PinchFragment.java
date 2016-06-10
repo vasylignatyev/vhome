@@ -42,6 +42,7 @@ public class PinchFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Log.d("MyApp", "PinchFragment::onCreate : ");
+
     }
 
     @Override

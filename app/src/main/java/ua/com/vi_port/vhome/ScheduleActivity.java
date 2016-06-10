@@ -83,6 +83,8 @@ public class ScheduleActivity extends Activity {
 
         @Override
         protected void onPostExecute(String schedule) {
+
+
             Log.d("MyApp", "getCustomerVcamSchedule:" + schedule);
             mScheduleFragment = ScheduleFragment.newInstance( schedule);
             getFragmentManager().beginTransaction().add(R.id.container, mScheduleFragment).commit();

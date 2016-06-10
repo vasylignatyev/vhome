@@ -20,8 +20,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ua.com.vi_port.vhome.ajax.HTTPManager;
 import ua.com.vi_port.vhome.ajax.RequestPackage;
@@ -47,7 +51,8 @@ public class VcamSetupFragment extends Fragment
 
     private Spinner spinManufacturer, spinModel, spinProtocol;
     private Switch swAudioStream, swNotifications;
-    private EditText etVcamIP, etConnectionPort, etVcamLogin, etVcamPassword, etVcamLocation, etVcamName, etRecordDuration;
+    private EditText etVcamIP, etConnectionPort, etVcamLogin, etVcamPassword, etVcamLocation,
+            etVcamName, etRecordDuration, etVcamDNS, etSetupPort;
 
     private String mUserToken = null;
     //Vcam info
@@ -111,6 +116,8 @@ public class VcamSetupFragment extends Fragment
         etVcamLocation = (EditText) view.findViewById(R.id.etVcamLocation);
         etVcamName = (EditText) view.findViewById(R.id.etVcamName);
         etRecordDuration  = (EditText) view.findViewById(R.id.etRecordDuration);
+        etVcamDNS  = (EditText) view.findViewById(R.id.etVcamDNS);
+        etSetupPort  = (EditText) view.findViewById(R.id.etSetupPort);
 
         if(mVcamToken != null) {
             spinManufacturer.setEnabled(false);
@@ -163,7 +170,11 @@ public class VcamSetupFragment extends Fragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d("MyApp", "VcamSetupFragment::onActivityCreated: " + mVcamToken);
-        getCustomerVcamByToken(mVcamToken);
+        if(mVcamToken != null) {
+            getCustomerVcamByToken(mVcamToken);
+        } else {
+            getVendors(null, false);
+        }
     }
 
     /**
@@ -413,15 +424,48 @@ public class VcamSetupFragment extends Fragment
     public void onBackPressed() {
         RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
         rp.setMethod("GET");
-        rp.setParam("functionName", "updateCustomerVcam");
-        rp.setParam("cam_token", mVcamToken);
-        rp.setParam("camLogin", mCustomerVcamLogin);
-        rp.setParam("camPass", mCustomerVcamPassword);
-        rp.setParam("camName", mCustomerVcamName);
+        rp.setParam("camLogin",etVcamLogin.getText().toString());
+        rp.setParam("camPass", etVcamPassword.getText().toString());
+        rp.setParam("camName", etVcamName.getText().toString());
         rp.setParam("user_token", mUserToken);
 
-        updateCustomerVcamAsyncTask task = new updateCustomerVcamAsyncTask();
-        task.execute(rp);
+        Map<String,String> options = new HashMap<>();
+        options.put("VCAM_IP", etVcamIP.getText().toString());
+        options.put("VCAM_PROTOCOL", spinProtocol.getSelectedItem().toString());
+        options.put("VCAM_DNAME", etVcamDNS.getText().toString());
+        options.put("VCAM_PORT", etConnectionPort.getText().toString());
+        options.put("R_CHUNK_TIME", etRecordDuration.getText().toString());
+        options.put("CONFIG_PORT", etSetupPort.getText().toString());
+        options.put("VCAM_LOCATION", etVcamLocation.getText().toString());
+        options.put("VCAM_AUDIO", swAudioStream.isChecked()? "AUDIO_ON" : "AUDIO_OFF");
+
+        StringBuilder sb = new StringBuilder();
+        for(String key : options.keySet()){
+            String value = null;
+            try {
+                if(options.get(key) != null)
+                    value = URLEncoder.encode(options.get(key), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            if(sb.length() > 0){
+                sb.append("&");
+            }
+            sb.append(key + "=" + value);
+        }
+        rp.setParam("OPTIONS", sb.toString());
+
+
+        if(mVcamToken != null ) {
+            rp.setParam("cam_token", mVcamToken);
+            rp.setParam("functionName", "updateCustomerVcam");
+            new updateCustomerVcamAsyncTask().execute(rp);
+        } else {
+            rp.setParam("functionName", "addCustomerVcam");
+            rp.setParam("camManufacturer", spinManufacturer.getSelectedItem().toString());
+            rp.setParam("camModel", spinModel.getSelectedItem().toString());
+            new addCustomerVcamAsyncTask().execute(rp);
+        }
     }
     public class updateCustomerVcamAsyncTask extends AsyncTask<RequestPackage, Void, String> {
 
@@ -432,6 +476,17 @@ public class VcamSetupFragment extends Fragment
         @Override
         protected void onPostExecute(String s) {
             Log.d("MyApp", "updateCustomerVcam: " + s);
+        }
+    }
+    public class addCustomerVcamAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+
+        @Override
+        protected String doInBackground(RequestPackage... params) {
+            return HTTPManager.getData(params[0]);
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("MyApp", "addCustomerVcamAsyncTask: " + s);
         }
     }
 

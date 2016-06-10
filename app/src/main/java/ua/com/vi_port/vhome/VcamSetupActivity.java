@@ -32,7 +32,7 @@ public class VcamSetupActivity extends Activity {
 
         VcamSetupFragment fragment = VcamSetupFragment.newInstance(mVcamToken, mUserToken);
         mListener = fragment;
-        getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
     }
     @Override

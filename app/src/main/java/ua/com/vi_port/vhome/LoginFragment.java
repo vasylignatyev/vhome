@@ -34,6 +34,9 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
     private String mUserPass;
 
     private OnLoginFragmentInteractionListener mListener;
+    public void setListener( OnLoginFragmentInteractionListener listener) {
+        mListener = listener;
+    }
 
     public LoginFragment() {
     }

@@ -18,7 +18,8 @@
         android:inputType="textEmailAddress"
         android:id="@+id/etEmail"
         android:paddingLeft="15pt"
-        android:hint="@string/enter_email" />
+        android:hint="@string/enter_email"
+        android:textColor="#000"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -26,7 +27,8 @@
         android:inputType="textPassword"
         android:hint="@string/password"
         android:paddingLeft="15pt"
-        android:id="@+id/etPass1" />
+        android:id="@+id/etPass1"
+        android:textColor="#000"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -34,55 +36,62 @@
         android:background="#EFEFF4"
         android:text="ПЕРСОНАЛЬНЫЕ ДАННЫЕ"
         android:paddingLeft="15pt"
-        android:gravity="center_vertical"/>
+        android:gravity="center_vertical"
+        android:textColor="#6d6d72"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="20pt"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:hint="@string/name"
         android:paddingLeft="15pt"
-        android:id="@+id/etPass1" />
+        android:id="@+id/etName"
+        android:textColor="#000"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="20pt"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:hint="@string/surename"
         android:paddingLeft="15pt"
-        android:id="@+id/etPass1" />
+        android:id="@+id/etSurename"
+        android:textColor="#000"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="20pt"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:hint="@string/country"
         android:paddingLeft="15pt"
-        android:id="@+id/etPass1" />
+        android:id="@+id/etCountry"
+        android:textColor="#000"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="20pt"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:hint="@string/city"
         android:paddingLeft="15pt"
-        android:id="@+id/etPass1" />
+        android:id="@+id/etCity"
+        android:textColor="#000"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="20pt"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:hint="@string/street_house"
         android:paddingLeft="15pt"
-        android:id="@+id/etPass1" />
+        android:id="@+id/etStreetHouse"
+        android:textColor="#000"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="20pt"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:hint="@string/phone"
         android:paddingLeft="15pt"
-        android:id="@+id/etPass1" />
+        android:id="@+id/etPhone"
+        android:textColor="#000"/>
 
     <Button
         android:layout_width="match_parent"

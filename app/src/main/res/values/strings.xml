@@ -31,6 +31,7 @@
     <string name="shared_cameras">Shared cameras</string>
     <string name="my_alerts">My alerts</string>
     <string name="shared_alerts">Shared alerts</string>
+    <string name="add_camera">Add camera</string>
     <string name="exit">Quit</string>
 
     <string-array name="nav_drawer_items">
@@ -38,6 +39,7 @@
         <item>@string/shared_cameras</item>
         <item>@string/my_alerts</item>
         <item>@string/shared_alerts</item>
+        <item>@string/add_camera</item>
         <item>@string/exit</item>
     </string-array>
 
@@ -100,6 +102,7 @@
     <string name="street_house">Street, house</string>
     <string name="phone">Phone</string>
     <string name="already_in_use">Такой п/я уже используется!</string>
+    <string name="vcjjc">РАССПИСАНИЕ ЗАПИСИ</string>
 
     <string-array name="access_level_items">
         <item>@string/access_level_online</item>

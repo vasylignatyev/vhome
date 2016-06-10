@@ -226,6 +226,13 @@ public class MainActivity extends FragmentActivity
                     newFragment = SharedMDFragment.newInstance(mUserToken, 0);
                     break;
                 case 4:
+                    Intent intent = new Intent(this, VcamSetupActivity.class);
+                    intent.putExtra( VcamSetupActivity.USER_TOKEN, mUserToken);
+                    startActivity(intent);
+
+                    //newFragment = VcamSetupFragment.newInstance(null, null);
+                    break;
+                case 5:
                     logout();
                     break;
                 default:

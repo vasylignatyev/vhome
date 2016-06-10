@@ -19,8 +19,15 @@ public class LoginActivity extends Activity
 
         setContentView(R.layout.activity_login);
 
-        Fragment fragment = LoginFragment.newInstance();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoginFragment fragment = LoginFragment.newInstance();
         getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+        fragment.setListener(this);
 
     }
 
