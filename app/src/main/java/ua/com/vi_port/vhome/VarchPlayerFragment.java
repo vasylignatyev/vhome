@@ -1,6 +1,7 @@
 package ua.com.vi_port.vhome;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -112,6 +113,7 @@ public class VarchPlayerFragment extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mGestureDetector = new GestureDetectorCompat( context, new GestureListener());
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
     @Override
@@ -213,6 +215,12 @@ public class VarchPlayerFragment extends Fragment
         t.cancel();
 
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**

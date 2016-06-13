@@ -54,6 +54,7 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         void onScheduleButtonClick(View view);
         void onShareButtonClick(View view);
         void onRecordButtonClick(int result);
+        void onDeleteButtonClick(View view);
     }
 
     private OnAdapterInteractionListener listener;
@@ -89,6 +90,16 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
             tvRecord.setVisibility(View.GONE);
         }
 
+        ImageButton ibDelete = (ImageButton) convertView.findViewById(R.id.ibDelete);
+        ibDelete.setTag(vcam.TOKEN);
+        ibDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onDeleteButtonClick(v);
+                }
+            }
+        });
 
         ImageButton ibConfig = (ImageButton) convertView.findViewById(R.id.ibConfig);
         ibConfig.setTag(vcam.TOKEN);
@@ -148,6 +159,8 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
             ibCalendar.setVisibility(View.VISIBLE);
             ibShare.setVisibility(View.VISIBLE);
             ibRecord.setVisibility(View.VISIBLE);
+            ibArchive.setVisibility(View.VISIBLE);
+        } else {
             ibArchive.setVisibility(View.VISIBLE);
         }
         if(vcam.THUMBNAIL != null) {

@@ -37,6 +37,17 @@ public class Vcam {
     public int ROD_START_TIME;
     public int ON_AIR;
     public int R_CHUNK_TIME;
+    public int CONFIG_PORT;
+    public String VCAM_DNAME;
+    public int EVENT_STATUS;
+    public int DEL_E_VIDEO;
+    public int SEND_EMAIL;
+    public int SEND_SMS;
+    public int SHARING_FOR_ALL;
+    public String LAT;
+    public String LNG;
+    public int SEND_EMAIL_ATTACH;
+
 
 
     public Bitmap THUMBNAIL;

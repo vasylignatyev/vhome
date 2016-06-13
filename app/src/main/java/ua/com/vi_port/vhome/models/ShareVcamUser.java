@@ -12,7 +12,7 @@ import java.util.Date;
 public class ShareVcamUser {
     private static final SimpleDateFormat mMysqlDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public int RESTRICTION;
+    public int RESTRICTION = 1;
     public String SCHEDULE;
     public Date EXPIRATION = null;
     public Date ISSUE_DATE = null;

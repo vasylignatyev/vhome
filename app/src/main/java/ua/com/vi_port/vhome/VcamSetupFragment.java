@@ -221,6 +221,7 @@ public class VcamSetupFragment extends Fragment
             mCustomerVcamName = vcam.CUSTOMER_VCAM_NAME;
             mRecordDuration = vcam.R_CHUNK_TIME;
 
+
             etVcamIP.setText(mVcamIP);
             etConnectionPort.setText(Integer.toString(mVcamPort));
             etVcamLogin.setText(mCustomerVcamLogin);
@@ -228,7 +229,9 @@ public class VcamSetupFragment extends Fragment
             etVcamLocation.setText(mVcamLocation);
             etVcamName.setText(mCustomerVcamName);
             etRecordDuration.setText(Integer.toString(mRecordDuration));
-
+            if( vcam.CONFIG_PORT>0 ) {
+                etSetupPort.setText(Integer.toString(vcam.CONFIG_PORT));
+            }
             getVendors(mVendorName, false);
         }
     }
@@ -429,32 +432,14 @@ public class VcamSetupFragment extends Fragment
         rp.setParam("camName", etVcamName.getText().toString());
         rp.setParam("user_token", mUserToken);
 
-        Map<String,String> options = new HashMap<>();
-        options.put("VCAM_IP", etVcamIP.getText().toString());
-        options.put("VCAM_PROTOCOL", spinProtocol.getSelectedItem().toString());
-        options.put("VCAM_DNAME", etVcamDNS.getText().toString());
-        options.put("VCAM_PORT", etConnectionPort.getText().toString());
-        options.put("R_CHUNK_TIME", etRecordDuration.getText().toString());
-        options.put("CONFIG_PORT", etSetupPort.getText().toString());
-        options.put("VCAM_LOCATION", etVcamLocation.getText().toString());
-        options.put("VCAM_AUDIO", swAudioStream.isChecked()? "AUDIO_ON" : "AUDIO_OFF");
-
-        StringBuilder sb = new StringBuilder();
-        for(String key : options.keySet()){
-            String value = null;
-            try {
-                if(options.get(key) != null)
-                    value = URLEncoder.encode(options.get(key), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            if(sb.length() > 0){
-                sb.append("&");
-            }
-            sb.append(key + "=" + value);
-        }
-        rp.setParam("OPTIONS", sb.toString());
-
+        rp.setParam("options[VCAM_IP]", etVcamIP.getText().toString());
+        rp.setParam("options[VCAM_PROTOCOL]", spinProtocol.getSelectedItem().toString());
+        rp.setParam("options[VCAM_DNAME]", etVcamDNS.getText().toString());
+        rp.setParam("options[VCAM_PORT]", etConnectionPort.getText().toString());
+        rp.setParam("options[R_CHUNK_TIME]", etRecordDuration.getText().toString());
+        rp.setParam("options[CONFIG_PORT]", etSetupPort.getText().toString());
+        rp.setParam("options[VCAM_LOCATION]", etVcamLocation.getText().toString());
+        rp.setParam("options[VCAM_AUDIO]", swAudioStream.isChecked()? "AUDIO_ON" : "AUDIO_OFF");
 
         if(mVcamToken != null ) {
             rp.setParam("cam_token", mVcamToken);

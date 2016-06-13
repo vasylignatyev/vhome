@@ -3,6 +3,7 @@ package ua.com.vi_port.vhome;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
     public void onAttach(Context context) {
         super.onAttach(context);
         mListener = (OnLoginFragmentInteractionListener) context;
+        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -124,10 +125,26 @@ public class ShareVcamUserFragment extends Fragment
     }
 
     private void  saveAccess(){
+        ShareVcamUser problemUser = null;
         for (ShareVcamUser shareVcamUser: mShareVcamUserArrayList) {
-            addAccess(shareVcamUser);
+            if( shareVcamUser.RESTRICTION == 0 ) {
+                problemUser = shareVcamUser;
+                break;
+            }
         }
-        getActivity().finish();
+        if(problemUser == null ) {
+            for (ShareVcamUser shareVcamUser : mShareVcamUserArrayList) {
+                addAccess(shareVcamUser);
+            }
+            for (ShareVcamUser shareVcamUser : mDeletedShareVcamUserArrayList) {
+                delAccess(shareVcamUser);
+            }
+            getActivity().finish();
+        } else {
+            String msg = "Пользователь: \"" + problemUser.NAME + "\" не имеет прав доступа. Добавте права";
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+
+        }
     }
 
     @Override
@@ -172,7 +189,30 @@ public class ShareVcamUserFragment extends Fragment
 
         }
     }
+    //******************************************
+     private void delAccess(ShareVcamUser shareVcamUser){
+         RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
+         rp.setMethod("GET");
+         rp.setParam("functionName", "deleteCustomerAccess");
+         rp.setParam("cam_token", mVcamToken);
+         rp.setParam("user_token", mUserToken);
+         rp.setParam("access_name", shareVcamUser.NAME);
+         //rp.setParam("restriction", Integer.toString(shareVcamUser.RESTRICTION));
+         new delAccessAsyncTask().execute(rp);
 
+     }
+    public class delAccessAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+
+        @Override
+        protected String doInBackground(RequestPackage... params) {
+            return HTTPManager.getData(params[0]);
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("MyApp", "delAccessAsyncTask:" + s);
+        }
+    }
+    //********************************************
     private void getVcamShareCustomers(String camToken, String userToken) {
         RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
         rp.setMethod("GET");

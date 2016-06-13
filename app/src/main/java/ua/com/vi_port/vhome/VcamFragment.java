@@ -2,12 +2,14 @@ package ua.com.vi_port.vhome;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,8 +104,21 @@ public class VcamFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
 
         if(savedInstanceState == null) {
-            getCustomerVCamList();
+            //getCustomerVCamList();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("MyApp", "VcamFragment::onResume");
+        getCustomerVCamList();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("MyApp", "VcamFragment::onPause");
     }
 
     /**
@@ -182,6 +197,25 @@ public class VcamFragment extends Fragment
                     "Запись по требованию отключена.",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onDeleteButtonClick(View view) {
+        new AlertDialog.Builder(getContext())
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Closing Activity")
+                .setMessage("Are you sure you want to close this activity?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
+
     }
 
     /**

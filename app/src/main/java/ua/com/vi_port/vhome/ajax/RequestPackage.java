@@ -41,17 +41,20 @@ public class RequestPackage {
         StringBuilder sb = new StringBuilder();
         for(String key : params.keySet()){
             String value = null;
+            String encodeKey = null;
             try {
-                if(params.get(key) != null)
+                if(params.get(key) != null) {
                     value = URLEncoder.encode(params.get(key), "UTF-8");
+                    encodeKey = URLEncoder.encode(key, "UTF-8");
+                    if (sb.length() > 0) {
+                        sb.append("&");
+                    }
+                    sb.append(encodeKey + "=" + value);
+                }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            if(sb.length() > 0){
-                sb.append("&");
-            }
-            sb.append(key + "=" + value);
-      }
+        }
         return sb.toString();
     }
 }

@@ -74,51 +74,27 @@ public class VcamParser {
             if(obj.has("OPTIONS")) {
                 JSONObject options = obj.getJSONObject("OPTIONS");
 
-                if(options.has("VCAM_PORT")) {
-                    String VCAM_PORT =  options.getString("VCAM_PORT");
-                    if(!VCAM_PORT.equals("null")) {
-                        //vcam.VCAM_PORT = Integer.parseInt(VCAM_PORT);
-                    }
-                }
-                if(options.has("VCAM_IP")) {
-                    vcam.VCAM_IP = options.getString("VCAM_IP");
-                }
-                if(options.has("VCAM_LOCATION")) {
-                    vcam.VCAM_LOCATION = options.getString("VCAM_LOCATION");
-                }
-                if(options.has("VCAM_VIDEO")) {
-                    vcam.VCAM_VIDEO = options.getString("VCAM_VIDEO");
-                }
-                if(options.has("UTILITY_NAME")) {
-                    vcam.UTILITY_NAME = options.getString("UTILITY_NAME");
-                }
-                if(options.has("UTIL_IN_ARGS")) {
-                    vcam.UTIL_IN_ARGS = options.getString("UTIL_IN_ARGS");
-                }
-                if(options.has("VCAM_PROTOCOL")) {
-                    vcam.VCAM_PROTOCOL = options.getString("VCAM_PROTOCOL");
-                }
-                if(options.has("VCAM_AUDIO")) {
-                    vcam.VCAM_AUDIO = options.getString("VCAM_AUDIO");
-                }
-                if(options.has("ROD_START_TIME")) {
-                    String ROD_START_TIME =  options.getString("ROD_START_TIME");
-                    if(ROD_START_TIME.equals("null")) {
-                        vcam.ROD_START_TIME = Integer.parseInt(ROD_START_TIME);
-                    }
-                }
-                if(options.has("ON_AIR")) {
-                    String ON_AIR =  options.getString("ON_AIR");
-                    if(!ON_AIR.equals("null")) {
-                        vcam.ON_AIR = Integer.parseInt(ON_AIR);
-                    }
-                }
-                if(options.has("R_CHUNK_TIME")) {
-                    String R_CHUNK_TIME =  options.getString("R_CHUNK_TIME");
-                    if(!R_CHUNK_TIME.equals("null")) {
-                        vcam.R_CHUNK_TIME = Integer.parseInt(R_CHUNK_TIME);
-                    }
-                }
+                vcam.VCAM_PORT      =  options.optInt("VCAM_PORT");
+                vcam.VCAM_IP        = options.optString("VCAM_IP");
+                vcam.VCAM_LOCATION  = options.optString("VCAM_LOCATION");
+                vcam.VCAM_VIDEO     = options.optString("VCAM_VIDEO");
+                vcam.UTILITY_NAME   = options.optString("UTILITY_NAME");
+                vcam.UTIL_IN_ARGS   = options.optString("UTIL_IN_ARGS");
+                vcam.VCAM_PROTOCOL  = options.optString("VCAM_PROTOCOL");
+                vcam.VCAM_AUDIO     = options.optString("VCAM_AUDIO");
+                vcam.ROD_START_TIME = options.optInt("ROD_START_TIME");
+                vcam.ON_AIR         = options.optInt("ON_AIR");
+                vcam.R_CHUNK_TIME   = options.optInt("R_CHUNK_TIME");
+                vcam.CONFIG_PORT     = options.optInt("CONFIG_PORT");
+                vcam.VCAM_DNAME     = options.optString("VCAM_DNAME");
+                vcam.EVENT_STATUS   = options.optInt("EVENT_STATUS");
+                vcam.DEL_E_VIDEO    = options.optInt("DEL_E_VIDEO");
+                vcam.SEND_EMAIL     = options.optInt("SEND_EMAIL");
+                vcam.SEND_SMS       = options.optInt("SEND_SMS");
+                vcam.SHARING_FOR_ALL = options.optInt("SHARING_FOR_ALL");
+                vcam.LAT             = options.optString("LAT");
+                vcam.LNG             = options.optString("LNG");
+                vcam.SEND_EMAIL_ATTACH = options.optInt("SEND_EMAIL_ATTACH");
             }
             return vcam;
         } catch (JSONException ex) {
