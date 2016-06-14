@@ -2,6 +2,7 @@ package ua.com.vi_port.vhome;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -50,7 +51,6 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
     public void onAttach(Context context) {
         super.onAttach(context);
         mListener = (OnLoginFragmentInteractionListener) context;
-        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override
@@ -127,9 +127,17 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                 }
                 break;
             case  R.id.btnRegisterRecovery :
+                /*
                 RegistrationFragment newFragment = RegistrationFragment.newInstance(etEmail.getText().toString());
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, newFragment).commit();
+                FragmentManager fragmentManager = getActivity().getFragmentManager();
+                fragmentManager.beginTransaction().add(R.id.container, newFragment).commit();
+*/
+                RegistrationFragment fragment = RegistrationFragment.newInstance(etEmail.getText().toString());
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.add(R.id.container, fragment);
+                transaction.addToBackStack("RegistrationFragment");
+                transaction.commit();
+
                 break;
         }
     }

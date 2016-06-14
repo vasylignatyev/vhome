@@ -2,12 +2,14 @@ package ua.com.vi_port.vhome;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 
 import ua.com.vi_port.vhome.models.Credentials;
 
@@ -27,9 +29,26 @@ public class LoginActivity extends Activity
     protected void onResume() {
         super.onResume();
         LoginFragment fragment = LoginFragment.newInstance();
-        getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        //transaction.addToBackStack("LoginFragment");
+        transaction.commit();
         fragment.setListener(this);
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        /*
+        Log.d("MyApp", "onBackPressed: " + getFragmentManager().getBackStackEntryCount());
+        if (getFragmentManager().getBackStackEntryCount() > 0 ){
+            getFragmentManager().popBackStack();
+            //getFragmentManager().popBackStackImmediate();
+            getFragmentManager().beginTransaction().commit();
+        } else {
+            super.onBackPressed();
+        }
+        */
     }
 
     @Override
@@ -64,6 +83,4 @@ public class LoginActivity extends Activity
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
-
-
 }

@@ -1,6 +1,9 @@
 package ua.com.vi_port.vhome;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +23,8 @@ import ua.com.vi_port.vhome.ajax.HTTPManager;
 import ua.com.vi_port.vhome.ajax.RequestPackage;
 import ua.com.vi_port.vhome.validator.TextValidator;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class RegistrationFragment extends Fragment implements View.OnFocusChangeListener {
 
     private static final String TAG = "RegistrationFragment";
@@ -30,6 +35,10 @@ public class RegistrationFragment extends Fragment implements View.OnFocusChange
     private EditText mEtEmail;
     private EditText mEtPass1;
     private Button btRegistration;
+
+    private EditText etName, etSurename, etCountry, etCity, etStreetHouse, etPhone;
+
+    private Boolean mResumed = false;
 
     Drawable mOriginalBackground;
 
@@ -71,33 +80,50 @@ public class RegistrationFragment extends Fragment implements View.OnFocusChange
         });
 
         mEtEmail.setText(mEMail);
+        etName = (EditText) view.findViewById(R.id.etName);
+        etSurename = (EditText) view.findViewById(R.id.etSurename);
+        etCountry = (EditText) view.findViewById(R.id.etCountry);
+        etCity = (EditText) view.findViewById(R.id.etCity);
+        etStreetHouse = (EditText) view.findViewById(R.id.etStreetHouse);
+        etPhone = (EditText) view.findViewById(R.id.etPhone);
+
 
         mEtEmail.setOnFocusChangeListener(this);
         mEtPass1.setOnFocusChangeListener(this);
         btRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addCustomer();
+                Boolean error = false;
+                if(etPhone.getText().length() == 0) {
+                    etPhone.setError("Обязательное поле");
+                    error = true;
+                }
+                if(etName.getText().length() == 0){
+                    etName.setError("Обязательное поле");
+                    error = true;
+                }
+                if(!error) {
+                    addCustomer();
+                }
             }
         });
 
         return view;
     }
 
-    /**
-     * REST Request for Vcam List
-     */
-    private void addCustomer(){
-        RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "/ajax/addCustomer.php");
-        rp.setMethod("GET");
-        //rp.setParam("functionName", "addCustomer");
-        rp.setParam("userEmail", mEtEmail.getText().toString() );
-        rp.setParam("userPassword", mEtPass1.getText().toString());
-
-        addCustomerAsyncTask task = new addCustomerAsyncTask();
-        task.execute(rp);
+    @Override
+    public void onResume() {
+        super.onResume();
+        mResumed = true;
 
     }
+
+    @Override
+    public void onPause() {
+        mResumed = false;
+        super.onPause();
+    }
+
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
@@ -106,13 +132,45 @@ public class RegistrationFragment extends Fragment implements View.OnFocusChange
                 case R.id.etEmail:
                     isEmailUniq(((EditText)v).getText().toString());
                     break;
+                case R.id.etPass1:
+                    validatePassword(v);
+                    break;
             }
         }
     }
 
     /**
-     * Async taskfor Vcam List
+     * REST Request for Vcam List
      */
+    private void addCustomer(){
+        RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
+        rp.setMethod("GET");
+        rp.setParam("user_email", mEtEmail.getText().toString() );
+        rp.setParam("user_password", mEtPass1.getText().toString());
+
+        if( etName.getText().length() >0  ) {
+            rp.setParam("firstname", etName.getText().toString());
+        }
+        if( etSurename.getText().length() >0  ) {
+            rp.setParam("lastname", etSurename.getText().toString());
+        }
+        if( etCountry.getText().length() >0  ) {
+            rp.setParam("country", etCountry.getText().toString());
+        }
+        if( etCity.getText().length() >0  ) {
+            rp.setParam("city]", etCity.getText().toString());
+        }
+        if( etStreetHouse.getText().length() >0  ) {
+            rp.setParam("address", etStreetHouse.getText().toString());
+        }
+        if( etPhone.getText().length() >0  ) {
+            rp.setParam("telephone", etPhone.getText().toString());
+        }
+        rp.setParam("functionName", "addCustomer");
+        addCustomerAsyncTask task = new addCustomerAsyncTask();
+        task.execute(rp);
+    }
+
     private class addCustomerAsyncTask extends AsyncTask<RequestPackage, Void, String> {
         @Override
         protected String doInBackground(RequestPackage... params) {
@@ -122,14 +180,35 @@ public class RegistrationFragment extends Fragment implements View.OnFocusChange
         @Override
         protected void onPostExecute(String s) {
             Log.d("MyApp", s);
-         }
+            try {
+                JSONObject object = new JSONObject(s);
+                if(object.has("i_customer")) {
+                    SharedPreferences sp = getActivity().getSharedPreferences(MySharedPreferences.PREFS_NAME, MODE_PRIVATE);
+                    SharedPreferences.Editor et = sp.edit();
+                    et.commit();
+
+                    FragmentManager fm = getFragmentManager();
+                    for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                        fm.popBackStack();
+                    }
+
+                    LoginFragment fragment = LoginFragment.newInstance();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.container, fragment);
+                    transaction.commit();
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
     /**
      * REST Request for Vcam List
      */
     private void validatePassword(View view){
         TextView v  = (TextView) view;
-        RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "/php/ajax.php");
+        RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
         rp.setMethod("GET");
         rp.setParam("functionName", "validatePassword");
         rp.setParam("password", v.getText().toString() );
@@ -152,9 +231,9 @@ public class RegistrationFragment extends Fragment implements View.OnFocusChange
             try {
                 JSONObject obj = new JSONObject(s);
                 if(obj.has("error")){
-                    Toast toast = Toast.makeText(getActivity().getApplicationContext(),obj.getString("error"), Toast.LENGTH_LONG);
-                    toast.show();
                     mEtPass1.setError(obj.getString("error"));
+                } else {
+                    mEtPass1.setError(null);
                 }
             } catch (JSONException e){
                 e.printStackTrace();
@@ -166,12 +245,14 @@ public class RegistrationFragment extends Fragment implements View.OnFocusChange
      */
     private void isEmailUniq(String userEmail) {
         //pd.show();
-        RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "/ajax/isEmailUniq.php");
+        RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
         rp.setMethod("GET");
-        rp.setParam("userEmail", userEmail);
+        rp.setParam("functionName", "isEmailUniq");
+        rp.setParam("user_email", userEmail);
 
-        isEmailUniqAsyncTask task = new isEmailUniqAsyncTask();
-        task.execute(rp);
+        if(mResumed) {
+            new isEmailUniqAsyncTask().execute(rp);
+        }
     }
     /**
      * Async taskfor Vcam List
@@ -184,11 +265,14 @@ public class RegistrationFragment extends Fragment implements View.OnFocusChange
         }
         @Override
         protected void onPostExecute(String s) {
+            if(s == null)    {
+                return;
+            }
             s = s.trim();
             if(s.equals("false")){
                 mEtEmail.setError(getString(R.string.already_in_use));
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(),getString(R.string.already_in_use), Toast.LENGTH_LONG);
-                toast.show();
+            } else {
+                mEtEmail.setError(null);
             }
         }
     }

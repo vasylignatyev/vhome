@@ -3,7 +3,6 @@ package ua.com.vi_port.vhome;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,9 +138,7 @@ public class ScheduleFragment extends Fragment {
 
         schedule = schedule.replace("\"", "");
 
-        Log.d("MyApp" , "ScheduleFragment::setSchedule schedule:" + schedule);
         if((schedule == null) || ( schedule.length() < 168)) {
-            Log.d("MyApp", "setSchedule param too short: " + schedule.length());
             return;
         }
         int rowCount = llSchedule.getChildCount();
@@ -155,7 +152,6 @@ public class ScheduleFragment extends Fragment {
                     View view = ll.getChildAt(i);
                     if (view instanceof CheckBox) {
                         int strIndex = r + j*24;
-                        Log.d("MyApp", "strIndex: " + strIndex + " - " + schedule.charAt(strIndex));
                         ((CheckBox)view).setChecked(schedule.charAt(strIndex) == '1');
                         j++;
                     }

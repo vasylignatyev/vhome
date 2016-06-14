@@ -31,7 +31,8 @@ import ua.com.vi_port.vhome.models.Vcam;
 import ua.com.vi_port.vhome.parsers.VcamListParser;
 
 public class VcamFragment extends Fragment
-        implements AbsListView.OnItemClickListener, VcamArrayAdapter.OnAdapterInteractionListener {
+        implements VcamArrayAdapter.OnAdapterInteractionListener {
+        //implements AbsListView.OnItemClickListener, VcamArrayAdapter.OnAdapterInteractionListener {
     /**
      * STATIC VAR
      */
@@ -94,7 +95,7 @@ public class VcamFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_vcam_list, container, false);
         mListView = (ListView) view.findViewById(android.R.id.list);
         mListView.setEmptyView(view.findViewById(android.R.id.empty));
-        mListView.setOnItemClickListener(this);
+        //mListView.setOnItemClickListener(this);
 
         return view;
     }
@@ -134,7 +135,7 @@ public class VcamFragment extends Fragment
 
     /**
      * IMPLEMENTED
-     */
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -145,6 +146,7 @@ public class VcamFragment extends Fragment
             getHashString(vcam.getTOKEN());
         }
     }
+     */
     //video Archive Button Click
     @Override
     public void onArchButtonClick(View v) {
@@ -201,6 +203,7 @@ public class VcamFragment extends Fragment
 
     @Override
     public void onDeleteButtonClick(View view) {
+        /*
         new AlertDialog.Builder(getContext())
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Closing Activity")
@@ -215,7 +218,18 @@ public class VcamFragment extends Fragment
                 })
                 .setNegativeButton("No", null)
                 .show();
+*/
+    }
 
+    @Override
+    public void onPlayClick(View v, int pos) {
+        mVcamPosition = pos;
+
+        if(mVcamList != null && (mVcamList.size() > pos) ) {
+            Vcam vcam = mVcamList.get(pos);
+            mStreamURL = vcam.getVcamURL();
+            getHashString(vcam.getTOKEN());
+        }
     }
 
     /**

@@ -165,6 +165,11 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
 
     }
 
+    @Override
+    public void onPlayClick(View v, int pos) {
+
+    }
+
     /**
      * REST Request for Shared Vcam List
      */

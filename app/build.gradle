@@ -13,8 +13,8 @@ android {
         // Enabling multidex support.
         //multiDexEnabled true
 
-        versionCode 109
-        versionName "1.09"
+        versionCode 110
+        versionName "1.10"
     }
     buildTypes {
         release {

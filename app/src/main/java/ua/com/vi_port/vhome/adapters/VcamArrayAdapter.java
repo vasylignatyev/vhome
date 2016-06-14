@@ -55,6 +55,7 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         void onShareButtonClick(View view);
         void onRecordButtonClick(int result);
         void onDeleteButtonClick(View view);
+        void onPlayClick(View v, int pos);
     }
 
     private OnAdapterInteractionListener listener;
@@ -64,7 +65,7 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
             LayoutInflater inflater =
                     (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -163,14 +164,23 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         } else {
             ibArchive.setVisibility(View.VISIBLE);
         }
+        ImageView ivThumb = (ImageView)  convertView.findViewById(R.id.ivThumb);
         if(vcam.THUMBNAIL != null) {
-            ImageView ivThumb = (ImageView)  convertView.findViewById(R.id.ivThumb);
             ivThumb.setImageBitmap(vcam.THUMBNAIL);
         } else {
             final VcamAndThumb container = new VcamAndThumb(vcam, convertView);
             ThumbLoader loader = new ThumbLoader();
             loader.execute(container);
         }
+        ivThumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("MyApp", "On thumb click: " + position);
+                if (listener != null) {
+                    listener.onPlayClick(v, position);
+                }
+            }
+        });
 
         convertView.setTag(position);
 
