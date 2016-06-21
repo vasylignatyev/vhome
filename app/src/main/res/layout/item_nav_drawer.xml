@@ -19,5 +19,6 @@
         android:layout_height="wrap_content"
         android:text="Title"
         android:id="@+id/item_title"
+        android:textColor="#000"
         android:layout_gravity="center_vertical" />
 </LinearLayout>

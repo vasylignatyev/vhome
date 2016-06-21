@@ -185,6 +185,8 @@ public class RegistrationFragment extends Fragment implements View.OnFocusChange
                 if(object.has("i_customer")) {
                     SharedPreferences sp = getActivity().getSharedPreferences(MySharedPreferences.PREFS_NAME, MODE_PRIVATE);
                     SharedPreferences.Editor et = sp.edit();
+                    et.putString(MySharedPreferences.USER_NAME, mEtEmail.getText().toString());
+                    et.putString(MySharedPreferences.USER_PASSWORD, mEtPass1.getText().toString());
                     et.commit();
 
                     FragmentManager fm = getFragmentManager();
@@ -195,6 +197,7 @@ public class RegistrationFragment extends Fragment implements View.OnFocusChange
                     LoginFragment fragment = LoginFragment.newInstance();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.container, fragment);
+                    fragment.setListener((LoginActivity)getActivity());
                     transaction.commit();
 
                 }

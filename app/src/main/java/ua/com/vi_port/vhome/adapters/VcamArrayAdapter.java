@@ -257,8 +257,6 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
             if(s == null) {
                 return;
             }
-            //Log.d("MyApp", "recordControl: " + s);
-
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if(jsonObject.has("result")) {

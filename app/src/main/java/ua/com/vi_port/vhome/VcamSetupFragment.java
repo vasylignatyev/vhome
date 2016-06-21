@@ -433,7 +433,7 @@ public class VcamSetupFragment extends Fragment
         rp.setParam("user_token", mUserToken);
 
         rp.setParam("options[VCAM_IP]", etVcamIP.getText().toString());
-        rp.setParam("options[VCAM_PROTOCOL]", spinProtocol.getSelectedItem().toString());
+        rp.setParam("options[VCAM_PROTOCOL]", spinProtocol.getSelectedItem().toString().toLowerCase().substring(0,4));
         rp.setParam("options[VCAM_DNAME]", etVcamDNS.getText().toString());
         rp.setParam("options[VCAM_PORT]", etConnectionPort.getText().toString());
         rp.setParam("options[R_CHUNK_TIME]", etRecordDuration.getText().toString());

@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -33,14 +32,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
 import ua.com.vi_port.vhome.ajax.HTTPManager;
 import ua.com.vi_port.vhome.ajax.InstallTask;
 import ua.com.vi_port.vhome.ajax.RequestPackage;
 import ua.com.vi_port.vhome.gcm.QuickstartPreferences;
 import ua.com.vi_port.vhome.gcm.RegistrationIntentService;
-import ua.com.vi_port.vhome.models.Vcam;
 
 public class MainActivity extends FragmentActivity
 //public class MainActivity extends Activity
@@ -48,7 +44,8 @@ public class MainActivity extends FragmentActivity
     /**
      * STATIC VARS
      */
-    public static final String SERVER_URL = "http://vhome.dev.vi-port.com.ua/";
+    //ublic static final String SERVER_URL = "http://vhome.dev.vi-port.com.ua/";
+     public static final String SERVER_URL = "http://vhome.vi-port.com.ua/";
     public static final String PREFS_NAME = "VhomeSharedPreferences";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static String mUserToken = null;
@@ -121,6 +118,7 @@ public class MainActivity extends FragmentActivity
             //confirmAuthentication();
         }
 */
+
 
         // Set up the drawer.
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);

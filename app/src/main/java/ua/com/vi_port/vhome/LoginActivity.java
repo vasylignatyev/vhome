@@ -31,7 +31,6 @@ public class LoginActivity extends Activity
         LoginFragment fragment = LoginFragment.newInstance();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
-        //transaction.addToBackStack("LoginFragment");
         transaction.commit();
         fragment.setListener(this);
     }
@@ -39,16 +38,6 @@ public class LoginActivity extends Activity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        /*
-        Log.d("MyApp", "onBackPressed: " + getFragmentManager().getBackStackEntryCount());
-        if (getFragmentManager().getBackStackEntryCount() > 0 ){
-            getFragmentManager().popBackStack();
-            //getFragmentManager().popBackStackImmediate();
-            getFragmentManager().beginTransaction().commit();
-        } else {
-            super.onBackPressed();
-        }
-        */
     }
 
     @Override
@@ -72,6 +61,7 @@ public class LoginActivity extends Activity
 
     @Override
     public Credentials getCredentials() {
+        Log.d("MyApp", "LoginActivity::getCredentials");
         SharedPreferences sp = getSharedPreferences(MySharedPreferences.PREFS_NAME, MODE_PRIVATE);
         String userName = sp.getString(MySharedPreferences.USER_NAME, null);
         String userPass = sp.getString(MySharedPreferences.USER_PASSWORD, null);

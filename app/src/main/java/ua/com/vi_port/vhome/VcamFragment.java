@@ -49,6 +49,8 @@ public class VcamFragment extends Fragment
     private List<Vcam> mVcamList;
     private MainActivity mMainActivity = null;
 
+    ua.com.vi_port.vhome.AlertDialog mAlertDialog;
+
     /**
      *
      */
@@ -87,6 +89,8 @@ public class VcamFragment extends Fragment
         if (getArguments() != null) {
             mUserToken = getArguments().getString(USER_TOKEN, null);
         }
+
+        mAlertDialog = new ua.com.vi_port.vhome.AlertDialog();
     }
 
     @Override
@@ -204,22 +208,11 @@ public class VcamFragment extends Fragment
     @Override
     public void onDeleteButtonClick(View view) {
         /*
-        new AlertDialog.Builder(getContext())
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Closing Activity")
-                .setMessage("Are you sure you want to close this activity?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // finish();
-                    }
-
-                })
-                .setNegativeButton("No", null)
-                .show();
-*/
+        mAlertDialog.show(getFragmentManager(), "Alert");
+        */
     }
+
+
 
     @Override
     public void onPlayClick(View v, int pos) {
