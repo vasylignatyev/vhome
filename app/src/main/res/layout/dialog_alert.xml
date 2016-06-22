@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
-        android:text="message_text">
+        android:text="@string/delete_vcam_question"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large">
     </TextView>
 
     <LinearLayout

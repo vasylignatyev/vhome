@@ -2,20 +2,16 @@ package ua.com.vi_port.vhome;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,8 +27,7 @@ import ua.com.vi_port.vhome.models.Vcam;
 import ua.com.vi_port.vhome.parsers.VcamListParser;
 
 public class VcamFragment extends Fragment
-        implements VcamArrayAdapter.OnAdapterInteractionListener {
-        //implements AbsListView.OnItemClickListener, VcamArrayAdapter.OnAdapterInteractionListener {
+        implements VcamArrayAdapter.OnAdapterInteractionListener, VcamDelAlertDialog.AlertDialogInterface {
     /**
      * STATIC VAR
      */
@@ -49,7 +44,7 @@ public class VcamFragment extends Fragment
     private List<Vcam> mVcamList;
     private MainActivity mMainActivity = null;
 
-    ua.com.vi_port.vhome.AlertDialog mAlertDialog;
+
 
     /**
      *
@@ -89,8 +84,6 @@ public class VcamFragment extends Fragment
         if (getArguments() != null) {
             mUserToken = getArguments().getString(USER_TOKEN, null);
         }
-
-        mAlertDialog = new ua.com.vi_port.vhome.AlertDialog();
     }
 
     @Override
@@ -207,9 +200,14 @@ public class VcamFragment extends Fragment
 
     @Override
     public void onDeleteButtonClick(View view) {
-        /*
-        mAlertDialog.show(getFragmentManager(), "Alert");
-        */
+
+        Log.d("MyApp", "Token: " + view.getTag());
+
+        VcamDelAlertDialog mVcamDelAlertDialog;
+        mVcamDelAlertDialog = VcamDelAlertDialog.newInstance(view.getTag().toString());
+        mVcamDelAlertDialog.setListener(this);
+        mVcamDelAlertDialog.show(getFragmentManager(), "VcamDeleteAlert");
+
     }
 
 
@@ -223,6 +221,16 @@ public class VcamFragment extends Fragment
             mStreamURL = vcam.getVcamURL();
             getHashString(vcam.getTOKEN());
         }
+    }
+
+    @Override
+    public void onConfirm(String vcam_token) {
+        deleteCustomerVcam(vcam_token);
+    }
+
+    @Override
+    public void onCancel(String vcam_token) {
+        //Log.d("MyApp" , "vcamToken: " + vcam_token);
     }
 
     /**
@@ -239,6 +247,8 @@ public class VcamFragment extends Fragment
 
         new VcamFragment.getCustomerVCamListAsyncTask().execute(rp);
     }
+
+
     private class getCustomerVCamListAsyncTask extends AsyncTask<RequestPackage, Void, String> {
         @Override
         protected String doInBackground(RequestPackage... params) {
@@ -310,6 +320,28 @@ public class VcamFragment extends Fragment
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void deleteCustomerVcam(String camToken) {
+        RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
+        rp.setMethod("GET");
+        rp.setParam("functionName", "deleteCustomerVcam");
+        rp.setParam("user_token", mUserToken);
+        rp.setParam("cam_token", camToken);
+
+        new deleteCustomerVcamAsyncTask().execute(rp);
+    }
+    private class deleteCustomerVcamAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+
+        @Override
+        protected String doInBackground(RequestPackage... params) {
+            return HTTPManager.getData(params[0]);
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("MyApp", "deleteCustomerVcam:" + s);
+            getCustomerVCamList();
         }
     }
 }

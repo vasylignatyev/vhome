@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -472,6 +473,19 @@ public class VcamSetupFragment extends Fragment
         @Override
         protected void onPostExecute(String s) {
             Log.d("MyApp", "addCustomerVcamAsyncTask: " + s);
+
+            try {
+                JSONObject object = new JSONObject(s);
+                if(object.has("error")) {
+                    JSONObject error =  object.getJSONObject("error");
+                    if(error.has("message")) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Ошибка: " + error.getString("message"), Toast.LENGTH_LONG ).show();
+                    }
+                }
+            } catch (JSONException e) {
+                Log.d("MyApp", "errror addCustomerVcam: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 

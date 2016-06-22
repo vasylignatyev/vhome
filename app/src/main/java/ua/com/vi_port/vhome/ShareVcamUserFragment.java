@@ -156,25 +156,24 @@ public class ShareVcamUserFragment extends Fragment
      /**
      * REST Request for Hash String
      */
-     private void addAccess(ShareVcamUser shareVcamUser){
-         RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
-         rp.setMethod("GET");
-         rp.setParam("functionName", "addAccess");
-         rp.setParam("cam_token", mVcamToken);
-         rp.setParam("user_token", mUserToken);
-         rp.setParam("access_name", shareVcamUser.NAME);
-         rp.setParam("restriction", Integer.toString(shareVcamUser.RESTRICTION));
-         if(shareVcamUser.EXPIRATION != null) {
-             rp.setParam("expiration", mMysqlDateFormat.format(shareVcamUser.EXPIRATION));
-         }
-         if(shareVcamUser.SCHEDULE != null) {
-             rp.setParam("schedule", shareVcamUser.SCHEDULE);
-         }
-         addAccessAsyncTask task = new addAccessAsyncTask();
-         task.execute(rp);
-
-     }
-
+private void addAccess(ShareVcamUser shareVcamUser){
+    RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
+    rp.setMethod("GET");
+    rp.setParam("functionName", "addAccess");
+    rp.setParam("cam_token", mVcamToken);
+    rp.setParam("user_token", mUserToken);
+    rp.setParam("access_name", shareVcamUser.NAME);
+    rp.setParam("type", "insert");
+    rp.setParam("restriction", Integer.toString(shareVcamUser.RESTRICTION));
+    if(shareVcamUser.EXPIRATION != null) {
+        rp.setParam("expiration", mMysqlDateFormat.format(shareVcamUser.EXPIRATION));
+    }
+    if(shareVcamUser.SCHEDULE != null) {
+        rp.setParam("schedule", shareVcamUser.SCHEDULE);
+    }
+    addAccessAsyncTask task = new addAccessAsyncTask();
+    task.execute(rp);
+}
 
     public class addAccessAsyncTask extends AsyncTask<RequestPackage, Void, String> {
 

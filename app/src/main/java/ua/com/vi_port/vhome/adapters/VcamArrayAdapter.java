@@ -161,6 +161,7 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
             ibShare.setVisibility(View.VISIBLE);
             ibRecord.setVisibility(View.VISIBLE);
             ibArchive.setVisibility(View.VISIBLE);
+            ibDelete.setVisibility(View.VISIBLE);
         } else {
             ibArchive.setVisibility(View.VISIBLE);
         }

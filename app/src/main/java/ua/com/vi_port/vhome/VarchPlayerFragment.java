@@ -59,7 +59,7 @@ public class VarchPlayerFragment extends Fragment
     private ScrollBarView mScrollBarView;
     private VideoView mVideoView = null;
     private ImageButton mIbPlay;
-    private TextView mTvDate, mTvTime;
+    private TextView mTvDate, mTvTime, tvEmpty;
 
     private Boolean mTimerStarted = false;
 
@@ -132,6 +132,7 @@ public class VarchPlayerFragment extends Fragment
                 e.printStackTrace();
             }
         }
+        getVarchStatByCam();
     }
 
     @Override
@@ -156,6 +157,7 @@ public class VarchPlayerFragment extends Fragment
         mIbPlay = (ImageButton) view.findViewById(R.id.ibPlay);
         mTvDate =(TextView) view.findViewById(R.id.tvDate);
         mTvTime =(TextView) view.findViewById(R.id.tvTime);
+        tvEmpty =(TextView) view.findViewById(R.id.tvEmpty);
 
         mIbPlay.setOnClickListener(this);
 
@@ -417,6 +419,34 @@ public class VarchPlayerFragment extends Fragment
                 ex.printStackTrace();
             }
             mScrollBarView.invalidate();
+        }
+    }
+    public void getVarchStatByCam() {
+        RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
+        rp.setMethod("GET");
+        rp.setParam("functionName", "getVarchStatByCam");
+        rp.setParam("vcam_token", mVcamToken);
+        rp.setParam("user_token", mUserToken);
+
+        new getVarchStatByCamAsyncTask().execute(rp);
+    }
+    public class getVarchStatByCamAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+        @Override
+        protected String doInBackground(RequestPackage... params) {
+            return HTTPManager.getData(params[0]);
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("MyApp", "getVarchStatByCam: " + s);
+            try {
+                JSONObject object = new JSONObject(s);
+                int count = object.optInt("COUNT",0);
+                if(count == 0) {
+                    tvEmpty.setVisibility(View.VISIBLE);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

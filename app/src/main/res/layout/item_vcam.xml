@@ -80,6 +80,7 @@
                     android:layout_height="30dp"
                     android:background="#fff"
                     android:id="@+id/ibDelete"
+                    android:visibility="gone"
                     android:src="@drawable/places_ic_clear" />
 
             </LinearLayout>

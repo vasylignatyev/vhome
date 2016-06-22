@@ -103,6 +103,8 @@
     <string name="phone">Phone</string>
     <string name="already_in_use">Такой п/я уже используется!</string>
     <string name="vcjjc">РАССПИСАНИЕ ЗАПИСИ</string>
+    <string name="vcam_delete">Удаление камеры</string>
+    <string name="delete_vcam_question">Удалить видеокамеру?</string>
 
     <string-array name="access_level_items">
         <item>@string/access_level_online</item>

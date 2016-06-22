@@ -6,15 +6,15 @@ android {
     buildToolsVersion '23.0.0'
 
     defaultConfig {
-        applicationId "ua.kiev.vignatyev.vhome1"
+        applicationId "ua.com.vi_port.vhome"
         minSdkVersion 17
         targetSdkVersion 23
 
         // Enabling multidex support.
         //multiDexEnabled true
 
-        versionCode 111
-        versionName "1.11"
+        versionCode 112
+        versionName "1.12"
     }
     buildTypes {
         release {
