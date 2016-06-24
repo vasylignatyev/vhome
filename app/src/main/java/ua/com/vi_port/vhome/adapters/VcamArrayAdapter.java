@@ -35,9 +35,6 @@ import ua.com.vi_port.vhome.ajax.HTTPManager;
 import ua.com.vi_port.vhome.ajax.RequestPackage;
 import ua.com.vi_port.vhome.models.Vcam;
 
-/**
- * Created by vignatyev on 01.07.2015.
- */
 public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
     private Context context;
     private static String THUMB_NAIL_URL = MainActivity.SERVER_URL + "vcam_thumbnail/";
@@ -89,7 +86,7 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if(convertView == null) {
             viewHolder = new ViewHolder();
@@ -201,23 +198,15 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
                 }
             }
         });
-        if( vcam.ON_AIR == 4 ) {
-            viewHolder.tvOnline.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.tvOnline.setVisibility(View.GONE);
-        }
-        if( (vcam.ROS != 0) || (vcam.ROD != 0) ) {
-            viewHolder.tvRecord.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.tvRecord.setVisibility(View.GONE);
-        }
+        viewHolder.tvOnline.setVisibility(( vcam.ON_AIR == 4 ) ? View.VISIBLE : View.GONE);
+        viewHolder.tvRecord.setVisibility(((vcam.ROS!=0)||(vcam.ROD!=0)) ? View.VISIBLE : View.GONE);
 
         vcam.timer = new Timer();
         vcam.timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 if(listener != null) {
-                    getVCamStatus(listener.getCustomerToken(), vcam.TOKEN);
+                    getVCamStatus(listener.getCustomerToken(), vcam.TOKEN, viewHolder);
                 }
             }
         }, 10000L, 10000L);
@@ -326,16 +315,22 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
             }
         }
     }
-    private void getVCamStatus(String user_token, String cam_token) {
+    private void getVCamStatus(String user_token, String cam_token, ViewHolder viewHolder) {
         RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
         rp.setMethod("GET");
         rp.setParam("functionName", "getVCamStatus");
         rp.setParam("cam_token", cam_token);
         rp.setParam( "user_token", user_token);
 
-        new getVCamStatusAsyncTask().execute(rp);
+        new getVCamStatusAsyncTask(viewHolder).execute(rp);
     }
     private class getVCamStatusAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+        ViewHolder viewHolder;
+
+        getVCamStatusAsyncTask(ViewHolder viewHolder) {
+            this.viewHolder = viewHolder;
+        }
+
         @Override
         protected String doInBackground(RequestPackage... params) {
             return HTTPManager.getData(params[0]);
@@ -343,6 +338,24 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         @Override
         protected void onPostExecute(String s) {
             Log.d("MyApp", "getVCamStatus: " + s);
+            if(s == null) {
+                return;
+            }
+            try {
+                JSONObject object = new JSONObject(s);
+                if(object.has("result")) {
+                    JSONObject result = object.getJSONObject("result");
+                    int ROD = result.optInt("ROD");
+                    int ROS = result.optInt("ROS");
+                    int ON_AIR = result.optInt("ON_AIR");
+                    if (viewHolder != null) {
+                        viewHolder.tvOnline.setVisibility((ON_AIR == 4) ? View.VISIBLE : View.GONE);
+                        viewHolder.tvRecord.setVisibility(((ROS != 0) || (ROD != 0)) ? View.VISIBLE : View.GONE);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
