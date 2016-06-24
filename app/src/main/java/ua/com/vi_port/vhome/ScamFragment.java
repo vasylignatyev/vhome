@@ -170,6 +170,11 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
 
     }
 
+    @Override
+    public String getCustomerToken() {
+        return mUserToken;
+    }
+
     /**
      * REST Request for Shared Vcam List
      */

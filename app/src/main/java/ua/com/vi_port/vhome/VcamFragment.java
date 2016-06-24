@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -210,6 +211,11 @@ public class VcamFragment extends Fragment
 
     }
 
+    @Override
+    public void onDestroyView() {
+        ((ArrayAdapter) mListView.getAdapter()).clear();
+        super.onDestroyView();
+    }
 
 
     @Override
@@ -221,6 +227,11 @@ public class VcamFragment extends Fragment
             mStreamURL = vcam.getVcamURL();
             getHashString(vcam.getTOKEN());
         }
+    }
+
+    @Override
+    public String getCustomerToken() {
+        return mUserToken;
     }
 
     @Override

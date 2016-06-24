@@ -3,24 +3,26 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.0'
+    buildToolsVersion '23.0.3'
 
+ /*   buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+        }
+    }
+*/
     defaultConfig {
         applicationId "ua.com.vi_port.vhome"
         minSdkVersion 17
         targetSdkVersion 23
 
         // Enabling multidex support.
-        //multiDexEnabled true
+         multiDexEnabled true
 
         versionCode 112
         versionName "1.12"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
     }
 }
 

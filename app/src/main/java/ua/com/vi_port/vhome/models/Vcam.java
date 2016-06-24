@@ -2,10 +2,13 @@ package ua.com.vi_port.vhome.models;
 
 import android.graphics.Bitmap;
 
+import java.util.Timer;
+
 /**
  * Created by vignatyev on 01.07.2015.
  */
 public class Vcam {
+    public Timer timer;
     public String error;
     public String URL;
     public int HLS;

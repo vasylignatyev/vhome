@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,13 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ua.com.vi_port.vhome.MainActivity;
 import ua.com.vi_port.vhome.R;
@@ -35,9 +42,22 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
     private Context context;
     private static String THUMB_NAIL_URL = MainActivity.SERVER_URL + "vcam_thumbnail/";
 
-
     private List<Vcam> vcamList;
     private ProgressDialog pd;
+
+    private static class ViewHolder {
+        TextView vcamName;
+        TextView tvVcamLocation;
+        ImageButton ibDelete;
+        ImageButton ibConfig;
+        ImageButton ibCalendar;
+        ImageButton ibShare;
+        ImageButton ibRecord;
+        ImageButton ibArchive;
+        ImageView ivThumb;
+        TextView tvOnline;
+        TextView tvRecord;
+    }
 
     public VcamArrayAdapter(Context context, int resource, List<Vcam> objects) {
         super(context, resource, objects);
@@ -48,6 +68,7 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         pd.setTitle("Подключение к серверу");
         pd.setMessage("Ожидайте");
     }
+
     public interface OnAdapterInteractionListener {
         void onArchButtonClick(View view);
         void onConfigButtonClick(View view);
@@ -56,6 +77,7 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         void onRecordButtonClick(int result);
         void onDeleteButtonClick(View view);
         void onPlayClick(View v, int pos);
+        String getCustomerToken();
     }
 
     private OnAdapterInteractionListener listener;
@@ -66,34 +88,40 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
+        ViewHolder viewHolder;
+
         if(convertView == null) {
+            viewHolder = new ViewHolder();
+
             LayoutInflater inflater =
                     (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
             convertView = inflater.inflate(R.layout.item_vcam, parent, false);
+
+            viewHolder.vcamName = (TextView) convertView.findViewById(R.id.vcamName);
+            viewHolder.tvVcamLocation = (TextView) convertView.findViewById(R.id.vcamLocation);
+            viewHolder.ibDelete = (ImageButton) convertView.findViewById(R.id.ibDelete);
+            viewHolder.ibConfig = (ImageButton) convertView.findViewById(R.id.ibConfig);
+            viewHolder.ibCalendar = (ImageButton) convertView.findViewById(R.id.ibCalendar);
+            viewHolder.ibShare = (ImageButton) convertView.findViewById(R.id.ibShare);
+            viewHolder.ibRecord = (ImageButton) convertView.findViewById(R.id.ibRecord);
+            viewHolder.ibArchive = (ImageButton) convertView.findViewById(R.id.ibArchive);
+            viewHolder.ivThumb = (ImageView)  convertView.findViewById(R.id.ivThumb);
+            viewHolder.tvOnline = (TextView) convertView.findViewById(R.id.tvOnline);
+            viewHolder.tvRecord = (TextView) convertView.findViewById(R.id.tvRecord);
+
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
         final Vcam vcam = vcamList.get(position);
-        TextView vcamName = (TextView) convertView.findViewById(R.id.vcamName);
-        vcamName.setText(vcam.CUSTOMER_VCAM_NAME);
-        TextView tvVcamLocation = (TextView) convertView.findViewById(R.id.vcamLocation);
-        tvVcamLocation.setText(vcam.VCAM_LOCATION);
 
-        TextView tvOnline = (TextView) convertView.findViewById(R.id.tvOnline);
-        if( vcam.ON_AIR == 4 ) {
-            tvOnline.setVisibility(View.VISIBLE);
-        } else {
-            tvOnline.setVisibility(View.GONE);
-        }
+        viewHolder.vcamName.setText(vcam.CUSTOMER_VCAM_NAME);
+        viewHolder.tvVcamLocation.setText(vcam.VCAM_LOCATION);
 
-        TextView tvRecord = (TextView) convertView.findViewById(R.id.tvRecord);
-        if( (vcam.ROS != 0) || (vcam.ROD != 0) ) {
-            tvRecord.setVisibility(View.VISIBLE);
-        } else {
-            tvRecord.setVisibility(View.GONE);
-        }
-
-        ImageButton ibDelete = (ImageButton) convertView.findViewById(R.id.ibDelete);
-        ibDelete.setTag(vcam.TOKEN);
-        ibDelete.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ibDelete.setTag(vcam.TOKEN);
+        viewHolder.ibDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -101,10 +129,8 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
                 }
             }
         });
-
-        ImageButton ibConfig = (ImageButton) convertView.findViewById(R.id.ibConfig);
-        ibConfig.setTag(vcam.TOKEN);
-        ibConfig.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ibConfig.setTag(vcam.TOKEN);
+        viewHolder.ibConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -112,10 +138,8 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
                 }
             }
         });
-
-        ImageButton ibCalendar = (ImageButton) convertView.findViewById(R.id.ibCalendar);
-        ibCalendar.setTag(vcam.TOKEN);
-        ibCalendar.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ibCalendar.setTag(vcam.TOKEN);
+        viewHolder.ibCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -123,11 +147,8 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
                 }
             }
         });
-
-
-        ImageButton ibShare = (ImageButton) convertView.findViewById(R.id.ibShare);
-        ibShare.setTag(vcam.TOKEN);
-        ibShare.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ibShare.setTag(vcam.TOKEN);
+        viewHolder.ibShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -135,18 +156,16 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
                 }
             }
         });
-        ImageButton ibRecord = (ImageButton) convertView.findViewById(R.id.ibRecord);
-        ibShare.setTag(vcam.TOKEN);
-        ibRecord.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ibShare.setTag(vcam.TOKEN);
+        viewHolder.ibRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recordControl( vcam.TOKEN, "session");
 
             }
         });
-        ImageButton ibArchive = (ImageButton) convertView.findViewById(R.id.ibArchive);
-        ibArchive.setTag(vcam.TOKEN);
-        ibArchive.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ibArchive.setTag(vcam.TOKEN);
+        viewHolder.ibArchive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -156,24 +175,24 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
         });
 
         if( vcam.TYPE.equalsIgnoreCase("OWNER")) {
-            ibConfig.setVisibility(View.VISIBLE);
-            ibCalendar.setVisibility(View.VISIBLE);
-            ibShare.setVisibility(View.VISIBLE);
-            ibRecord.setVisibility(View.VISIBLE);
-            ibArchive.setVisibility(View.VISIBLE);
-            ibDelete.setVisibility(View.VISIBLE);
+            viewHolder.ibConfig.setVisibility(View.VISIBLE);
+            viewHolder.ibCalendar.setVisibility(View.VISIBLE);
+            viewHolder.ibShare.setVisibility(View.VISIBLE);
+            viewHolder.ibRecord.setVisibility(View.VISIBLE);
+            viewHolder.ibArchive.setVisibility(View.VISIBLE);
+            viewHolder.ibDelete.setVisibility(View.VISIBLE);
         } else {
-            ibArchive.setVisibility(View.VISIBLE);
+            viewHolder.ibArchive.setVisibility(View.VISIBLE);
         }
-        ImageView ivThumb = (ImageView)  convertView.findViewById(R.id.ivThumb);
+
         if(vcam.THUMBNAIL != null) {
-            ivThumb.setImageBitmap(vcam.THUMBNAIL);
+            viewHolder.ivThumb.setImageBitmap(vcam.THUMBNAIL);
         } else {
             final VcamAndThumb container = new VcamAndThumb(vcam, convertView);
             ThumbLoader loader = new ThumbLoader();
             loader.execute(container);
         }
-        ivThumb.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ivThumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("MyApp", "On thumb click: " + position);
@@ -182,11 +201,46 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
                 }
             }
         });
+        if( vcam.ON_AIR == 4 ) {
+            viewHolder.tvOnline.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.tvOnline.setVisibility(View.GONE);
+        }
+        if( (vcam.ROS != 0) || (vcam.ROD != 0) ) {
+            viewHolder.tvRecord.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.tvRecord.setVisibility(View.GONE);
+        }
+
+        vcam.timer = new Timer();
+        vcam.timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(listener != null) {
+                    getVCamStatus(listener.getCustomerToken(), vcam.TOKEN);
+                }
+            }
+        }, 10000L, 10000L);
+
 
         convertView.setTag(position);
 
         return convertView;
     }
+
+    @Override
+    public void clear() {
+        Log.d("MyApp", "VcamArrayAdapter::clear");
+        for(Vcam vcam : vcamList ) {
+            if(vcam.timer != null) {
+                vcam.timer.cancel();
+                vcam.timer = null;
+            }
+        }
+        super.clear();
+    }
+
+
     private class VcamAndThumb {
         public VcamAndThumb(Vcam vcam, View view) {
             this.vcam = vcam;
@@ -231,6 +285,7 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
             }
         }
     }
+
     /**
      * REST Request
      */
@@ -269,6 +324,25 @@ public class VcamArrayAdapter extends ArrayAdapter<Vcam> {
             } catch (JSONException e) {
                 Log.d("MyApp", "recordControl JSON error: " + e.getMessage());
             }
+        }
+    }
+    private void getVCamStatus(String user_token, String cam_token) {
+        RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
+        rp.setMethod("GET");
+        rp.setParam("functionName", "getVCamStatus");
+        rp.setParam("cam_token", cam_token);
+        rp.setParam( "user_token", user_token);
+
+        new getVCamStatusAsyncTask().execute(rp);
+    }
+    private class getVCamStatusAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+        @Override
+        protected String doInBackground(RequestPackage... params) {
+            return HTTPManager.getData(params[0]);
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("MyApp", "getVCamStatus: " + s);
         }
     }
 }

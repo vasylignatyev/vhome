@@ -83,7 +83,6 @@ public class VcamParser {
                 vcam.VCAM_PROTOCOL  = options.optString("VCAM_PROTOCOL");
                 vcam.VCAM_AUDIO     = options.optString("VCAM_AUDIO");
                 vcam.ROD_START_TIME = options.optInt("ROD_START_TIME");
-                vcam.ON_AIR         = options.optInt("ON_AIR");
                 vcam.R_CHUNK_TIME   = options.optInt("R_CHUNK_TIME");
                 vcam.CONFIG_PORT     = options.optInt("CONFIG_PORT");
                 vcam.VCAM_DNAME     = options.optString("VCAM_DNAME");

@@ -437,7 +437,10 @@ public class VarchPlayerFragment extends Fragment
         }
         @Override
         protected void onPostExecute(String s) {
+            if(s == null)
+                return;
             Log.d("MyApp", "getVarchStatByCam: " + s);
+
             try {
                 JSONObject object = new JSONObject(s);
                 int count = object.optInt("COUNT",0);
