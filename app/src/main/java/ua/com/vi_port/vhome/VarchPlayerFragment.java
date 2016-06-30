@@ -422,6 +422,7 @@ public class VarchPlayerFragment extends Fragment
         }
     }
     public void getVarchStatByCam() {
+        Log.d("MyApp", "getVarchStatByCam vcam_token:" + mVcamToken + "user_token: " + mUserToken);
         RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
         rp.setMethod("GET");
         rp.setParam("functionName", "getVarchStatByCam");

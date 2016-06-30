@@ -25,7 +25,8 @@ import ua.com.vi_port.vhome.ajax.RequestPackage;
 import ua.com.vi_port.vhome.models.Vcam;
 import ua.com.vi_port.vhome.parsers.VcamListParser;
 
-public class ScamFragment extends Fragment implements AbsListView.OnItemClickListener, VcamArrayAdapter.OnAdapterInteractionListener {
+public class ScamFragment extends Fragment
+        implements VcamArrayAdapter.OnAdapterInteractionListener {
     /**
      * STATIC VAR
      */
@@ -38,7 +39,7 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
     private String mUserToken;
     private AbsListView mListView = null;
     private String mStreamURL;
-    private int mPosition;
+    private int mVcamPosition;
     private List<Vcam> mVcamList;
     private MainActivity mMainActivity = null;
 
@@ -66,7 +67,6 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
         if( context instanceof MainActivity) {
             mMainActivity = (MainActivity) context;
             mMainActivity.getActionBar().setTitle(getResources().getString(R.string.shared_cameras));
-
         }
 
         pd = new ProgressDialog(context);
@@ -89,7 +89,6 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
         View view = inflater.inflate(R.layout.fragment_scam_list, container, false);
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         mListView.setEmptyView(view.findViewById(android.R.id.empty));
-        mListView.setOnItemClickListener(this);
 
         return view;
     }
@@ -98,8 +97,15 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(savedInstanceState == null) {
-            getSharedVCamList();
+            //getSharedVCamList();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("MyApp", "VcamFragment::onResume");
+        getSharedVCamList();
     }
 
     /**
@@ -115,7 +121,7 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
 
     /**
      * IMPLEMENTED
-     */
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -126,7 +132,7 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
             getHashString(vcam.getTOKEN());
         }
     }
-
+     */
     //video Archive Button Click
     @Override
     public void onArchButtonClick(View v) {
@@ -167,7 +173,12 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
 
     @Override
     public void onPlayClick(View v, int pos) {
-
+        mVcamPosition = pos;
+        if(mVcamList != null && (mVcamList.size() > pos) ) {
+            Vcam vcam = mVcamList.get(pos);
+            mStreamURL = vcam.getVcamURL();
+            getHashString(vcam.getTOKEN());
+        }
     }
 
     @Override
@@ -187,13 +198,9 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
         rp.setParam("functionName", "getSharedVCamList");
         rp.setParam("customer", mUserToken);
 
-        GetSharedVCamListAsyncTask task = new GetSharedVCamListAsyncTask();
-        task.execute(rp);
+        new GetSharedVCamListAsyncTask().execute(rp);
     }
 
-    /**
-     * Async taskfor Vcam List
-     */
     public class GetSharedVCamListAsyncTask extends AsyncTask<RequestPackage, Void, String> {
         @Override
         protected String doInBackground(RequestPackage... params) {
@@ -256,7 +263,7 @@ public class ScamFragment extends Fragment implements AbsListView.OnItemClickLis
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-                Fragment newFragment = VcamPlayerFragment.newInstance(mStreamURL, mPosition, camToken);
+                Fragment newFragment = VcamPlayerFragment.newInstance(mStreamURL, mVcamPosition, camToken);
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setTransition(FragmentTransaction.TRANSIT_NONE);
                 transaction.replace(R.id.container, newFragment, VcamPlayerFragment.TAG);

@@ -45,6 +45,7 @@ public class MainActivity extends FragmentActivity
      * STATIC VARS
      */
     public static final String SERVER_URL = "http://vhome.dev.vi-port.com.ua/";
+
     //public static final String SERVER_URL = "http://vhome.vi-port.com.ua/";
     public static final String PREFS_NAME = "VhomeSharedPreferences";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;

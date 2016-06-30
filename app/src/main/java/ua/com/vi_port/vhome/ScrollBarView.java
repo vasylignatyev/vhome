@@ -404,7 +404,7 @@ public class ScrollBarView extends View {
      */
     private void getArchiveList() {
         RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
-        rp.setMethod("GET");
+        rp.setMethod("POST");
         rp.setParam( "functionName", "getArchiveList");
         //rp.setParam( "iCustomerVcam", Integer.toString(VarchPlayerFragment.getICustomerVcam()));
         rp.setParam( "vcam_token", mListener.getVcamToken());
@@ -426,7 +426,7 @@ public class ScrollBarView extends View {
             if (s == null)
                 return;
 
-            Log.d("MyApp", "getMotionDetectList replay: " + s);
+            Log.d("MyApp", "getArchiveListAsyncTask replay: " + s);
 
             try {
                 jsonArray = new JSONArray(s);
@@ -440,6 +440,7 @@ public class ScrollBarView extends View {
                 }
 
             } catch (JSONException | ParseException e) {
+                Log.d("MyApp", "getArchiveList Json error: " + e.getMessage());
                 e.printStackTrace();
             }
             getMDEventList();
@@ -457,8 +458,7 @@ public class ScrollBarView extends View {
         rp.setParam( "startTime", mMysqlDateFormat.format(mObservationStart) );
         rp.setParam( "endTime", mMysqlDateFormat.format(mObservationEnd) );
         rp.setParam( "md_period", Integer.toString(30) );
-        GetMDEventListAsyncTask task = new GetMDEventListAsyncTask();
-        task.execute(rp);
+        new GetMDEventListAsyncTask().execute(rp);
     }
     private class GetMDEventListAsyncTask extends AsyncTask<RequestPackage, Void, String> {
         @Override

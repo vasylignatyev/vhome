@@ -45,8 +45,6 @@ public class VcamFragment extends Fragment
     private List<Vcam> mVcamList;
     private MainActivity mMainActivity = null;
 
-
-
     /**
      *
      */
@@ -93,7 +91,6 @@ public class VcamFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_vcam_list, container, false);
         mListView = (ListView) view.findViewById(android.R.id.list);
         mListView.setEmptyView(view.findViewById(android.R.id.empty));
-        //mListView.setOnItemClickListener(this);
 
         return view;
     }
@@ -101,7 +98,6 @@ public class VcamFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         if(savedInstanceState == null) {
             //getCustomerVCamList();
         }
@@ -112,12 +108,6 @@ public class VcamFragment extends Fragment
         super.onResume();
         Log.d("MyApp", "VcamFragment::onResume");
         getCustomerVCamList();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("MyApp", "VcamFragment::onPause");
     }
 
     /**
@@ -213,7 +203,9 @@ public class VcamFragment extends Fragment
 
     @Override
     public void onDestroyView() {
-        ((ArrayAdapter) mListView.getAdapter()).clear();
+        Log.d("MyApp", "onDestroyView");
+        if((mListView != null) && (mListView.getAdapter() != null) )
+            ((ArrayAdapter) (mListView.getAdapter())).clear();
         super.onDestroyView();
     }
 
@@ -221,7 +213,6 @@ public class VcamFragment extends Fragment
     @Override
     public void onPlayClick(View v, int pos) {
         mVcamPosition = pos;
-
         if(mVcamList != null && (mVcamList.size() > pos) ) {
             Vcam vcam = mVcamList.get(pos);
             mStreamURL = vcam.getVcamURL();
@@ -248,7 +239,6 @@ public class VcamFragment extends Fragment
      * REST Request for Vcam List
      */
     private void getCustomerVCamList() {
-
         pd.show();
         //************************
         RequestPackage rp = new RequestPackage(MainActivity.SERVER_URL + "ajax/ajax.php");
